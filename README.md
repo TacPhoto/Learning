@@ -9,5 +9,5 @@ Probably most of the in-code comments will be in Polish by the beggining. I will
 These folders are design to divide my learning process between different programming languages.
 ### *Language*/StandaloneExercises
 Contains only one file exercises. This folder will prevent creating too messy repository by me ;)
-### *Language*/Other
-Probably small projects. To be done in future.
+### Other names
+Probably as name says.
