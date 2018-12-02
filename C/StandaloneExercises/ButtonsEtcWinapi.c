@@ -2,13 +2,13 @@
 
 LPSTR WindowClass = "WindowClass";
 MSG msg;
+
+LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
+// Creating Window
 HWND hwnd;
 HWND g_hButton; //button declaration
 HWND g_hCheckbox; //checkbox button declaration
 HWND g_hRadioButton; //radiobutton declaration
-LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
-// Creating Window
-	
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 
@@ -33,15 +33,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		MessageBox(NULL, "Window Registration Failed!", "Error!", MB_ICONEXCLAMATION | MB_OK);
 		return 0;
 	}
-
-
-	
-
+	//Main window and its components
 	hwnd = CreateWindowEx(WS_EX_CLIENTEDGE, WindowClass, "Window Exercise", WS_OVERLAPPEDWINDOW,
 		CW_USEDEFAULT, /* x */
 		CW_USEDEFAULT, /* y */
 		200, /* width */
-		280, /* height */
+		880, /* height */
 		NULL, NULL, hInstance, NULL);
 
 
@@ -54,15 +51,36 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	g_hRadioButton = CreateWindowEx(0, "BUTTON", "Radio Button", WS_CHILD | WS_VISIBLE | BS_RADIOBUTTON,
 		15, 70, 150, 30, hwnd, NULL, hInstance, NULL);
 
+	HWND hText = CreateWindowEx(WS_EX_CLIENTEDGE, "EDIT", NULL, WS_CHILD | WS_VISIBLE | WS_BORDER | //text input
+		WS_VSCROLL | ES_MULTILINE | ES_AUTOVSCROLL,
+		15, 100, 150, 50, hwnd, NULL, hInstance, NULL);
+
+	SetWindowText(hText, "Hey, you can write sth here!");
+	DWORD length = GetWindowTextLength(hText);
+	LPSTR temp = (LPSTR)GlobalAlloc(GPTR, length + 1);
+	GetWindowText(hText, temp, length + 1);
+	GlobalFree(temp);
+
+	HWND hListBox = CreateWindowEx(WS_EX_CLIENTEDGE, "LISTBOX", NULL, WS_CHILD | WS_VISIBLE | WS_BORDER,
+		15, 150, 150, 40, hwnd, NULL, hInstance, NULL);
+	SendMessage(hListBox, LB_ADDSTRING, 0, (LPARAM) "First Element");
+	SendMessage(hListBox, LB_ADDSTRING, 0, (LPARAM) "Second Element");
+
+	HWND hCombo = CreateWindowEx(WS_EX_CLIENTEDGE, "COMBOBOX", NULL, WS_CHILD | WS_VISIBLE | WS_BORDER |
+		CBS_DROPDOWNLIST,
+		15, 190, 150, 200, hwnd, NULL, hInstance, NULL);
+	SendMessage(hCombo, CB_ADDSTRING, 0, (LPARAM) "Element 1");
+	SendMessage(hCombo, CB_ADDSTRING, 0, (LPARAM) "Element 2");
 
 
-
+	//check if window has been created
 	if (hwnd == NULL) {
 		MessageBox(NULL, "Window Creation Failed!", "Error!", MB_ICONEXCLAMATION | MB_OK);
 		return 0;
 	}
 
-	ShowWindow(hwnd, nCmdShow); // Show window...
+	//Show/Update Window
+	ShowWindow(hwnd, nCmdShow);
 	UpdateWindow(hwnd);
 
 	//Message Loop
