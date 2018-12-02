@@ -1,21 +1,14 @@
-////In Progress, Code Not Ready
-////In Progress, Code Not Ready
-////In Progress, Code Not Ready
-////In Progress, Code Not Ready
-////In Progress, Code Not Ready
-////In Progress, Code Not Ready
-////In Progress, Code Not Ready
-////In Progress, Code Not Ready
-////In Progress, Code Not Ready
-////In Progress, Code Not Ready
-////In Progress, Code Not Ready
 #include <windows.h>
 
 LPSTR WindowClass = "WindowClass";
 MSG msg;
-
+HWND hwnd;
+HWND g_hButton; //button declaration
+HWND g_hCheckbox; //checkbox button declaration
+HWND g_hRadioButton; //radiobutton declaration
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
-
+// Creating Window
+	
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 
@@ -36,17 +29,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	wc.hIconSm = LoadIcon(NULL, IDI_APPLICATION);
 
 	//Is Registering Window Accomplished
-if (!RegisterClassEx(&wc)) {
+	if (!RegisterClassEx(&wc)) {
 		MessageBox(NULL, "Window Registration Failed!", "Error!", MB_ICONEXCLAMATION | MB_OK);
 		return 0;
 	}
+
+
 	
-	
-	// Creating Window
-	HWND hwnd;
-	HWND g_hButton; //button declaration
-	HWND g_hCheckbox; //checkbox button declaration
-	HWND g_hRadioButton; //radiobutton declaration
 
 	hwnd = CreateWindowEx(WS_EX_CLIENTEDGE, WindowClass, "Window Exercise", WS_OVERLAPPEDWINDOW,
 		CW_USEDEFAULT, /* x */
@@ -54,10 +43,10 @@ if (!RegisterClassEx(&wc)) {
 		200, /* width */
 		280, /* height */
 		NULL, NULL, hInstance, NULL);
-		
-	
-		
-		
+
+
+
+
 	g_hButton = CreateWindowEx(0, "BUTTON", "My Button Text", WS_CHILD | WS_VISIBLE,
 		15, 10, 150, 30, hwnd, NULL, hInstance, NULL);
 	g_hCheckbox = CreateWindowEx(0, "BUTTON", "Checkbox", WS_CHILD | WS_VISIBLE | BS_CHECKBOX,
@@ -90,13 +79,13 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg)
 	{
-		/*
+
 	case WM_COMMAND:
-	if ((HWND)lParam == g_hButton) //show msgbox if g_hButton is pressed
-		MessageBox(hwnd, "You pressed it! Hurray!", "It works!", MB_ICONINFORMATION);
-*/
-	break;
-		
+		if ((HWND)lParam == g_hButton) //show msgbox if g_hButton is pressed
+			MessageBox(hwnd, "You pressed it! Hurray!", "It works!", MB_ICONINFORMATION);
+
+		break;
+
 	case WM_CLOSE:
 		DestroyWindow(hwnd);
 		break;
@@ -104,8 +93,8 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		break;
-		
-		
+
+
 
 
 	default:
