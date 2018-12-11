@@ -4,3 +4,4 @@ It does not mean they are something more than just exercises but I think they sh
 
 \[newest to oldest]
 - CalcConsole.c - Console calculator. I plan making another one as a window app
+- CalcConsoleMacro.c - Console calculator with preprocesor's macros
