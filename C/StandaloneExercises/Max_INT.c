@@ -8,7 +8,7 @@ int main(){
 	int i,j ; //counters
 	int max; //copy of the highest number of arr
 	//INPUT NUMBERS
-	printf("Insert an integer to array and press enter. Stop by entering 0 repeating the process 256 times.\n");
+	printf("Insert an integer to array and press enter. Stop by entering 0 or repeating the process 256 times.\n");
 	for( i = 0 ; i<256 ; i++){
 		scanf("%d",&buf[i]);
 		if( buf[i] == 0 )break;
