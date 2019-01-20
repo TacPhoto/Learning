@@ -13,7 +13,7 @@ int main(){
 		scanf("%d",&buf[i]);
 		if( buf[i] == 0 )break;
 	}
-	//ALOCATING ARRAY
+	//ALLOCATING ARRAY
 	int *arr;
 	arr = (int *)malloc( i * sizeof(int));
 	//REWRITE BUFFER TO ARR
