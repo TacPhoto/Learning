@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 //////==========================================//////
-//ASKS USER FOR INTEGERS, THAN FINDS THE HIGHEST ONE// 
+//ASKS USER FOR INTEGERS, THEN FINDS THE HIGHEST ONE// 
 //////==========================================//////
 int main(){
 	int buf[256]; //buffer
