@@ -1,23 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
-
-
-void pot(int a,int n) {//funkcja podnoszaca okreslona liczbe do zadanej parametrem potegi
-	int buf = a; //zmienna buforowa, w niej bede liczyl potege
-	for(int i = 1; i<n; i++)buf = buf * a;
-	printf("wynik= %d", buf);
-
+void exp(int a,int n) {
+	int buf = a; //buffer
+	for( int i = 1 ; i<n ; i++ ) buf = buf * a; //calculate
+	printf("result= %d", buf); //print the result
 }
 int main() {
-	int n = 0;//wysokosc potegi
-	int a = 3;//nasza liczba
-	printf("podaj wysokosc potegi do ktorej podniesiemy liczbe 3 \n");
-	scanf("%d", &n); //pobiera liczbe od uzytkownika
+	int n = 0;//exponent
+	int a = 3;//number, does not have to be necessarily hardcoded ;)
+	printf("What exponent do you want to use on num 3?\n");
+	scanf("%d", &n); //gets user input
 	printf("\n");
-	pot(a,n); //uruchamia funkcje
-
+	exp(a,n); //launch exponentiation
 	system("pause");
 	return 0;
 }
-
-
+//system("pause") may not work on linux, use getch or sth simmilar instead
