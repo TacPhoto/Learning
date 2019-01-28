@@ -1,19 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
-//funkcja poteguje rekurencyjnie
-int pot( int liczba, int potega){
-    if(potega==0){ //potegowanie przez 0 zawsze zwraca 1
-        return 1;
-    }
-    return(liczba*pot(liczba,potega-1)); //poteguje
+////recursive exponentiation, not the best way to do it but a good way to exercise
+int exp( int a, int n){
+    if(n==0)return 1;
+    return(a*exp(a,n-1));
 }
 int main()
 {
-	int a=3; //liczba potegowana
-	int n=0; //wartosc potegi
-	printf("podaj wysokosc potegi do ktorej podniesiemy liczbe 3 \n");
-	scanf("%d", &n); //pobiera liczbe od uzytkownika
-    printf("%d", pot(a,n)); //wypisze wynik ktorego wartosc wyliczy funkcja
+	int a=3; //our number, does not have to be hardcoded
+	int n=0; //exponent
+	printf("Insert exponent\n");
+	scanf("%d", &n); //gets user input for an exponent
+    printf("%d", exp(a,n)); //print result
     system("pause");
     return 0;
 }
+//system("pause") may not work on linux. try using getch or any different pausing method
