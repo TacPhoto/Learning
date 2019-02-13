@@ -6,24 +6,29 @@
 ///CODE STILL NOT WORKING PROPERLY
 ///CORRECTING IN PROGRESS
 ////////
-int search(char arr[], int fileLen, char phrase[]) //count all occurances of the phrase in arr
-	{
-	int i, matchCount = 0; //iteration counter, matching characters counter
-	int count = 0; //occarances counter
-	for (i = 0; i < (fileLen - strlen(phrase) + 1); i++)
-	{
-		if (arr[i] == phrase[ i % strlen(phrase)] ) 
-		{
-			matchCount++;
-			if( matchCount == (strlen(phrase)) ) 
-				{
-					count++;
-					matchCount = 0; //reset matching characters number
-				}
-		}
-	}
-	return count;
-	}
+iint search( char arr[], int fileLen, char phrase[] ) //count all occurances of the phrase in arr
+{
+    int i, matchCount = 0; //iteration counter, matching characters counter
+    int count = 0; //occarances counter
+    for( i = 0; i <( fileLen - strlen( phrase ) + 1 ); i++ )
+    {
+       
+        if( arr[ i ] == phrase[ matchCount ] )
+        {
+            matchCount++;
+            if( matchCount ==( strlen( phrase ) ) )
+            {
+                count++;
+                matchCount = 0; //reset matching characters number
+            }
+        }
+        else
+        {
+            matchCount = 0;
+        }
+    }
+    return count;
+}
 ////////
 int main() {
 	////////VARIABLES (not including phrase)
