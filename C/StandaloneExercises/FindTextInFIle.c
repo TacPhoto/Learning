@@ -10,22 +10,24 @@ int search( char arr[], int fileLen, char phrase[] ) //count all occurances of t
 {
     int i, matchCount = 0; //iteration counter, matching characters counter
     int count = 0; //occarances counter
-    for( i = 0; i <( fileLen - strlen( phrase ) + 1 ); i++ )
+    for( i = 0; i < fileLen ; i++ )
     {
-       
-        if( arr[ i ] == phrase[ matchCount ] )
+    	
+        if( arr[ i ] == phrase[matchCount] )
         {
             matchCount++;
-            if( matchCount ==( strlen( phrase ) ) )
+            if( matchCount == ( strlen( phrase ) ) )
             {
                 count++;
                 matchCount = 0; //reset matching characters number
-            }
+            }          
+	
         }
         else
         {
-            matchCount = 0;
-        }
+        	if( matchCount != 0 ) i--;
+        	matchCount = 0; //reset matchCount if characters don't match
+		}
     }
     return count;
 }
