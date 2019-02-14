@@ -1,72 +1,76 @@
 #define _CRT_SECURE_NO_WARNINGS //prevents 'use scanf_s warning' in Visual Studio
-#include <stdio.h> 
-#include <stdlib.h> 
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 ////////
-///CODE STILL NOT WORKING PROPERLY
-///CORRECTING IN PROGRESS
+///CODE STILL NOT WORKING PROPERLY 
+///CORRECTING IN PROGRESS 
 ////////
-int search( char arr[], int fileLen, char phrase[] ) //count all occurances of the phrase in arr
+int search( char arr[], int fileLen, char phrase[], int length ) //count all occurances of the phrase in arr
 {
-    int i, matchCount = 0; //iteration counter, matching characters counter
+    int i = 0; //iteration counter
+	int matchCount = 0; //matching characters counter
     int count = 0; //occarances counter
-    for( i = 0; i < fileLen ; i++ )
-    {
-    	
-        if( arr[ i ] == phrase[matchCount] )
-        {
-            matchCount++;
-            if( matchCount == ( strlen( phrase ) ) )
-            {
-                count++;
-                matchCount = 0; //reset matching characters number
-            }          
-	
-        }
-        else
-        {
-        	if( matchCount != 0 ) i--;
-        	matchCount = 0; //reset matchCount if characters don't match
+    while( i < fileLen )
+ 	  	{
+		if( arr[i] == phrase[i] ) //if letters match
+		{
+			matchCount++;
+			i++;
+			if( matchCount == length ) //if the whole phrase matches
+			{
+				count++;
+				matchCount = 0;
+			}
+			else //if some letters did match but not the whole phrase
+			{
+				i = i - matchCount + 1;
+				matchCount = 0;
+			}
+		}
+		else //if letters don't match
+		{
+		matchCount = 0;
+		i++;
 		}
     }
     return count;
 }
 ////////
 int main() {
-	////////VARIABLES (not including phrase)
-	int count = 0;
-	int i = 0;
-	char buf[256]; //buffer for test input
-	char arr[512]; //	char arr[512];
-	int fileLen = 512; //array (arr) size
-	int length; //lenght of a phrase
-	////////OPEN FILE
-	FILE *source;
-	source = fopen("D:file1.txt", "r"); //open source
-	while (fgets(arr, fileLen, source) != NULL); //read file.
-	////////ASK USER FOR TEXT TO FIND
-	printf("what phrase should i look for?\n\n");
-	scanf("%s", buf);
-	length = strlen(buf);
-	printf("Length of the typed phrase: %d,TEST\n", length); //////TEST
-	////////WRITE FROM BUFFER TO PHRASE
-	char *phrase = malloc(sizeof(char) * (length+1)); //allocate memory fot phrase
-	strncpy(phrase, buf, sizeof(phrase)-1); //uses strncpy the safe way
-	phrase[sizeof(phrase) - 1 ] = '\0';
-	printf("You have typed: %s,TEST\n", phrase); //////TEST
-	////////SEARCHING FOR THE PHRASE
-	if (length <= fileLen)
-	{
-		count = search(arr, fileLen, phrase);
-		printf("I have found such phrase %d times - TEST\n", search(arr, fileLen, phrase)); //////TEST
-		printf("I have found such phrase %d times.\n", count);
-	}
-	else {
-		printf("The phrase you have entered is longer than number of characters in the source file. Phrase was found 0 times.\n");
-	}
-	////////CLOSE
-	fclose(source);
-	system("pause");
-	return 0;
+    ////////VARIABLES (not including phrase)
+    int count = 0;
+    int i = 0;
+    char buf[ 256 ]; //buffer for test input
+    char arr[ 512 ]; // char arr[512];
+    int fileLen = 512; //array (arr) size
+    int length; //lenght of a phrase
+    ////////OPEN FILE
+    FILE * source;
+    source = fopen( "D:file1.txt", "r" ); //open source
+    while( fgets( arr, fileLen, source ) != NULL ); //read file.
+    ////////ASK USER FOR TEXT TO FIND
+    printf( "what phrase should i look for?\n\n" );
+    scanf( "%s", buf );
+    length = strlen( buf );
+    printf( "Length of the typed phrase: %d,TEST\n", length ); //////TEST
+    ////////WRITE FROM BUFFER TO PHRASE
+    char * phrase = malloc( sizeof( char ) *( length + 1 ) ); //allocate memory fot phrase
+    strncpy( phrase, buf, sizeof( phrase ) - 1 ); //uses strncpy the safe way
+    phrase[ sizeof( phrase ) - 1 ] = '\0';
+    printf( "You have typed: %s,TEST\n", phrase ); //////TEST
+    ////////SEARCHING FOR THE PHRASE
+    if( length <= fileLen )
+    {
+        count = search( arr, fileLen, phrase, length );
+        printf( "I have found such phrase %d times.\n", count );
+    }
+    else
+    {
+        printf( "The phrase you have entered is longer than number of characters in the source file. Phrase was found 0 times.\n" );
+    }
+    ////////CLOSE
+    fclose( source );
+    system( "pause" );
+    return 0;
 }
-
