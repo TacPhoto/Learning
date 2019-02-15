@@ -3,37 +3,33 @@
 #include <stdlib.h>
 #include <string.h>
 ////////
-///CODE STILL NOT WORKING PROPERLY 
-///CORRECTING IN PROGRESS 
-////////
+///STILL NOT WORKING (WRONG RESULTS). search FUNCTION SEEMS TO WORK RIGHT. 
+///THE PROBLEM IS PROBABLY IN THE strncpy USAGE IMPLEMENTATION
+///////
 int search( char arr[], int fileLen, char phrase[], int length ) //count all occurances of the phrase in arr
 {
     int i = 0; //iteration counter
 	int matchCount = 0; //matching characters counter
     int count = 0; //occarances counter
     while( i < fileLen )
- 	  	{
-		if( arr[i] == phrase[i] ) //if letters match
-		{
-			matchCount++;
-			i++;
-			if( matchCount == length ) //if the whole phrase matches
-			{
-				count++;
-				matchCount = 0;
-			}
-			else //if some letters did match but not the whole phrase
-			{
-				i = i - matchCount + 1;
-				matchCount = 0;
-			}
+ 	{
+	   if( arr[i] == phrase[matchCount] ) //letters match
+	   {
+	   	matchCount++;
+	   	i++;
+	   	if( matchCount == length ) //whole phrase matches
+	   	  	{
+	   	  		count++;
+	   	  		matchCount = 0; //set matchCount to 0, it has already done his job
+		   	}
+	   }
+ 		else //letters mismatch
+ 		{
+ 	  		i = i - matchCount + 1; //go a step furthers but do not forget about any possible phrase beginning
+ 	  		matchCount = 0; //letters didn't match so the matchCount should be equal to 0
 		}
-		else //if letters don't match
-		{
-		matchCount = 0;
-		i++;
-		}
-    }
+ 	  
+  	}
     return count;
 }
 ////////
@@ -47,8 +43,7 @@ int main() {
     int length; //lenght of a phrase
     ////////OPEN FILE
     FILE * source;
-    source = fopen( "D:file1.txt", "r" ); //open source
-    while( fgets( arr, fileLen, source ) != NULL ); //read file.
+    source = fopen( "D:file1.txt", "r" ); //open source 
     ////////ASK USER FOR TEXT TO FIND
     printf( "what phrase should i look for?\n\n" );
     scanf( "%s", buf );
