@@ -2,8 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-////////WAITING FOR A CORRECTION
-////////CODE STILL NOT WORKING
+////////
 int search( char arr[], int fileLen, char phrase[], int length ) //count all occurances of the phrase in arr
 {
     int i = 0; //iteration counter
@@ -26,7 +25,6 @@ int search( char arr[], int fileLen, char phrase[], int length ) //count all occ
  	  		i = i - matchCount + 1; //go a step furthers but do not forget about any possible phrase beginning
  	  		matchCount = 0; //letters didn't match so the matchCount should be equal to 0
 		}
- 	  
     }
     return count;
 }
@@ -42,7 +40,7 @@ int main() {
     ////////OPEN FILE
     FILE * source;
     source = fopen( "D:file1.txt", "r" ); //open source
-    fgets( arr, fileLen, source ); 
+    fgets( arr, fileLen, source );
     ////////ASK USER FOR TEXT TO FIND
     printf( "what phrase should i look for?\n\n" );
     scanf( "%s", buf );
@@ -50,8 +48,8 @@ int main() {
     printf( "Length of the typed phrase: %d,TEST\n", length ); //////TEST
     ////////WRITE FROM BUFFER TO PHRASE
     char * phrase = malloc( sizeof( char ) *( length + 1 ) ); //allocate memory fot phrase
-    strncpy( phrase, buf, sizeof( phrase ) - 1 ); //uses strncpy the safe way
-    phrase[ sizeof( phrase ) - 1 ] = '\0';
+    strncpy( phrase, buf, length ); //uses strncpy the safe way
+    phrase[ length ] = '\0';
     printf( "You have typed: %s,TEST\n", phrase ); //////TEST
     ////////SEARCHING FOR THE PHRASE
     if( length <= fileLen )
