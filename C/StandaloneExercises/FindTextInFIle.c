@@ -2,10 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-////////
-///STILL NOT WORKING (WRONG RESULTS). search FUNCTION SEEMS TO WORK RIGHT. 
-///THE PROBLEM IS PROBABLY IN THE strncpy USAGE IMPLEMENTATION
-///////
+////////WAITING FOR A CORRECTION
+////////CODE STILL NOT WORKING
 int search( char arr[], int fileLen, char phrase[], int length ) //count all occurances of the phrase in arr
 {
     int i = 0; //iteration counter
@@ -29,7 +27,7 @@ int search( char arr[], int fileLen, char phrase[], int length ) //count all occ
  	  		matchCount = 0; //letters didn't match so the matchCount should be equal to 0
 		}
  	  
-  	}
+    }
     return count;
 }
 ////////
@@ -43,7 +41,8 @@ int main() {
     int length; //lenght of a phrase
     ////////OPEN FILE
     FILE * source;
-    source = fopen( "D:file1.txt", "r" ); //open source 
+    source = fopen( "D:file1.txt", "r" ); //open source
+    fgets( arr, fileLen, source ); 
     ////////ASK USER FOR TEXT TO FIND
     printf( "what phrase should i look for?\n\n" );
     scanf( "%s", buf );
