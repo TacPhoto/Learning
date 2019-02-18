@@ -1,5 +1,6 @@
 //counts from 9 to 0, then blinks alternately red and yellow diodes, everything looped
 //I used a horizontally pinned  display, you may be a bit confused after looking into 'segCode' array
+//want to see the result? visit https://youtu.be/A4yXwrYrLzA
 int segPins[] = {2, 3, 4, 5, 6, 7, 8};
 
 byte segCode[10][7] = { //information for displaying numbers 0-9
