@@ -1,4 +1,4 @@
-#Learning Arduino!
+#Learning Arduino!\
 I have bought Arduino Uno, Nano and Digispark to try something new and learn how to use these controlers. I am honestly not sure how far it will go but it is a pretty fun and I wanted to know at least basics of such things and chosen Arduino to begin with.
 
 You probably won't find my projects very interesting... maybe one day but currently they are very basic and I still want to publish some of my codes to have my progress documented and have a bit more motivation :)
