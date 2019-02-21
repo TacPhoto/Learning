@@ -39,6 +39,7 @@ int main()
 	}
 	sorted = 1; //reset counter
 	
+	printf("Sorted:   ");
 	for( i = 0 ; i <n ; i++) printf("%d ", arr[i]); //prints sorted array
 	printf("\n");
 	
