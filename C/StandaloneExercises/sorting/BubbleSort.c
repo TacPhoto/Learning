@@ -8,7 +8,7 @@ int main()
 //	int arr[] = { 10, 9, 8, 7, 6, 5, 4, 3, 2, 1};
 	int n = 10; //number of arr elements
 	int sorted = 1; //sorted counter (strarting from 1)
-	int i, j; //teration counters
+	int i; //teration counter
 	int temp; //temporary int
 	
 	printf("Unsorted: ");
@@ -24,15 +24,12 @@ int main()
 	{	
 		for( i = 0 ; i < (n - 1) ; i++) //single sorting iteration
 			{
-				for( j = 0; j < (n - 1) ; j++ )
-				{
 					if( arr[i] > arr[i+1])
 					{
 						temp = arr[i];
 						arr[i] = arr[i+1];
 						arr[i+1] = temp;
 					}
-				}
 			}
 		sorted = 1; //reset counter
 		for( i = 0 ; i < (n - 1) ; i++ ) //checks if another iteration is needed
