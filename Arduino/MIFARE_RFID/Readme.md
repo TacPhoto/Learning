@@ -5,4 +5,4 @@ This issue is described here https://lukelectro.wordpress.com/2018/03/08/fixed-r
 
 Files:
 1. ReadUIDTest.c -simple test to check if the serial terminal works properly and if the antenna can read UID
-2. ReadData.c - reads MIFARE/RFID data. Take from mfrc examples
+2. ReadData.c - reads MIFARE/RFID data. Taken from mfrc examples
