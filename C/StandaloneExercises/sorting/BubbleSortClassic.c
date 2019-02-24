@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
 //bubble sort, classic way using for j<n containing for i<n (see my comment in readme.md)
 int main()
 {
@@ -20,9 +19,9 @@ int main()
 				if( arr[i] < arr [i+1] ) sorted++;		
 		}
 	
-if(sorted!=n)
+if(sorted!=n) //runs sorting only if there is a need to
 {
-	for( int j = 0; j < n ; j++)
+	for( int j = 0; j < (n - 1) ; j++)
 	{	
 		for( i = 0 ; i < (n - 1) ; i++) //single sorting iteration
 			{
@@ -33,19 +32,11 @@ if(sorted!=n)
 						arr[i+1] = temp;
 					}
 			}
-		sorted = 1; //reset counter
-		for( i = 0 ; i < (n - 1) ; i++ ) //checks if another iteration is needed
-			{
-				if( arr[i] < arr [i+1] ) sorted++;		
-			}
 	}
 }
-	sorted = 1; //reset counter
 	
 	printf("Sorted:   ");
 	for( i = 0 ; i <n ; i++) printf("%d ", arr[i]); //prints sorted array
 	printf("\n");
-	
-	system("pause");
 	return 0;
 }
