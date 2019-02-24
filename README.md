@@ -1,9 +1,10 @@
-# Learning
+# Learning 
 See my progress learning to code :)
 The files in this repository will be probably useless for you. It is just another thing to motivate me and may show you my progress. 
 Who knows how far I will go? I may give up after a week or to but it is always good to try :)
 
-Probably most of the in-code comments will be in Polish by the beggining. I will try to keep in mind to write them in English while making future projects. You can find short English descriptions in git file comments.
+---
+
 ## Folders
 ### Language Named Folders - ex. "C"
 These folders are made to divide my learning process between different programming languages.
@@ -12,6 +13,10 @@ Contains only single file exercises. This folder will prevent creating too messy
 ### Other names
 Probably as the name says.
 
+#### Note:
+Probably most of the in-code comments will be in Polish by the beggining. I will try to keep in mind to write them in English while making future projects. You can find short English descriptions in git file comments.
+
+---
 ## Some of my thoughts about studying ICT and so on
 My thoughts about learning system on my University and why I am learning to code my self.
 
@@ -25,8 +30,8 @@ Ex.:
 -You will not even know how usefull are things like getchar() or putchar(). You will be constantly using printf and scanf simply because you are kinda familiar with them after using them for few months and you don't even know putchar() and getchar() execute much faster and you should use them. I have learned that from Stephen's Prata book, not from the lectures or laboratories.
 
 #### I wish we were told about good habits
-The only good coding habit we were told about was putting comments. If you look into my code in Learning/C/StandaloneExercises chronologically you will see how badly my commentary looks and that it was written in Polish. Then I realised it's a very bad practise and started writting the commentary in English.
-I'm still trying to make my code cleaner and cleaner and I wish we (students) were told about creating propper spacing, passing less variables to functions or such things like storing length of the word in a variable instead of calling strlen every time a loop iterates. These are the foundaments and the foundaments my university mad are weak, very weak.
+The only good coding habit we were told about was to put comments. If you look into my code in Learning/C/StandaloneExercises chronologically you will see how badly my commentary looks and that it was written in Polish. Then I realised it's a very bad practise and started writting the commentary in English.
+I'm still trying to make my code cleaner and cleaner and I wish we (students) were told about creating propper spacing, passing less variables to functions or such things like storing length of the word in a variable instead of calling strlen() every time a loop iterates. These are the foundaments and the foundaments my university mad are weak, very weak.
 
 #### Some things they will try to teach you may be a bit... unconventional and does not go as supposed to
 You should learn how a computer works. My university had made a simmulator in order to help you with that! We were reading the mnemonics and performing operations they described such as moving data between the registers, performing ALU calculations etc. It would be a great way to understand the topic but it sadly was not. Instead of understanding how real computer works most of us did not even understand how the simmulator worked but we knew how to operate it. We learned how to read the mnemonic, find it's meaning in the cheat sheet and follow the instruction from the book but we didn't learn anything else. We should be able to write the code (not only copy it and run) and fully understood operations we were performing.
