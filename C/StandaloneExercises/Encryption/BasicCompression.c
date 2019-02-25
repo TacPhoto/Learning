@@ -2,8 +2,8 @@
 #include <stdlib.h> //for file handling
 #include <string.h> //fot strcpy() and strcat()
 //simple file compressing program
-//NOT WORKING YET!
-char compress(char source[], char result[]);
+//WORKING BUT TO BE CORRECTED A BIT
+void compress(char source[], char result[]);
 
 int main()
 {
@@ -21,48 +21,41 @@ int main()
     source[ length ] = '\0'; //makes sure there is end of a string
 //	printf("You have typed: %s,TEST\n", source ); //////TEST	
 
-	char * result = malloc( sizeof( char ) * ( length + 1 ) ); //allocate memory fot phrase
+	char * result = malloc( sizeof( char ) * ( 2* length + 1 ) ); //allocate memory fot phrase
 
-	compress(source, result);
+	if(length != 0 || length != 1)compress(source, result);
 
 
 	return 0;
 }
 
-char compress(char source[], char result[])
+void compress(char source[], char result[])
 {	
-	int i = 0;
-	int count = 0;
-	char buf[256];
-	char temp = source[0];
-	char num;
+	int i = 0, j = 0;
+	int count = 1;
+	char num = 0;
 	int length = strlen(source);
-//	printf("source %s", source); //TEST
 	
-	while( i < length )
+//	puts(source);//TEST
+//	puts(result);//TEST
+
+	for( i = 0 ; i < (length) ; i++ )
 	{
-		num ="";
-		count = 0;
-		while(temp == source[i+count])
+		if(source[i] == source[i+1])
 		{
 			count++;
 		}
-		if( count!=0 )
-		{
-		num = count;
-		result[i] = num;
-		i++;
-		result[i] = source[i-1];
-		i += count - 1;
-		}
 		else
-		{
-			i++;
+		{		
+		result[j] = source[i];
+		result[j+1] = count + '0';
+		count = 1;
+		j += 2;
 		}
-	puts(result);
-	return result;
+//		puts(result); //TEST
 	}
 	
+	puts(result);
 	
-	
+	return;
 }
