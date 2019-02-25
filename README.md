@@ -27,7 +27,7 @@ Ex.:
 
 -You will have a basic knowledge about what is buffer overflow but you won't have written even a single line of code that may prevent such thing (like securing strncpy)
 
--You will not even know how usefull are things like getchar() or putchar(). You will be constantly using printf and scanf simply because you are kinda familiar with them after using them for few months and you don't even know putchar() and getchar() execute much faster and you should use them. I have learned that from Stephen's Prata book, not from the lectures or laboratories.
+-You will not even know how usefull are things like getchar() or putchar(). You will be constantly using printf and scanf simply because you are kinda familiar with them after using them for few months and you don't even know putchar() and getchar() execute much faster and you should use them. I have learned that from Stephen Prata's book, not from the lectures or laboratories.
 
 #### I wish we were told about good habits
 The only good coding habit we were told about was to put comments. If you look into my code in Learning/C/StandaloneExercises chronologically you will see how badly my commentary looks and that it was written in Polish. Then I realised it's a very bad practise and started writting the commentary in English.
@@ -40,5 +40,6 @@ It took me some time, I managed to get a positive grade and somehow understand (
 
 #### Math
 Math is very importand. I totally aggree. But it is taught the hard way, just like you were to become math teacher, not someone who will use it later in any practicall way.
+
 I was learning how to calculate square root of negative numbers, how to find local extremums, use matrixes, various things, often much more complicated then I have quickly listed here but I have never used that.
-Do you know what I was looking for this week (note its nearly end of January 2019 today)? I was looking to find Bubble Sort mathematical complexity and it's minimal number of iterations and studies had nothing common to that. They did not teach me such things and I had to find it my self. I did, I am satisfied now but I have spent over 180 hours learning math at university in 5 months (not including time spent at home) and I did not know anything about mathematical complexity of different sorting algorithms! I knew what is algebraic structure and Stirling's number instead ;)
+Do you know what I was looking for this week (note its nearly end of January 2019 today)? I was looking to find Bubble Sort's mathematical complexity and it's minimal number of iterations and studies had nothing common with that. They did not teach me such things and I had to find it my self. I did, I am satisfied now but I have spent over 180 hours learning math at university in 5 months (not including time spent at home) and I did not know anything about mathematical complexity of different sorting algorithms! I knew what is algebraic structure and Stirling's number instead ;)
