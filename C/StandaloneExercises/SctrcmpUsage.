@@ -1,0 +1,18 @@
+#include <stdio.h>
+#include <stdio.h>
+#define endl puts("")
+//just a test, btw as i have tested simmilar use of puts will display nothing
+int main()
+{
+	char someText[]="One";
+	char anotherText[]="Two"; 
+	char yetAnotherText[]="One";
+	
+	printf("%d", strcmp(someText, anotherText)); endl;
+	printf("%d", strcmp(someText, yetAnotherText)); endl;
+	printf("%d", strcmp(yetAnotherText, anotherText)); endl;
+	printf("%d", strcmp(someText,"One")); endl; //as we see, we are not obliged to use variables here
+	printf("%d", strcmp("One", "One")); endl; //see ;) ^
+	
+	return 0;
+}
