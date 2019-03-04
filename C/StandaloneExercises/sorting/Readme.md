@@ -18,11 +18,13 @@ Please note:
 
 QuickSort.c                   - 0.02129 seconds
 
-BubbleSortClassicOptimized.c  - 0.03205
+BubbleSortClassicOptimized.c  - 0.03205 seconds
 
 BubbleSort.c                  - 0.03626 seconds
 
 BubbleSortClassic.c           - 0.03751 seconds
+
+InserionSort.c                - 0.04072 seconds
 
 Array used: { 17, 10, 0, 33, 5, 99, 22, 104, 40, 3})
 
