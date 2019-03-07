@@ -2,7 +2,7 @@
 See my progress learning to code :)
 The files in this repository will be probably useless for you. It is just another thing to motivate me and may show you my progress. 
 Who knows how far I will go? I may give up after a week or two but it is always good to try :)
-##My Learning Order
+## My Learning Order
 I was going to learn C, then some algorithms and C++ but I will try learning basics of Python before C++ cause I may need in my likely new job soon.
 
 ---
