@@ -1,8 +1,14 @@
+import os
+
 board = {
     'top-l': '  ', 'top-m': '  ', 'top-r': '  ',
     'mid-l': '  ', 'mid-m': '  ', 'mid-r': '  ',
     'low-l': '  ', 'low-m': '  ', 'low-r': '  ',
 }
+
+def cls():
+    os.system('cls' if os.name=='nt' else 'clear')
+    print()
 
 def printBoard(board):
     print(board['top-l'], '|', board['top-m'], '|', board['top-r'])
@@ -18,5 +24,6 @@ def userInput():
         print('Try again')
 
 while(True):
+    cls()
     printBoard(board)
     userInput()
