@@ -1,6 +1,6 @@
 import pandas as pd
 import sklearn
-from sklearn import  preprocessing
+from sklearn import linear_model, preprocessing
 from sklearn.neighbors import KNeighborsClassifier
 
 data = pd.read_csv("car.data") #import data
@@ -34,5 +34,5 @@ names = ["unacc", "acc", "good", "vgood"] #for evaluating non-numeric phrases
 
 for i in range(len(predicted)): #print results
     print("Predicted: ", names[predicted[i]], "Data: ", x_test[i], names[y_test[i]])
-    n = model.kneighbors([x_test[i]], n_neighbours, True)
-    print("N:", n)
+    #n = model.kneighbors([x_test[i]], n_neighbours, True)
+    #print("N:", n)
