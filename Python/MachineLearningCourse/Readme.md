@@ -4,8 +4,8 @@ I think I should know some ML basics at least ;)
 
 ## Free Tutorials/Courses I Use
 I think I should mention main tutors I learn from:
--Sentdex
--Tech With Tim
+* Sentdex
+* Tech With Tim
 
 ## Data Sources
 Getting errors while trying to run my code? I sometimes use data files from Tech With Tim page,
