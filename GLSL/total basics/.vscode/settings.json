@@ -1,0 +1,4 @@
+{
+    "glsl-linter.validatorArgs": "D:\\gslang\\bin",
+    "glsl-linter.validatorPath": "D:\\gslang\\bin\\glslangValidator.exe"
+}
