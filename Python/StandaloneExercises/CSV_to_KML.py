@@ -62,13 +62,11 @@ def set_meta(csv, row):
     else:
         category = 'Brak kategorii'
         icon = icons['unkown']
-    #print(category, icon) #DEBUG
+
     return category, icon;
 
 for i in (base_csv.index):
-    #print(i)
     category, icon = set_meta(base_csv, i)
-    #print(category, icon)
 
     descr =u"""\
 {status}, {category}, {rate}/5
@@ -83,7 +81,7 @@ for i in (base_csv.index):
     single_record = u"""
 		<Placemark>
 			<name>{name}</name>
-			<description>{description}<description>
+			<description>{description}</description>
 			<LookAt>
 				<longitude>{longitude}</longitude>
 				<latitude>{latitude}</latitude>
@@ -94,6 +92,11 @@ for i in (base_csv.index):
 				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
 			</LookAt>
 			<styleUrl>#{icon}</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>{longitude},{latitude}</coordinates>
+			</Point>
+		</Placemark>
     """.format(name = base_csv['name'].iloc[i],
                description = descr,
                longitude = base_csv['longitude'].iloc[i],
