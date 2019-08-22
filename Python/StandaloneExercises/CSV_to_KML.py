@@ -22,41 +22,41 @@ icons = {
     'church' : 'm_ylw-pushpin'
 }
 
-def set_meta(csv, row):
-    if 'rzemys³' in (csv['category'].iloc[row]):
+def set_meta(csv, i):
+    if 'rzemys³' in (csv.at[i, 'category']):
         category = 'Przemys³owe'
         icon = icons['industrial']
-    elif 'zpital' in (csv['category'].iloc[row]):
+    elif 'zpital' in (csv.at[i, 'category']):
         category = 'Szpitale'
         icon = icons['medical']
-    elif 'ortyfikac' in (csv['category'].iloc[row]):
+    elif 'ortyfikac' in (csv.at[i, 'category']):
         category = 'Fortyfikacje, wojskowe'
         icon = icons['fortification']
-    elif 'mazur' in (csv['category'].iloc[row]):
+    elif 'mazur' in (csv.at[i, 'category']):
         category = 'Nasze'
         icon = icons['mazur']
-    elif 'szko³' in (csv['category'].iloc[row].lower()):
+    elif ('szko³' in (csv.at[i, 'category'].lower())):
         category = 'Szko³y i uczelnie'
         icon = icons['school']
-    elif 'otel' in (csv['category'].iloc[row]):
+    elif 'otel' in (csv.at[i, 'category']):
         category = 'Hotele i oœrodki'
         icon = icons['hotel']
-    elif ('domy' in (csv['category'].iloc[row]).lower()):
+    elif ('domy' in (csv.at[i, 'category'].lower())):
         category = 'Hotele i oœrodki'
         icon = icons['hotel']
-    elif ('restauracj' in (csv['category'].iloc[row]).lower()):
+    elif ('restauracj' in (csv.at[i, 'category'].lower())):
         category = 'Restauracje'
         icon = icons['restaurant']
-    elif ('schron' in (csv['category'].iloc[row]).lower()):
+    elif ('schron' in (csv.at[i, 'category'].lower())):
         category = 'Schrony i podziemia'
         icon = icons['underground']
-    elif ('kolej' in (csv['category'].iloc[row]).lower()):
+    elif ('kolej' in (csv.at[i, 'category'].lower())):
         category = 'Kolej'
         icon = icons['train']
-    elif ('rozryw' in (csv['category'].iloc[row]).lower()):
+    elif ('rozryw' in (csv.at[i, 'category'].lower())):
         category = 'Kolej'
         icon = icons['entertainment']
-    elif ('koœci' in (csv['category'].iloc[row]).lower()):
+    elif ('koœci' in (csv.at[i, 'category'].lower())):
         category = 'Kolej'
         icon = icons['church']
     else:
@@ -72,11 +72,11 @@ for i in (base_csv.index):
 {status}, {category}, {rate}/5
 {description}
 {phone}
-    """.format(status = base_csv['status'].iloc[i],
+    """.format(status = base_csv.at[i, 'status'],
                category = category,
-               rate = len( base_csv['rate'].iloc[i]),
-               description = base_csv['description'].iloc[i],
-               phone =  base_csv['phone'].iloc[i] )
+               rate = len(base_csv.at[i, 'rate']),
+               description = base_csv.at[i, 'description'],
+               phone =  base_csv.at[i, 'phone'] )
 
     single_record = u"""
 		<Placemark>
@@ -97,9 +97,9 @@ for i in (base_csv.index):
 				<coordinates>{longitude},{latitude}</coordinates>
 			</Point>
 		</Placemark>
-    """.format(name = base_csv['name'].iloc[i],
+    """.format(name = base_csv.at[i, 'name'],
                description = descr,
-               longitude = base_csv['longitude'].iloc[i],
-               latitude = base_csv['latitude'].iloc[i],
+               longitude = base_csv.at[i, 'longitude'],
+               latitude = base_csv.at[i, 'latitude'],
                icon = icon)
     print(single_record)
