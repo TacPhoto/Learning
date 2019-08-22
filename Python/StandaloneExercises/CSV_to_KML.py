@@ -2,7 +2,11 @@
 import pandas
 
 base_path = u'C:\\Users\\Pan i W³adca\\Desktop\\teest.csv'
-base_csv = pandas.read_csv(base_path, encoding = 'utf-8', sep = ';', engine = 'c')
+try:
+    base_csv = pandas.read_csv(base_path, encoding = 'utf-8', sep = ';', engine = 'c')
+except Exception as e:
+    print('Could not read the CSV file')
+    exit()
 
 icons = {
     'industrial' : 'msn_mechanic',
@@ -22,41 +26,53 @@ icons = {
     'church' : 'm_ylw-pushpin'
 }
 
-def set_meta(csv, i):
-    if 'rzemys³' in (csv.at[i, 'category']):
+rows_number = base_csv.index
+name = tuple(base_csv['name'])
+status = tuple(base_csv['status'])
+rate = tuple(base_csv['rate'])
+description = tuple(base_csv['description'])
+phone = tuple(base_csv['phone'])
+category = tuple(base_csv['category'])
+longitude = tuple(base_csv['longitude'])
+latitude = tuple(base_csv['latitude'])
+
+del base_csv
+
+def set_meta(category, i):
+    if 'rzemys³' in category[i]:
         category = 'Przemys³owe'
         icon = icons['industrial']
-    elif 'zpital' in (csv.at[i, 'category']):
+    elif 'zpital' in category[i]:
         category = 'Szpitale'
         icon = icons['medical']
-    elif 'ortyfikac' in (csv.at[i, 'category']):
+    elif 'ortyfikac' in  category[i]:
         category = 'Fortyfikacje, wojskowe'
         icon = icons['fortification']
-    elif 'mazur' in (csv.at[i, 'category']):
+    elif 'mazur' in category[i]:
         category = 'Nasze'
         icon = icons['mazur']
-    elif ('szko³' in (csv.at[i, 'category'].lower())):
+    elif 'szko³' in  category[i].lower():
         category = 'Szko³y i uczelnie'
         icon = icons['school']
-    elif 'otel' in (csv.at[i, 'category']):
+    elif 'otel' in category[i]:
         category = 'Hotele i oœrodki'
         icon = icons['hotel']
-    elif ('domy' in (csv.at[i, 'category'].lower())):
+    elif 'domy' in category[i].lower():
         category = 'Hotele i oœrodki'
         icon = icons['hotel']
-    elif ('restauracj' in (csv.at[i, 'category'].lower())):
+    elif 'restauracj' in category[i].lower():
         category = 'Restauracje'
         icon = icons['restaurant']
-    elif ('schron' in (csv.at[i, 'category'].lower())):
+    elif 'schron' in category[i].lower():
         category = 'Schrony i podziemia'
         icon = icons['underground']
-    elif ('kolej' in (csv.at[i, 'category'].lower())):
+    elif 'kolej' in category[i].lower():
         category = 'Kolej'
         icon = icons['train']
-    elif ('rozryw' in (csv.at[i, 'category'].lower())):
+    elif 'rozryw' in category[i].lower():
         category = 'Kolej'
         icon = icons['entertainment']
-    elif ('koœci' in (csv.at[i, 'category'].lower())):
+    elif 'koœci' in category[i].lower():
         category = 'Kolej'
         icon = icons['church']
     else:
@@ -65,18 +81,18 @@ def set_meta(csv, i):
 
     return category, icon;
 
-for i in (base_csv.index):
-    category, icon = set_meta(base_csv, i)
+for i in rows_number:
+    category, icon = set_meta(category, i)
 
     descr =u"""\
 {status}, {category}, {rate}/5
 {description}
 {phone}
-    """.format(status = base_csv.at[i, 'status'],
+    """.format(status = status[i],
                category = category,
-               rate = len(base_csv.at[i, 'rate']),
-               description = base_csv.at[i, 'description'],
-               phone =  base_csv.at[i, 'phone'] )
+               rate = len(rate[i]),
+               description = description[i],
+               phone =  phone[i] )
 
     single_record = u"""
 		<Placemark>
@@ -97,9 +113,9 @@ for i in (base_csv.index):
 				<coordinates>{longitude},{latitude}</coordinates>
 			</Point>
 		</Placemark>
-    """.format(name = base_csv.at[i, 'name'],
+    """.format(name = name[i],
                description = descr,
-               longitude = base_csv.at[i, 'longitude'],
-               latitude = base_csv.at[i, 'latitude'],
+               longitude = longitude[i],
+               latitude = latitude[i],
                icon = icon)
     print(single_record)
