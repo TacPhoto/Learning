@@ -1,9 +1,11 @@
 #CSV to KML exporter for personal use, needs a csv with specific columns, IN-PROGRESS
-import pandas
+import pandas, codecs
 
-base_path = u'C:\\Users\\Pan i W³adca\\Desktop\\teest.csv'
+desktop_path = u'C:\\Users\\Pan i W³adca\\Desktop\\'
+csv_name = 'teest.csv'
+finalname = 'urb_mapka.kml'
 try:
-    base_csv = pandas.read_csv(base_path, encoding = 'utf-8', sep = ';', engine = 'c')
+    base_csv = pandas.read_csv(desktop_path + csv_name, encoding = 'utf-8', sep = ';', engine = 'c')
 except Exception as e:
     print('Could not read the CSV file')
     exit()
@@ -58,22 +60,22 @@ def set_meta(category, i):
         category = 'Hotele i oœrodki'
         icon = icons['hotel']
     elif 'domy' in category[i].lower():
-        category = 'Hotele i oœrodki'
-        icon = icons['hotel']
+        category = 'Domy'
+        icon = icons['house']
     elif 'restauracj' in category[i].lower():
         category = 'Restauracje'
         icon = icons['restaurant']
-    elif 'schron' in category[i].lower():
+    elif ('schron' in category[i].lower()) or ('podziem' in category[i].lower()):
         category = 'Schrony i podziemia'
         icon = icons['underground']
-    elif 'kolej' in category[i].lower():
-        category = 'Kolej'
+    elif 'kolej' in category[i].lower() or 'transport' in category[i].lower():
+        category = 'Transport'
         icon = icons['train']
     elif 'rozryw' in category[i].lower():
-        category = 'Kolej'
+        category = 'Rozrywka'
         icon = icons['entertainment']
     elif 'koœci' in category[i].lower():
-        category = 'Kolej'
+        category = 'Koœció³'
         icon = icons['church']
     else:
         category = 'Brak kategorii'
@@ -127,14 +129,12 @@ for i in rows_number:
     else:
         places_old += single_record
 
-header = """
-<?xml version="1.0" encoding="UTF-8"?>
+header = """<?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
 <Document>
 	<name>{finalname}</name>
-""".format(finalname = 'urb_mapka.kml')
-icon_header ="""
-	<Style id="sh_lodging">
+""".format(finalname = finalname)
+icon_header ="""	<Style id="sh_lodging">
 		<IconStyle>
 			<scale>1.4</scale>
 			<Icon>
@@ -536,10 +536,31 @@ icon_header ="""
 		</IconStyle>
 	</Style>
 	<Style id="sn_info_circle">
+			<IconStyle>
+			<scale>1.2</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/shapes/info_circle.png</href>
+			</Icon>
+			<hotSpot x="0.5" y="0" xunits="fraction" yunits="fraction"/>
+		</IconStyle>
+	</Style>
 """
 bottom = """
-/Document>
+</Document>
 </kml>
 """
+folder1_header = """	<Folder>
+		<name>Dostêpne</name>
+		<open>1</open>
+"""
+folder2_header = """
+	<Folder>
+		<name>Nie Dostêpne</name>
+		<open>2</open>
+"""
+
+file = codecs.open(desktop_path + finalname, 'w', 'utf-8')
+file.write(header + icon_header + folder1_header + places + u'	</Folder>' + folder2_header + places_old + u'</Folder>' + bottom)
+file.close()
 
 print(places)
