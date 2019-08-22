@@ -1,4 +1,4 @@
-#CSV to KML exporter for personal use, needs a csv with specific columns, IN-PROGRESS
+#CSV to KML exporter for personal use, needs a csv with specific columns
 import pandas, codecs
 
 desktop_path = u'C:\\Users\\Pan i W³adca\\Desktop\\'
@@ -34,23 +34,23 @@ status = tuple(base_csv['status'])
 rate = tuple(base_csv['rate'])
 description = tuple(base_csv['description'])
 phone = tuple(base_csv['phone'])
-category = tuple(base_csv['category'])
+categories = tuple(base_csv['category'])
 longitude = tuple(base_csv['longitude'])
 latitude = tuple(base_csv['latitude'])
 
 del base_csv
 
 def set_meta(category, i):
-    if 'rzemys³' in category[i]:
+    if 'przemys³' in category[i].lower():
         category = 'Przemys³owe'
         icon = icons['industrial']
-    elif 'zpital' in category[i]:
+    elif 'szpital' in category[i].lower():
         category = 'Szpitale'
         icon = icons['medical']
-    elif 'ortyfikac' in  category[i]:
+    elif ('fortyfikac' in category[i].lower()) or ('wojsko' in category[i].lower()):
         category = 'Fortyfikacje, wojskowe'
         icon = icons['fortification']
-    elif 'mazur' in category[i]:
+    elif 'mazur' in category[i].lower():
         category = 'Nasze'
         icon = icons['mazur']
     elif 'szko³' in  category[i].lower():
@@ -59,7 +59,7 @@ def set_meta(category, i):
     elif 'otel' in category[i]:
         category = 'Hotele i oœrodki'
         icon = icons['hotel']
-    elif 'domy' in category[i].lower():
+    elif 'dom' in category[i].lower():
         category = 'Domy'
         icon = icons['house']
     elif 'restauracj' in category[i].lower():
@@ -81,13 +81,13 @@ def set_meta(category, i):
         category = 'Brak kategorii'
         icon = icons['unkown']
 
-    return category, icon;
+    return category, icon
 
-places = str(None)
-places_old = str(None)
+places = str()
+places_old = str()
 
 for i in rows_number:
-    category, icon = set_meta(category, i)
+    category, icon = set_meta(categories, i)
 
     description_final = u"""\
 {status}, {category}, {rate}/5
