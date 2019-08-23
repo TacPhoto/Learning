@@ -101,8 +101,8 @@ for i in rows_number:
     """.format(status = status[i],
                category = category,
                rate = len(rate[i]),
-               description = (description[i] if description[i] is not None else ''),
-               phone =  phone[i] if phone[i] is not None else '')
+               description = (description[i] if not pandas.isnull(description[i]) else ''),
+               phone =  (phone[i] if not pandas.isnull(phone[i]) else ''))
 
     single_record = u"""
 		<Placemark>
