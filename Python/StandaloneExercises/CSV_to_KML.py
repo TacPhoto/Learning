@@ -1,5 +1,6 @@
 #CSV to KML exporter for personal use, needs a csv with specific columns
-import pandas, codecs
+import pandas, codecs, logging
+logging.basicConfig(level = logging.DEBUG)
 
 desktop_path = u'C:\\Users\\Pan i W³adca\\Desktop\\'
 csv_name = 'teest.csv'
@@ -7,7 +8,7 @@ finalname = 'urb_mapka.kml'
 try:
     base_csv = pandas.read_csv(desktop_path + csv_name, encoding = 'utf-8', sep = ';', engine = 'c')
 except Exception as e:
-    print('Could not read the CSV file')
+    logging.error('Could not read the CSV file', exc_info=True)
     exit()
 
 icons = {
@@ -32,7 +33,7 @@ icons = {
 rows_number = base_csv.index
 name = tuple(base_csv['name'])
 status = tuple(base_csv['status'])
-rate = tuple(str(base_csv['rate'])) #FIX, sth is wrong
+rate = tuple((base_csv['rate'])) #FIX, sth is wrong
 description = tuple(base_csv['description'])
 phone = tuple(base_csv['phone'])
 categories = tuple(base_csv['category'])
@@ -41,44 +42,44 @@ latitude = tuple(base_csv['latitude'])
 
 del base_csv
 
-def set_meta(category, i):
-    if 'przemys³' in category[i].lower():
+def set_meta(category):
+    if 'przemys³' in category.lower():
         category = 'Przemys³owe'
         icon = icons['industrial']
-    elif 'szpital' in category[i].lower():
+    elif 'szpital' in category.lower():
         category = 'Medyczne'
         icon = icons['medical']
-    elif ('fortyfikac' in category[i].lower()) or ('wojsko' in category[i].lower()):
+    elif ('fortyfikac' in category.lower()) or ('wojsko' in category.lower()):
         category = 'Fortyfikacje, wojskowe'
         icon = icons['fortification']
-    elif 'mazur' in category[i].lower():
+    elif 'mazur' in category.lower():
         category = 'Nasze'
         icon = icons['mazur']
-    elif 'szko³' in  category[i].lower():
+    elif 'szko³' in  category.lower():
         category = 'Szko³y, Naukowe, Uczelnie'
         icon = icons['school']
-    elif 'otel' in category[i]:
+    elif 'otel' in category:
         category = 'Hotele i oœrodki'
         icon = icons['hotel']
-    elif 'dom' in category[i].lower() or 'dwor' in category[i].lower():
+    elif 'dom' in category.lower() or 'dwor' in category.lower():
         category = 'Domy, dwory i pa³ace'
         icon = icons['house']
-    elif 'restauracj' in category[i].lower():
+    elif 'restauracj' in category.lower():
         category = 'Restauracje i kluby'
         icon = icons['restaurant']
-    elif ('schron' in category[i].lower()) or ('podziem' in category[i].lower()):
+    elif ('schron' in category.lower()) or ('podziem' in category.lower()):
         category = 'Schrony i podziemia'
         icon = icons['underground']
-    elif 'kolej' in category[i].lower() or 'transport' in category[i].lower():
+    elif 'kolej' in category.lower() or 'transport' in category.lower():
         category = 'Transport'
         icon = icons['train']
-    elif 'rozryw' in category[i].lower():
+    elif 'rozryw' in category.lower():
         category = 'Rozrywka'
         icon = icons['entertainment']
-    elif 'koœci' in category[i].lower():
+    elif 'koœci' in category.lower():
         category = 'Religijne'
         icon = icons['church']
-    elif 'biurow' in category[i].lower():
+    elif 'biurow' in category.lower():
         category = 'Biurowe, Wie¿owce'
         icon = icons['office']
 
@@ -90,10 +91,9 @@ def set_meta(category, i):
 
 places, places_old, places_our = str(), str(), str()
 
-
 for i in rows_number:
-    print(  'Starting ' + str(i), 'Rate = ' + str(len(rate[i]))   )
-    category, icon = set_meta(categories, i)
+    logging.debug(  'Starting %d Rate = %d',(i + 2),(len(str(rate[i]))))
+    category, icon = set_meta(str(categories[i]))
 
     description_final = u"""\
 {status}, {category}, {rate}/5
@@ -101,7 +101,7 @@ for i in rows_number:
 {phone}
     """.format(status = status[i],
                category = category,
-               rate = (len(rate[i]) if not pandas.isnull(rate[i]) else '1'),
+               rate = (len(str(rate[i])) if not pandas.isnull(rate[i]) else '1'),
                description = (description[i] if not pandas.isnull(description[i]) else ''),
                phone =  (phone[i] if not pandas.isnull(phone[i]) else ''))
 
@@ -130,13 +130,13 @@ for i in rows_number:
                latitude = latitude[i],
                icon = icon)
 
-    if  'niedo' in status[i].lower():
+    if  'niedo' in (str(status[i])).lower():
         places_old += single_record
     elif category == 'Nasze':
         places_our += single_record
     else:
         places += single_record
-    print('Finished ' + str(i))
+    logging.info('Finished %d', (i + 2))
 
 header = """<?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
@@ -572,8 +572,11 @@ folder3_header = """
 		<name>Nasze</name>
 		<open>3</open>
 		"""
+
+logging.info('SAVING FILE')
 file = codecs.open(desktop_path + finalname, 'w', 'utf-8')
 file.write(header + icon_header + folder1_header + places + u'</Folder>' + folder2_header + places_old + u'</Folder>' + folder3_header + places_our + u'</Folder>' + bottom)
 file.close()
+logging.info('FILE SAVED')
 
 #print(header + icon_header + folder1_header + places + u'</Folder>' + folder2_header + places_old + u'</Folder>' + folder3_header + places_our + u'</Folder>' + bottom) #KML FILE CONSOLE OUTPUT
