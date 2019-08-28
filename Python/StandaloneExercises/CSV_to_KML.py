@@ -1,7 +1,8 @@
 #CSV to KML exporter for personal use, needs a csv with specific columns
-import pandas, codecs, logging
+import pandas, codecs, logging, timeit
 logging.basicConfig(level = logging.DEBUG)
 
+start = timeit.default_timer()
 desktop_path = u'C:\\Users\\Pan i W³adca\\Desktop\\'
 csv_name = 'teest.csv'
 finalname = 'urb_mapka.kml'
@@ -33,7 +34,7 @@ icons = {
 rows_number = base_csv.index
 name = tuple(base_csv['name'])
 status = tuple(base_csv['status'])
-rate = tuple((base_csv['rate'])) #FIX, sth is wrong
+rate = tuple((base_csv['rate']))
 description = tuple(base_csv['description'])
 phone = tuple(base_csv['phone'])
 categories = tuple(base_csv['category'])
@@ -43,43 +44,43 @@ latitude = tuple(base_csv['latitude'])
 del base_csv
 
 def set_meta(category):
-    if 'przemys³' in category.lower():
+    if 'przemys³' in category:
         category = 'Przemys³owe'
         icon = icons['industrial']
-    elif 'szpital' in category.lower():
+    elif 'szpital' in category:
         category = 'Medyczne'
         icon = icons['medical']
-    elif ('fortyfikac' in category.lower()) or ('wojsko' in category.lower()):
+    elif ('fortyfikac' in category) or ('wojsko' in category):
         category = 'Fortyfikacje, wojskowe'
         icon = icons['fortification']
-    elif 'mazur' in category.lower():
+    elif 'mazur' in category:
         category = 'Nasze'
         icon = icons['mazur']
-    elif 'szko³' in  category.lower():
+    elif 'szko³' in  category:
         category = 'Szko³y, Naukowe, Uczelnie'
         icon = icons['school']
     elif 'otel' in category:
         category = 'Hotele i oœrodki'
         icon = icons['hotel']
-    elif 'dom' in category.lower() or 'dwor' in category.lower():
+    elif 'dom' in category or 'dwor' in category:
         category = 'Domy, dwory i pa³ace'
         icon = icons['house']
-    elif 'restauracj' in category.lower():
+    elif 'restauracj' in category:
         category = 'Restauracje i kluby'
         icon = icons['restaurant']
-    elif ('schron' in category.lower()) or ('podziem' in category.lower()):
+    elif ('schron' in category) or ('podziem' in category):
         category = 'Schrony i podziemia'
         icon = icons['underground']
-    elif 'kolej' in category.lower() or 'transport' in category.lower():
+    elif 'kolej' in category or 'transport' in category:
         category = 'Transport'
         icon = icons['train']
-    elif 'rozryw' in category.lower():
+    elif 'rozryw' in category:
         category = 'Rozrywka'
         icon = icons['entertainment']
-    elif 'koœci' in category.lower():
+    elif 'koœci' in category:
         category = 'Religijne'
         icon = icons['church']
-    elif 'biurow' in category.lower():
+    elif 'biurow' in category:
         category = 'Biurowe, Wie¿owce'
         icon = icons['office']
 
@@ -93,7 +94,7 @@ places, places_old, places_our = str(), str(), str()
 
 for i in rows_number:
     logging.debug(  'Starting %d Rate = %d',(i + 2),(len(str(rate[i]))))
-    category, icon = set_meta(str(categories[i]))
+    category, icon = set_meta(str(categories[i]).lower())
 
     description_final = u"""\
 {status}, {category}, {rate}/5
@@ -557,26 +558,18 @@ bottom = """
 </Document>
 </kml>
 """
-folder1_header = """
+folder_header = """
 	<Folder>
-		<name>Dostêpne</name>
-		<open>1</open>
+		<name>{folder_name}</name>
 """
-folder2_header = """
-	<Folder>
-		<name>Nie Dostêpne</name>
-		<open>2</open>
-"""
-folder3_header = """
-	<Folder>
-		<name>Nasze</name>
-		<open>3</open>
-		"""
 
 logging.info('SAVING FILE')
 file = codecs.open(desktop_path + finalname, 'w', 'utf-8')
-file.write(header + icon_header + folder1_header + places + u'</Folder>' + folder2_header + places_old + u'</Folder>' + folder3_header + places_our + u'</Folder>' + bottom)
+file.write(header + icon_header + folder_header.format(folder_name = 'Dostêpne') + places + u'</Folder>' + folder_header.format(folder_name = 'Nie Dostêpne') + places_old + u'</Folder>' + folder_header.format(folder_name = 'Nasze') + places_our + u'</Folder>' + bottom)
 file.close()
 logging.info('FILE SAVED')
 
+end = timeit.default_timer()
+time_elapsed = end - start
+print('TIME ELAPSED = ' + str(time_elapsed))
 #print(header + icon_header + folder1_header + places + u'</Folder>' + folder2_header + places_old + u'</Folder>' + folder3_header + places_our + u'</Folder>' + bottom) #KML FILE CONSOLE OUTPUT
