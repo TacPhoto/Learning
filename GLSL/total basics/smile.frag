@@ -7,6 +7,19 @@ float Circle(vec2 uv, vec2 offset, float radius, float blur)
 	return c;
 }
 
+float Smiley(vec2 middle, vec2 offset, float size)
+{
+	float c = Circle(middle, vec2(0.0, 0.0), 0.4, 0.005);
+    
+    c -= Circle(middle, vec2(-0.1, 0.1), 0.05, 0.005) + Circle(middle, vec2(0.1, 0.1), 0.05, 0.005);
+
+    float mouth = Circle(middle, vec2(0.0, 0.0), 0.3, 0.01);
+    mouth -= Circle(middle, vec2(0.0, 0.1), 0.3, 0.01);
+	if ( mouth < 0.5 ) mouth = 0.0;
+
+    return c - mouth;
+}
+
 void mainImage( out vec4 fragColor, in vec2 fragCoord )
 {
     
@@ -15,14 +28,9 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     middle.x *= iResolution.x/iResolution.y; //correct distorion (screen ratio)
 
     vec3 col = vec3(0.4, 0.3, 0.8);
-	float c = Circle(middle, vec2(0.0, 0.0), 0.4, 0.005);
+	
+    float mask = Smiley(middle, vec2 (0.0, 0.0), 1.0);
     
-    c -= Circle(middle, vec2(-0.1, 0.1), 0.05, 0.005) + Circle(middle, vec2(0.1, 0.1), 0.05, 0.005);
-
-    float mouth = Circle(middle, vec2(0.0, 0.0), 0.3, 0.01);
-    mouth -= Circle(middle, vec2(0.0, 0.1), 0.3, 0.01);
-	if ( mouth < 0.5 ) mouth = 0.0;
-    
-    col *= ( c - mouth ); //mask color
+    col *= mask;
     fragColor = vec4(col,1.0);
 }
