@@ -13,8 +13,8 @@ float Smiley(vec2 middle, vec2 offset, float size)
     
     c -= Circle(middle, vec2(-0.1, 0.1), (size / 20.0), 0.005) + Circle(middle, vec2(0.1, 0.1), (size / 20.0), 0.005);
 
-    float mouth = Circle(middle, vec2(0.0, 0.0), 0.3, 0.01);
-    mouth -= Circle(middle, vec2(0.0, 0.1), 0.3, 0.01);
+    float mouth = Circle(middle, vec2(0.0, 0.0), (size / 3.4), 0.01);
+    mouth -= Circle(middle, vec2(0.0, 0.1), (size / 3.2), 0.01);
 	if ( mouth < 0.5 ) mouth = 0.0;
 
     return c - mouth;
