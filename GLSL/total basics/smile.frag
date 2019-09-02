@@ -9,9 +9,9 @@ float Circle(vec2 uv, vec2 offset, float radius, float blur)
 
 float Smiley(vec2 middle, vec2 offset, float size)
 {
-	float c = Circle(middle, vec2(0.0, 0.0), 0.4, 0.005);
+	float c = Circle(middle, vec2(0.0, 0.0), (size / 2.5), 0.005);
     
-    c -= Circle(middle, vec2(-0.1, 0.1), 0.05, 0.005) + Circle(middle, vec2(0.1, 0.1), 0.05, 0.005);
+    c -= Circle(middle, vec2(-0.1, 0.1), (size / 20.0), 0.005) + Circle(middle, vec2(0.1, 0.1), (size / 20.0), 0.005);
 
     float mouth = Circle(middle, vec2(0.0, 0.0), 0.3, 0.01);
     mouth -= Circle(middle, vec2(0.0, 0.1), 0.3, 0.01);
