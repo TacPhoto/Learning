@@ -1,5 +1,9 @@
-/*works with shadertoy*/
-//#define TO_GLSL
+/*works with shadertoy, define TO_GLSL to make it work with VS_COde GLSL Viewer*/
+#ifdef GL_ES
+precision mediump float;
+#endif
+
+#define TO_GLSL
 #ifdef TO_GLSL
 uniform vec2 u_resolution;
 #define iResolution u_resolution
@@ -7,7 +11,6 @@ uniform vec2 u_resolution;
 #define fragCoord gl_FragCoord.xy
 #define mainImage(x, y) main()
 #endif
-
 
 #define S(a, b, t) smoothstep(a, b, t)
 #define sat(x) clamp(x, 0., 1.)
