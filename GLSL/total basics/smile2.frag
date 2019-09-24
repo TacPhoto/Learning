@@ -1,6 +1,17 @@
 /*works with shadertoy*/
+//#define TO_GLSL
+#ifdef TO_GLSL
+uniform vec2 u_resolution;
+#define iResolution u_resolution
+#define fragColor gl_FragColor
+#define fragCoord gl_FragCoord.xy
+#define mainImage(x, y) main()
+#endif
+
+
 #define S(a, b, t) smoothstep(a, b, t)
 #define sat(x) clamp(x, 0., 1.)
+
 
 float remap01(float a, float b, float t)
 {
