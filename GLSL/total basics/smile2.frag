@@ -66,9 +66,11 @@ vec4 Brow(vec2 uv)
 }
 
 
-vec4 Eye(vec2 uv)
+vec4 Eye(vec2 uv, float side)
 {
     uv -= .55;
+    uv.x *= side;
+    
     float d = length(uv);
 
     vec4 irisCol = vec4(.3, .5, 1., 1.);
@@ -150,9 +152,10 @@ vec4 Smiley(vec2 uv)
 {
 	vec4 col = vec4(0.);
     
+    float side = sign(uv.x);
     uv.x = abs(uv.x);
     vec4 head = Head(uv);
-    vec4 eye = Eye(within(uv, vec4(.03, -.1, .37, .25)));
+    vec4 eye = Eye(within(uv, vec4(.03, -.1, .37, .25)), side);
     vec4 mouth = Mouth(within(uv, vec4(-.3, -.4, .3, .01)));
     vec4 brow = Brow(within(uv, vec4(.03, .2, .4, .35)));
 
