@@ -99,7 +99,7 @@ vec4 Eye(vec2 uv, float side, vec2 m, float smile)
     col.rgb = mix(col.rgb, irisCol.rgb, S(.28, .25, d)); 
     
     float pupilSize = mix(irisMask, .16, smile);
-    float pupilMask = S(pupilSize, pupilSize * 0.90, d);
+    float pupilMask = S(pupilSize, pupilSize * 0.9, d);
 	pupilMask *= irisMask;
     
     col.rgb = mix(col.rgb, vec3(0.), pupilMask); //pupil
