@@ -34,6 +34,38 @@ vec2 within(vec2 uv, vec4 rect)
 }
 
 
+vec4 Brow(vec2 uv)
+{
+    float y = uv.y;
+    uv.y += uv.x * .85 - .35;
+    uv.x -= .15;
+    uv -= .5;
+    
+    vec4 col = vec4(.0);
+    
+    float blur = .1;
+    float d1 = length(uv);
+    float s1 = S(.45, .45 - blur, d1);
+    float d2 = length(uv - vec2(.12, -.25) * .75);
+    float s2 = S(.5, .5 - blur, d2);
+    
+    float browMask = sat(s1 - s2);
+
+    float colMask = remap01(.7, .8, y) * .75;
+    colMask *= S(.6, .9, browMask);
+
+    vec4 browCol = mix(vec4(.4, .2, .2, 1.), vec4(.6, .4, .3, 1.), browMask);
+    
+    float shadowMask = sat(s1-s2);
+    
+    col = mix(col, vec4(0.,0.,0.,1.), S(.0, 1., shadowMask)*.5);  
+    col = mix(col, browCol, S(.2, .4, browMask));
+    
+   	return  col;
+                 
+}
+
+
 vec4 Eye(vec2 uv)
 {
     uv -= .55;
@@ -122,11 +154,13 @@ vec4 Smiley(vec2 uv)
     vec4 head = Head(uv);
     vec4 eye = Eye(within(uv, vec4(.03, -.1, .37, .25)));
     vec4 mouth = Mouth(within(uv, vec4(-.3, -.4, .3, .01)));
+    vec4 brow = Brow(within(uv, vec4(.03, .2, .4, .35)));
 
     col = mix(col, head, head.a);
     col = mix(col, eye, eye.a);
     col = mix(col, mouth, mouth.a);
-    
+    col = mix(col, brow, brow.a);
+
     return col;
 }
 
