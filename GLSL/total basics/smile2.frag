@@ -75,8 +75,9 @@ vec4 Eye(vec2 uv, float side)
 
     vec4 irisCol = vec4(.3, .5, 1., 1.);
     vec4 col = mix(vec4(1.), irisCol, S(.1, .7, d) * .5);
-    
-    col.rgb *= 1. - S(.45, .5, d) * .5 * sat(-uv.y - uv.x);
+    col.a = S(.5, .48, d);
+
+    col.rgb *= 1. - S(.45, .5, d) * .5 * sat(-uv.y - uv.x * side);
     
     col.rgb = mix(col.rgb, vec3(0.), S(.3, .28, d)); //iris outline
     irisCol.rgb *= 1. + S(.3, .05, d);
@@ -90,7 +91,6 @@ vec4 Eye(vec2 uv, float side)
 
     col.rgb = mix(col.rgb, vec3(1.), highlight);
                       
-    col.a = S(.5, .48, d);
     return col;
 }
 
