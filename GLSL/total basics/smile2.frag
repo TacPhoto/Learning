@@ -53,7 +53,7 @@ vec4 Eye(vec2 uv)
     float highlight = S(.1, .09, length(uv - vec2(-.15, .15)));
     highlight += S(.09, .01, length(uv + vec2(-.09, .09)));
     highlight += S(.3, .01, length(uv + vec2(-.08, .08))) *.3;
-    
+
     col.rgb = mix(col.rgb, vec3(1.), highlight);
                       
     col.a = S(.5, .48, d);
@@ -100,6 +100,8 @@ vec4 Head(vec2 uv)
     
     float highlight = S(.41, .405, d);
     highlight *= remap(.41, -.1, .75, 0., uv.y);
+    highlight *= S(.185, .19, length(uv - vec2(.21, .1)));
+
     col.rgb = mix(col.rgb, vec3(1.), highlight);
     
     d = length(uv - vec2(.23, -.2));
