@@ -1,4 +1,4 @@
-/*works with shadertoy, define TO_GLSL to make it work with VS_COde GLSL Viewer*/
+/*works with shadertoy, define TO_GLSL to make it work with VS_Code GLSL Viewer*/
 #ifdef GL_ES
 precision mediump float;
 #endif
@@ -11,15 +11,20 @@ precision mediump float;
 #define mainImage(x, y) main()
 #define iMouse u_mouse
 #define iTime u_time
+#define DECLAREUNIFORMS TRUE
 #endif
 
 #define S(a, b, t) smoothstep(a, b, t)
 #define sat(x) clamp(x, 0., 1.)
 
+#ifndef TO_GLSL
+#define DECLAREUNIFORMS FALSE
+#endif
 
 uniform vec2 u_resolution;
-uniform vec2 iMouse; //uncomment for use with TO_GLSL
-uniform float iTime;  //uncomment for use with TO_GLSL
+uniform vec2 u_mouse; 
+uniform float u_time;  
+
 
 float remap01(float a, float b, float t)
 {
@@ -71,7 +76,7 @@ vec4 Brow(vec2 uv)
 }
 
 
-vec4 Eye(vec2 uv, float side, vec2 m)
+vec4 Eye(vec2 uv, float side, vec2 m, float smile)
 {
     uv -= .55;
     uv.x *= side;
@@ -85,13 +90,19 @@ vec4 Eye(vec2 uv, float side, vec2 m)
     col.rgb *= 1. - S(.45, .5, d) * .5 * sat(-uv.y - uv.x * side); //shadow
     
     d = length(uv - m*.5);
-    col.rgb = mix(col.rgb, vec3(0.), S(.3, .28, d)); //iris outline
+    float irisMask = S(.3, .28, d);
+    col.rgb = mix(col.rgb, vec3(0.), irisMask); //iris outline
     irisCol.rgb *= 1. + S(.3, .05, d);
     
     d = length(uv - m*.545);
-    col.rgb = mix(col.rgb, irisCol.rgb, S(.28, .25, d)); //pupil
     
-    col.rgb = mix(col.rgb, vec3(0.), S(.16, .14, d));
+    col.rgb = mix(col.rgb, irisCol.rgb, S(.28, .25, d)); 
+    
+    float pupilSize = mix(irisMask, .16, smile);
+    float pupilMask = S(pupilSize, pupilSize * 0.90, d);
+	pupilMask *= irisMask;
+    
+    col.rgb = mix(col.rgb, vec3(0.), pupilMask); //pupil
     
     float highlight = S(.1, .09, length(uv - vec2(-.15, .15)));
     highlight += S(.09, .01, length(uv + vec2(-.09, .09)));
@@ -156,14 +167,14 @@ vec4 Head(vec2 uv)
 }
 
 
-vec4 Smiley(vec2 uv, vec2 m)
+vec4 Smiley(vec2 uv, vec2 m, float smile)
 {
 	vec4 col = vec4(0.);
     
     float side = sign(uv.x);
     uv.x = abs(uv.x);
     vec4 head = Head(uv);
-    vec4 eye = Eye(within(uv, vec4(.03, -.1, .37, .25)), side, m);
+    vec4 eye = Eye(within(uv, vec4(.03, -.1, .37, .25)), side, m, smile);
     vec4 mouth = Mouth(within(uv, vec4(-.3, -.4, .3, .01)));
     vec4 brow = Brow(within(uv, vec4(.03, .2, .4, .4)));
 
@@ -185,5 +196,7 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     vec2 m = iMouse.xy / iResolution.xy;
     m -= .5;
     
-    fragColor = Smiley(uv, m);
+    float smile = cos(iTime) * .5 + .5;
+    
+    fragColor = Smiley(uv, m, smile);
 }
