@@ -5,16 +5,21 @@ precision mediump float;
 
 #define TO_GLSL
 #ifdef TO_GLSL
-uniform vec2 u_resolution;
 #define iResolution u_resolution
 #define fragColor gl_FragColor
 #define fragCoord gl_FragCoord.xy
 #define mainImage(x, y) main()
+#define iMouse u_mouse
+#define iTime u_time
 #endif
 
 #define S(a, b, t) smoothstep(a, b, t)
 #define sat(x) clamp(x, 0., 1.)
 
+
+uniform vec2 u_resolution;
+uniform vec2 iMouse; //uncomment for use with TO_GLSL
+uniform float iTime;  //uncomment for use with TO_GLSL
 
 float remap01(float a, float b, float t)
 {
@@ -66,7 +71,7 @@ vec4 Brow(vec2 uv)
 }
 
 
-vec4 Eye(vec2 uv, float side)
+vec4 Eye(vec2 uv, float side, vec2 m)
 {
     uv -= .55;
     uv.x *= side;
@@ -77,11 +82,14 @@ vec4 Eye(vec2 uv, float side)
     vec4 col = mix(vec4(1.), irisCol, S(.1, .7, d) * .5);
     col.a = S(.5, .48, d);
 
-    col.rgb *= 1. - S(.45, .5, d) * .5 * sat(-uv.y - uv.x * side);
+    col.rgb *= 1. - S(.45, .5, d) * .5 * sat(-uv.y - uv.x * side); //shadow
     
+    d = length(uv - m*.5);
     col.rgb = mix(col.rgb, vec3(0.), S(.3, .28, d)); //iris outline
     irisCol.rgb *= 1. + S(.3, .05, d);
-    col.rgb = mix(col.rgb, irisCol.rgb, S(.28, .25, d));
+    
+    d = length(uv - m*.545);
+    col.rgb = mix(col.rgb, irisCol.rgb, S(.28, .25, d)); //pupil
     
     col.rgb = mix(col.rgb, vec3(0.), S(.16, .14, d));
     
@@ -148,16 +156,16 @@ vec4 Head(vec2 uv)
 }
 
 
-vec4 Smiley(vec2 uv)
+vec4 Smiley(vec2 uv, vec2 m)
 {
 	vec4 col = vec4(0.);
     
     float side = sign(uv.x);
     uv.x = abs(uv.x);
     vec4 head = Head(uv);
-    vec4 eye = Eye(within(uv, vec4(.03, -.1, .37, .25)), side);
+    vec4 eye = Eye(within(uv, vec4(.03, -.1, .37, .25)), side, m);
     vec4 mouth = Mouth(within(uv, vec4(-.3, -.4, .3, .01)));
-    vec4 brow = Brow(within(uv, vec4(.03, .2, .4, .35)));
+    vec4 brow = Brow(within(uv, vec4(.03, .2, .4, .4)));
 
     col = mix(col, head, head.a);
     col = mix(col, eye, eye.a);
@@ -174,5 +182,8 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
 	uv -= 0.5;
 	uv.x *= iResolution.x/iResolution.y;
 
-    fragColor = Smiley(uv);
+    vec2 m = iMouse.xy / iResolution.xy;
+    m -= .5;
+    
+    fragColor = Smiley(uv, m);
 }
