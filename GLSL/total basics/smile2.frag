@@ -3,7 +3,7 @@
 precision mediump float;
 #endif
 
-#define TO_GLSL
+//#define TO_GLSL
 #ifdef TO_GLSL
 #define iResolution u_resolution
 #define fragColor gl_FragColor
@@ -11,19 +11,16 @@ precision mediump float;
 #define mainImage(x, y) main()
 #define iMouse u_mouse
 #define iTime u_time
-#define DECLAREUNIFORMS TRUE
+#define DECLAREUNIFORMS 1
+#if(DECLAREUNIFORMS)
+	uniform vec2 u_resolution;
+	uniform vec2 iMouse; //uncomment for use with TO_GLSL
+	uniform float iTime;  //uncomment for use with TO_GLSL
+#endif
 #endif
 
 #define S(a, b, t) smoothstep(a, b, t)
 #define sat(x) clamp(x, 0., 1.)
-
-#ifndef TO_GLSL
-#define DECLAREUNIFORMS FALSE
-#endif
-
-uniform vec2 u_resolution;
-uniform vec2 u_mouse; 
-uniform float u_time;  
 
 
 float remap01(float a, float b, float t)
