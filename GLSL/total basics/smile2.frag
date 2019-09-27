@@ -4,6 +4,11 @@ precision mediump float;
 #endif
 
 //#define TO_GLSL
+
+#ifndef TO_GLSL
+#define DECLAREUNIFORMS 0
+#endif
+
 #ifdef TO_GLSL
 #define iResolution u_resolution
 #define fragColor gl_FragColor
@@ -14,8 +19,8 @@ precision mediump float;
 #define DECLAREUNIFORMS 1
 #if(DECLAREUNIFORMS)
 	uniform vec2 u_resolution;
-	uniform vec2 iMouse; //uncomment for use with TO_GLSL
-	uniform float iTime;  //uncomment for use with TO_GLSL
+	uniform vec2 iMouse;
+	uniform float iTime;
 #endif
 #endif
 
@@ -86,7 +91,7 @@ vec4 Eye(vec2 uv, float side, vec2 m, float smile)
 
     col.rgb *= 1. - S(.45, .5, d) * .5 * sat(-uv.y - uv.x * side); //shadow
     
-    d = length(uv - m*.5);
+    d = length(uv - m*.545);
     float irisMask = S(.3, .28, d);
     col.rgb = mix(col.rgb, vec3(0.), irisMask); //iris outline
     irisCol.rgb *= 1. + S(.3, .05, d);
@@ -95,8 +100,9 @@ vec4 Eye(vec2 uv, float side, vec2 m, float smile)
     
     col.rgb = mix(col.rgb, irisCol.rgb, S(.28, .25, d)); 
     
-    float pupilSize = mix(irisMask, .16, smile);
+    float pupilSize = mix(irisMask * .3, .235, 2.*smile);
     float pupilMask = S(pupilSize, pupilSize * 0.9, d);
+    pupilMask *= S(-pupilSize * .9, pupilSize * 0.9, d) * 1.6; //blueish overlay
 	pupilMask *= irisMask;
     
     col.rgb = mix(col.rgb, vec3(0.), pupilMask); //pupil
@@ -194,6 +200,6 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     m -= .5;
     
     float smile = cos(iTime) * .5 + .5;
-    
+
     fragColor = Smiley(uv, m, smile);
 }
