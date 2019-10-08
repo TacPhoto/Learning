@@ -92,7 +92,7 @@ vec4 Eye(vec2 uv, float side, vec2 m, float smile)
     col.rgb *= 1. - S(.45, .5, d) * .5 * sat(-uv.y - uv.x * side); //shadow
     
     d = length(uv - m*.545);
-    float irisMask = S(.3, .28, d);
+    float irisMask = S(.3, .287, d);
     col.rgb = mix(col.rgb, vec3(0.), irisMask); //iris outline
     irisCol.rgb *= 1. + S(.3, .05, d);
     
