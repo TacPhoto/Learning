@@ -132,11 +132,15 @@ vec4 Mouth(vec2 uv, float smile)
     
     uv.x *= 1. + (1. - smile); //smile width
     float d = length(uv);
-    col.a = S(.45, .43,d);
+    col.a = S(.49, .48,d);
     
-    float td = length(uv - vec2(0., .6));
+    vec2 teethUV = uv;
+    teethUV.y += abs(teethUV.x) * .5 + .2;
+    teethUV.y *= (1.1 - sqrt(smile));
     
-    vec3 toothCol = vec3(1.) *S(.6, .35, d) ;
+    float td = length(teethUV - vec2(0., .6));
+    
+    vec3 toothCol = vec3(1.) *S(.6, .35, d);
     col.rgb = mix(col.rgb, toothCol, S(.4, .37, td));
     
     td = length(uv + vec2(.0, .5));
