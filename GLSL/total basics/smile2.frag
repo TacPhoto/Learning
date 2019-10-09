@@ -46,8 +46,11 @@ vec2 within(vec2 uv, vec4 rect)
 }
 
 
-vec4 Brow(vec2 uv)
+vec4 Brow(vec2 uv, float smile)
 {
+    float offset = mix(.1, -.1, smile);
+    uv.y += offset;
+    
     float y = uv.y;
     uv.y += uv.x * .85 - .35;
     uv.x -= .15;
@@ -67,6 +70,13 @@ vec4 Brow(vec2 uv)
     colMask *= S(.6, .9, browMask);
 
     vec4 browCol = mix(vec4(.4, .2, .2, 1.), vec4(.6, .4, .3, 1.), browMask);
+    
+    uv.y -= offset;
+    blur += .1;
+    d1 = length(uv);
+    s1 = S(.45, .45 - blur, d1);
+    d2 = length(uv - vec2(.12, -.25) * .75);
+    s2 = S(.5, .5 - blur, d2);
     
     float shadowMask = sat(s1-s2);
     
@@ -189,7 +199,7 @@ vec4 Smiley(vec2 uv, vec2 m, float smile)
     vec4 head = Head(uv);
     vec4 eye = Eye(within(uv, vec4(.03, -.1, .37, .25)), side, m, smile);
     vec4 mouth = Mouth(within(uv, vec4(-.3, -.4, .3, .01)), smile);
-    vec4 brow = Brow(within(uv, vec4(.03, .2, .4, .4)));
+    vec4 brow = Brow(within(uv, vec4(.03, .2, .4, .4)), smile);
 
     col = mix(col, head, head.a);
     col = mix(col, eye, eye.a);
