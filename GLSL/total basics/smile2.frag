@@ -107,6 +107,11 @@ vec4 Eye(vec2 uv, float side, vec2 m, float smile)
     
     col.rgb = mix(col.rgb, vec3(0.), pupilMask); //pupil
     
+    float t = iTime * 3.;
+    vec2 offs = vec2(sin(t + uv.y * 25.), sin(t + uv.x * 25.));  //will move highlights in X and Y
+    offs *= .01 * (1. - smile);
+    
+    uv += offs; //apply offset
     float highlight = S(.1, .09, length(uv - vec2(-.15, .15)));
     highlight += S(.09, .01, length(uv + vec2(-.09, .09)));
     highlight += S(.3, .01, length(uv + vec2(-.08, .08))) *.3;
