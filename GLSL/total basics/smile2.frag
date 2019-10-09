@@ -218,6 +218,9 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
 
     vec2 m = iMouse.xy / iResolution.xy;
     m -= .5;
+
+    //uv -= m * length(uv); //ridiculus :D
+    uv -= m * (.25 - dot(uv, uv)); //distorts whole image when cursor moves
     
     float smile = cos(iTime) * .5 + .5;
 
