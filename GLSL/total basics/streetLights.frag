@@ -118,8 +118,8 @@ vec3 TailLights(ray r, float t)
     {
         float noise = Noise(i); //from 0 to 1
         
-        if(noise > .4) continue; //car randomization
-        //n goes 0-0.4 from here
+        if(noise > .55) continue; //car randomization
+        //n goes 0-0.55 from here
         
         float lane = step(.25, noise); //lane (left, right) randomization
         float ti = fract(t + i + ( s * .5) );
@@ -127,7 +127,9 @@ vec3 TailLights(ray r, float t)
         float fade = ti * ti * ti * ti * ti;
         float focus = S(.9, 1., ti);
         float size = mix(.05, .03, focus);
-        float x = 1.5 - lane;
+        
+        float laneShift = S(1., .96, ti);
+        float x = 1.5 - lane * laneShift;
         
     	m += Bokeh(r, vec3(x - w1, .15, z), size, .1) * fade; //headlight #1
         m += Bokeh(r, vec3(x + w1, .15, z), size, .1) * fade; //headlight #2
@@ -135,14 +137,17 @@ vec3 TailLights(ray r, float t)
         m += Bokeh(r, vec3(x - w2, .15, z), size, .1) * fade; //headlight #1 second layer
         m += Bokeh(r, vec3(x + w2, .15, z), size, .1) * fade; //headlight #2 second layer
         
+        float blink = step(0., sin(t * 1000.)) * 7. * lane * step(.96, ti);
+        m += Bokeh(r, vec3(x + w2, .15, z), size, .1) * fade * (1. + blink); //blinker
+        
         float reflection = 0.;
         reflection += Bokeh(r, vec3(x - w2, -.15, z), 3. * size, 1.) * fade;
-        reflection += Bokeh(r, vec3(x + w2, -.15, z), 3. * size, 1.) * fade;
-        
+        reflection += Bokeh(r, vec3(x + w2, -.15, z), 3. * size, 1.) * fade * (1. + blink * .1);
+
         m += reflection * focus; //add reflection to the mask
     }
     
-     return vec3(1., .1, .1) * m; //add color
+     return vec3(1., .1, .03) * m; //add color
 }
 
 
