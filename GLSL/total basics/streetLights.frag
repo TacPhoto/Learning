@@ -65,12 +65,54 @@ vec3 StreetLights(ray r, float t)
 }
 
 
+float Noise(float t)
+{
+    return fract(sin(t * 2343.) * 876.);
+}
+
+vec3 HeadLights(ray r, float t)
+{
+    float w1 = .25; //headlight distance from the middle of the car
+    float w2 = w1 * 1.2; //second layer for highlights
+    
+    float s = 1. / 10.;
+    float m = 0.; //mask
+    for(float i = 0.; i < 1.; i += s)
+    {
+        float noise = Noise(i);
+        
+        if(noise > .1) continue; //car randomization
+        float ti = fract(t + i + ( s * .5) );
+        float z = 100. - ti * 100.;
+        float fade = ti * ti * ti * ti * ti;
+        float focus = S(.9, 1., ti);
+        float size = mix(.05, .03, focus);
+            
+    	m += Bokeh(r, vec3(-1. - w1, .15, z), size, .1) * fade; //headlight #1
+        m += Bokeh(r, vec3(-1. + w1, .15, z), size, .1) * fade; //headlight #2
+
+        m += Bokeh(r, vec3(-1. - w2, .15, z), size, .1) * fade; //headlight #1 second layer
+        m += Bokeh(r, vec3(-1. + w2, .15, z), size, .1) * fade; //headlight #2 second layer
+        
+        float reflection = 0.;
+        reflection += Bokeh(r, vec3(-1. - w2, -.15, z), 3. * size, 1.) * fade;
+        reflection += Bokeh(r, vec3(-1. + w2, -.15, z), 3. * size, 1.) * fade;
+        
+        m += reflection * focus; //add reflection to the mask
+    }
+    
+     return vec3(.9, .9, 1.) * m;
+}
+
+
 void mainImage( out vec4 fragColor, in vec2 fragCoord )
 {
-    float t = iTime * .1;
     vec2 uv = fragCoord/iResolution.xy; // Normalized pixel coordinates (0 to 1)
 	uv -= .5; //set origin to middle of the screen
     uv.x *= iResolution.x / iResolution.y; //correct aspect ratio
+
+    vec2 m = iMouse.xy/iResolution.xy; //normalized mouse pos
+    float t = iTime * .1 + m.x;
 
 	vec3 camPos = vec3(0., .2, 0.);
     vec3 lookat = vec3(0., .2, 1.);
@@ -78,6 +120,7 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     ray r = GetRay(uv, camPos, lookat, 2.);
     
     vec3 col = StreetLights(r, t);
+    col += HeadLights(r, t);
     
     fragColor = vec4(col, 1.);
 }
