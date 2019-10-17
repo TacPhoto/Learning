@@ -2,6 +2,18 @@
 precision mediump float;
 #define S(a, b, t) smoothstep(a, b, t)
 
+float Noise(float t)
+{
+    return fract(sin(t * 3500.) * 6500.);
+}
+
+
+vec4 Noise4(float t)
+{
+    return fract(sin(t *vec4(123., 1200., 3500., 8374.) * vec4(6500., 350., 8700., 1760. )));
+}
+
+
 struct ray
 {
     vec3 o, d; //origin, direction
@@ -65,10 +77,37 @@ vec3 StreetLights(ray r, float t)
 }
 
 
-float Noise(float t)
+vec3 EnvLights(ray r, float t)
 {
-    return fract(sin(t * 3500.) * 6500.);
+    float side = step(r.d.x, 0.);
+    r.d.x = abs(r.d.x); //mirror
+    
+    float s = 1. / 10.;
+    float m = 0.; //mask
+    vec3 c = vec3(0.);
+    
+    for(float i = 0.; i < 1.; i += s)
+    {
+        float ti = fract(t + i + (side * s * .5) );
+        
+        vec4 n = Noise4(i + side * 100.);
+        
+        float occlusion = sin(ti * 6.28 * 10. * n.x) * .5 + .5;
+        float fade = ti * ti * ti;
+        fade = occlusion;
+        
+        float x = mix(2.5, 10., n.x);
+        float y = mix(.1, 1.5, n.y);
+        
+    	vec3 p = vec3(x, y, 50. - ti * 50.);
+        
+        vec3 col = n.wzy;
+    	c += Bokeh(r, p, .05, .1) * fade * col * .5;
+    }
+    
+     return c;
 }
+
 
 vec3 HeadLights(ray r, float t)
 {
@@ -158,7 +197,7 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     uv.x *= iResolution.x / iResolution.y; //correct aspect ratio
 
     vec2 m = iMouse.xy/iResolution.xy; //normalized mouse pos
-    float t = iTime * .1 + m.x;
+    float t = iTime * .05 + m.x;
 
 	vec3 camPos = vec3(.5, .2, 0.);
     vec3 lookat = vec3(.5, .2, 1.);
@@ -168,6 +207,10 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     vec3 col = StreetLights(r, t);
     col += HeadLights(r, t);
     col += TailLights(r, t);
+    col += EnvLights(r, t);
+
+    col += (r.d.y + .25) * vec3(.2, .1, .5); //gradient overlay
+
     
     fragColor = vec4(col, 1.);
 }
