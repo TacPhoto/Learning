@@ -1,5 +1,5 @@
 /*works with shadertoy*/
-#define DEBUG //enables debug preview
+//#define DEBUG //enables debug preview
 //#define DEBUGLINES //enables debug rain lines preview
 precision mediump float;
 #define S(a, b, t) smoothstep(a, b, t)
@@ -195,7 +195,6 @@ vec3 TailLights(ray r, float t)
 vec2 Rain(vec2 uv, float t)
 {
     t *= 40.;
-    uv *= 3.;
     
     vec2 a = vec2(3., 1.); //aspect ratio
     vec2 st = uv * a;
@@ -212,11 +211,13 @@ vec2 Rain(vec2 uv, float t)
     t += fract(sin(id.x * 76.33 + id.y * 100.24) * 777.33) * 6.283; //timing randomization
     float y = -sin(t + sin(t + sin(t) * .5)) * .43; //y offset
     vec2 p1 = vec2(0. + id.x, y);
-    float d = length((st - p1) / a);
+    vec2 o1 = (st - p1) / a; //offset1
+    float d = length(o1);
     
     float m1 = S(.07, .0, d);
     
-    d = length((fract(uv * a.x * vec2(1., 2.)) - .5) / vec2(1., 2.));
+    vec2 o2 = (fract(uv * a.x * vec2(1., 2.)) - .5) / vec2(1., 2.); //offset2
+    d = length(o2);
     
     float m2 = S(.3 * (.5 - st.y), .0, d) * S(-.1, .1, st.y - p1.y);
     
@@ -224,7 +225,7 @@ vec2 Rain(vec2 uv, float t)
     if(st.x > .46 || st.y>.49) m1 = 1.;
     #endif
     
-    return vec2(m1 + m2);
+    return vec2((m1 * o1 * 30.) + (m2 * o2 * 10.));
 }
 
 
@@ -240,8 +241,12 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
 	vec3 camPos = vec3(.5, .2, 0.);
     vec3 lookat = vec3(.5, .2, 1.);
     
-    vec2 rainDistort = Rain(uv,t);
-    ray r = GetRay(uv + rainDistort, camPos, lookat, 2.);
+    vec2 rainDistort = Rain(uv * 5.,t) * .5;
+    rainDistort += Rain(uv * 7.,t) * .5;
+    uv.x += sin(uv.y * 70.) * .005; //watery effect x
+    uv.y += sin(uv.y * 150.) * .003; //watery effect y
+
+    ray r = GetRay(uv - rainDistort * .5, camPos, lookat, 2.);
     
     vec3 col = StreetLights(r, t);
     col += HeadLights(r, t);
