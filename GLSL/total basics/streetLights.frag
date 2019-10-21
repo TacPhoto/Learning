@@ -1,4 +1,6 @@
 /*works with shadertoy*/
+#define DEBUG //enables debug preview
+
 precision mediump float;
 #define S(a, b, t) smoothstep(a, b, t)
 
@@ -190,6 +192,35 @@ vec3 TailLights(ray r, float t)
 }
 
 
+vec2 Rain(vec2 uv, float t)
+{
+    t *= 40.;
+    uv *= 3.;
+    
+    vec2 a = vec2(3., 1.); //aspect ratio
+    vec2 st = uv * a;
+    st.y += t * .22;
+    st = fract(st) - .5;    
+    
+    float y = -sin(t + sin(t + sin(t) * .5)) * .43; //y offset
+    vec2 p1 = vec2(0., y);
+    float d = length((st - p1) / a);
+    
+    float m1 = S(.07, .06, d);
+    
+    d = length(fract(uv));
+    
+    float m2 = S(.07, .06, d);
+
+    
+    #ifdef DEBUG
+    if(st.x > .46 || st.y>.49) m1 = 1.;
+    #endif
+    
+    return vec2(m1 + m2);
+}
+
+
 void mainImage( out vec4 fragColor, in vec2 fragCoord )
 {
     vec2 uv = fragCoord/iResolution.xy; // Normalized pixel coordinates (0 to 1)
@@ -202,7 +233,8 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
 	vec3 camPos = vec3(.5, .2, 0.);
     vec3 lookat = vec3(.5, .2, 1.);
     
-    ray r = GetRay(uv, camPos, lookat, 2.);
+    vec2 rainDistort = Rain(uv,t);
+    ray r = GetRay(uv + rainDistort, camPos, lookat, 2.);
     
     vec3 col = StreetLights(r, t);
     col += HeadLights(r, t);
@@ -210,7 +242,9 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     col += EnvLights(r, t);
 
     col += (r.d.y + .25) * vec3(.2, .1, .5); //gradient overlay
-
-    
+	
+    #ifdef DEBUG
+    col = vec3(rainDistort, 0.);
+    #endif
     fragColor = vec4(col, 1.);
 }
