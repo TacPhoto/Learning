@@ -1,6 +1,6 @@
 /*works with shadertoy*/
 #define DEBUG //enables debug preview
-
+//#define DEBUGLINES //enables debug rain lines preview
 precision mediump float;
 #define S(a, b, t) smoothstep(a, b, t)
 
@@ -201,12 +201,17 @@ vec2 Rain(vec2 uv, float t)
     vec2 st = uv * a;
     
     vec2 id = floor(st); //column id
+    
+    float n = fract(sin(id.x * 76.34) * 718.34); //noise
+    
     st.y += t * .22;
-    st.y += fract(sin(id.x * 76.33) * 777.33); //offset y depending on id
+    st.y += n; //offset y depending on id
+    id = floor(st);
     st = fract(st) - .5;    
     
+    t += fract(sin(id.x * 76.33 + id.y * 100.24) * 777.33) * 6.283; //timing randomization
     float y = -sin(t + sin(t + sin(t) * .5)) * .43; //y offset
-    vec2 p1 = vec2(0., y);
+    vec2 p1 = vec2(0. + id.x, y);
     float d = length((st - p1) / a);
     
     float m1 = S(.07, .0, d);
@@ -214,10 +219,8 @@ vec2 Rain(vec2 uv, float t)
     d = length((fract(uv * a.x * vec2(1., 2.)) - .5) / vec2(1., 2.));
     
     float m2 = S(.3 * (.5 - st.y), .0, d) * S(-.1, .1, st.y - p1.y);
-
     
-    
-    #ifdef DEBUG
+    #ifdef DEBUGLINES
     if(st.x > .46 || st.y>.49) m1 = 1.;
     #endif
     
