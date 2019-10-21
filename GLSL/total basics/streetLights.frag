@@ -73,7 +73,7 @@ vec3 StreetLights(ray r, float t)
     for(float i = 0.; i < 1.; i += s)
     {
         float ti = fract(t + i + (side * s * .5) );
-    	vec3 p = vec3(2., 2., 100. - ti * 100.);
+    	vec3 p = vec3(3., 2., 120. - ti * 120.);
     	m += Bokeh(r, p, .05, .1) * ti * ti * ti;
     }
     
