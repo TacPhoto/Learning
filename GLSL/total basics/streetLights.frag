@@ -1,6 +1,8 @@
 /*works with shadertoy*/
 //#define DEBUG //enables debug preview
 //#define DEBUGLINES //enables debug rain lines preview
+#define RAIN
+
 precision mediump float;
 #define S(a, b, t) smoothstep(a, b, t)
 
@@ -241,10 +243,13 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
 	vec3 camPos = vec3(.5, .2, 0.);
     vec3 lookat = vec3(.5, .2, 1.);
     
-    vec2 rainDistort = Rain(uv * 5.,t) * .5;
+    vec2 rainDistort = vec2(0.);
+    #ifdef RAIN
+    rainDistort = Rain(uv * 5.,t) * .5;
     rainDistort += Rain(uv * 7.,t) * .5;
     uv.x += sin(uv.y * 70.) * .005; //watery effect x
     uv.y += sin(uv.y * 150.) * .003; //watery effect y
+    #endif 
 
     ray r = GetRay(uv - rainDistort * .5, camPos, lookat, 2.);
     
