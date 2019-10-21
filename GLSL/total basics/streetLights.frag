@@ -199,7 +199,10 @@ vec2 Rain(vec2 uv, float t)
     
     vec2 a = vec2(3., 1.); //aspect ratio
     vec2 st = uv * a;
+    
+    vec2 id = floor(st); //column id
     st.y += t * .22;
+    st.y += fract(sin(id.x * 76.33) * 777.33); //offset y depending on id
     st = fract(st) - .5;    
     
     float y = -sin(t + sin(t + sin(t) * .5)) * .43; //y offset
@@ -212,6 +215,7 @@ vec2 Rain(vec2 uv, float t)
     
     float m2 = S(.3 * (.5 - st.y), .0, d) * S(-.1, .1, st.y - p1.y);
 
+    
     
     #ifdef DEBUG
     if(st.x > .46 || st.y>.49) m1 = 1.;
