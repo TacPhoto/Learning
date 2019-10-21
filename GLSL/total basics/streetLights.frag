@@ -206,11 +206,11 @@ vec2 Rain(vec2 uv, float t)
     vec2 p1 = vec2(0., y);
     float d = length((st - p1) / a);
     
-    float m1 = S(.07, .06, d);
+    float m1 = S(.07, .0, d);
     
-    d = length(fract(uv));
+    d = length((fract(uv * a.x * vec2(1., 2.)) - .5) / vec2(1., 2.));
     
-    float m2 = S(.07, .06, d);
+    float m2 = S(.3 * (.5 - st.y), .0, d) * S(-.1, .1, st.y - p1.y);
 
     
     #ifdef DEBUG
