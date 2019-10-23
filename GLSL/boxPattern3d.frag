@@ -55,19 +55,22 @@ vec2 Rain(vec2 uv, float t)
 {
     t *= 40.;
     
-    vec2 a = vec2(3., 1.); //aspect ratio
+    vec2 a = vec2(4., 1.); //aspect ratio
     vec2 st = uv * a;
     
     vec2 id = floor(st); //column id
     
-    float n = fract(sin(id.x * 76.34) * 718.34); //noise
+    float n = fract(sin(id.x * 76.34) * 728.34); //noise
     
     st.y += t * .22;
     st.y += n; //offset y depending on id
     id = floor(st);
     st = fract(st) - .5;    
+    //st = fract(st) - .1; //darker version
 
-    t += fract(sin(id.x * 76.33 + id.y * 100.24) * 777.33) * 6.283; //timing randomization
+    t = t + fract(sin(id.x * 76.33 + id.y * 100.24) * 777.33) * 6.283; //timing randomization
+    //t = t + fract(sin(id.y * 76.33 + id.y * 100.24) * 777.33) * 6.283; //make waves
+
     float y = -sin(t) * .4; //y offset
     
     vec2 p1 = vec2(id.x, y);
@@ -99,6 +102,6 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     vec3 col = vec3(0.);
 
     col += (r.d.y + .25) * vec3(.2, .1, .5); //gradient overlay
-	
+
     fragColor = vec4(col, 1.);
 }
