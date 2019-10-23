@@ -57,12 +57,12 @@ vec2 Rain(vec2 uv, float t)
     
     vec2 a = vec2(4., 1.); //aspect ratio
     vec2 st = uv * a;
-    
+
     vec2 id = floor(st); //column id
     
     float n = fract(sin(id.x * 76.34) * 728.34); //noise
-    
-    st.y += t * .22;
+
+    st.y += t * .22; //offset in time
     st.y += n; //offset y depending on id
     id = floor(st);
     st = fract(st) - .5;    
