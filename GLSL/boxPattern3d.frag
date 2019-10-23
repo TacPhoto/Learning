@@ -68,15 +68,12 @@ vec2 Rain(vec2 uv, float t)
     st = fract(st) - .5;    
 
     t += fract(sin(id.x * 76.33 + id.y * 100.24) * 777.33) * 6.283; //timing randomization
-    float y = -sin(t + sin(t + sin(t) * .5)) * .43; //y offset
-
-    vec2 p1 = vec2(id.x, y);
-    vec2 o1 = (st - p1) / a + .05; //offset1
-    float d = length(o1);
+    float y = -sin(t) * .4; //y offset
     
-    float m1 = S(.0, n, d);
-        
-    return vec2((m1 * o1 * 30.));
+    vec2 p1 = vec2(id.x, y);
+    vec2 o1 = (st - p1) / a;
+     
+    return vec2((1. * o1 * 30.));
 }
 
 
