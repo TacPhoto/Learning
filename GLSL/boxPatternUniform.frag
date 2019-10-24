@@ -13,12 +13,6 @@ float Noise(float t)
 }
 
 
-vec4 Noise4(float t)
-{
-    return fract(sin(t *vec4(123., 1200., 3500., 8374.) * vec4(6500., 350., 8700., 1760. )));
-}
-
-
 struct ray
 {
     vec3 o, d; //origin, direction
@@ -54,7 +48,7 @@ float DistRay(ray r, vec3 p)
 }
 
 
-vec2 Rain(vec2 uv, float t)
+vec2 Pattern(vec2 uv, float t)
 {
     t *= 40.;
 
@@ -105,8 +99,8 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     
     vec2 boxPattern = vec2(0.);
 
-    boxPattern = Rain(uv * 5.,t) * .5;
-    boxPattern += Rain(uv * 7.,t) * .5;
+    boxPattern = Pattern(uv * 5.,t) * .5;
+    boxPattern += Pattern(uv * 7.,t) * .5;
 
     ray r = GetRay(uv - boxPattern * .5, camPos, lookat, 2.);
     
