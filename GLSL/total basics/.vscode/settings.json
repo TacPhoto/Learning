@@ -1,4 +1,12 @@
 {
     "glsl-linter.validatorArgs": "D:\\gslang\\bin",
-    "glsl-linter.validatorPath": "D:\\gslang\\bin\\glslangValidator.exe"
+    "glsl-linter.validatorPath": "D:\\gslang\\bin\\glslangValidator.exe",
+    "glsl-linter.fileExtensions": {
+        ".fs.glsl": "frag",
+        ".vs.glsl": "vert",
+        ".tes.glsl": "tese",
+        ".tcs.glsl": "tesc",
+        ".gs.glsl": "geom"
+    }
 }
+
