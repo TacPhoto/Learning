@@ -13,12 +13,6 @@ float Noise(float t)
 }
 
 
-struct ray
-{
-    vec3 o, d; //origin, direction
-};
-
-
 vec2 Pattern(vec2 uv, float t)
 {
     t *= 40.;
