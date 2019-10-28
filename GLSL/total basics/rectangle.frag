@@ -1,8 +1,13 @@
 #ifdef GL_ES
 precision mediump float;
 #endif
-
-uniform vec2 u_resolution;
+#define shadertoy
+#ifdef shadertoy
+    #define u_resolution iResolution.xy
+#endif
+#ifndef shadertoy
+    uniform vec2 u_resolution;
+#endif
 
 float rectangle(vec2 position, vec2 scale)
 {
