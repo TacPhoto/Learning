@@ -54,6 +54,7 @@ public class MergeSort
         return merge(left, right);
     }
 
+
     private static int[] merge(int[] left, int[] right)
     {
         int[] result = new int[left.length + right.length];
