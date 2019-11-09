@@ -1,3 +1,5 @@
+#based on Christian Thompson tutorial
+
 import turtle
 import winsound
 
