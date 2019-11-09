@@ -36,15 +36,13 @@ public class MergeSort
         else
             right = new int[midpoint + 1];
 
-        { //populate new arrays
-            for (int i = 0; i < midpoint; i++) {
+        {
+            for (int i = 0; i < midpoint; i++)
                 left[i] = arr[i];
-            }
 
-            for (int j = 0; j < right.length; j++) {
+            for (int j = 0; j < right.length; j++)
                 right[j] = arr[midpoint + j];
-            }
-        }
+        }//populate new arrays
 
         int[] result = new int[arr.length];
 
