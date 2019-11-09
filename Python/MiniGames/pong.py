@@ -1,4 +1,5 @@
 import turtle
+import winsound
 
 window = turtle.Screen()
 window.title("Pong by @tacphoto")
@@ -67,6 +68,8 @@ def paddle_b_down():
     if paddle_b.ycor() > -250:
         paddle_b.sety(paddle_b.ycor() - 20)
 
+def bounceSound():
+    winsound.PlaySound("bounce.wav", winsound.SND_ASYNC)
 
 #Key binds
 window.listen()
@@ -90,28 +93,34 @@ while True:
     if ball.ycor() > (window.window_height() / 2) - 10:
         ball.sety((window.window_height() / 2) - 10)
         ball.dy *= -1
+        bounceSound()
 
     if ball.ycor() < (-window.window_height() / 2) + 10:
         ball.sety((-window.window_height() / 2) + 10)
         ball.dy *= -1
+        bounceSound()
 
     if ball.xcor() > window.window_width() / 2:
         points_a +=1
         pen.clear()
         ball.goto(0, 0)
         ball.dx *= -1
+        bounceSound()
 
     if  ball.xcor() < -window.window_width() / 2:
         points_b += 1
         pen.clear()
         ball.goto(0, 0)
         ball.dx *= -1
+        bounceSound()
 
     # Paddle collision
     if (ball.xcor() > 340) and ball.ycor() < ((paddle_b.ycor() + stretch_wid * 10)) and (ball.ycor() > paddle_b.ycor() - 50):
         ball.dx *= -1
         ball.dy *= -1
+        bounceSound()
 
     if (ball.xcor() < -340) and ball.ycor() < ((paddle_a.ycor() + stretch_wid * 10 )) and (ball.ycor() > paddle_a.ycor() - 50):
         ball.dx *= -1
         ball.dy *= -1
+        bounceSound()
