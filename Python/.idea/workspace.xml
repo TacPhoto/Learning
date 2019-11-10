@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2fe306cc-7e88-49ef-bac6-2df7020e4224" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/MiniGames/snake/snake.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Java/src/PascalTriangleJagged.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MiniGames/pong/pong.py" beforeDir="false" afterPath="$PROJECT_DIR$/MiniGames/pong/pong.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,8 +16,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/MiniGames/snake/snake.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="129">
-              <caret line="163" column="17" lean-forward="true" selection-start-line="163" selection-start-column="17" selection-end-line="163" selection-end-column="17" />
+            <state relative-caret-position="578">
+              <caret line="177" lean-forward="true" selection-start-line="177" selection-end-line="177" />
               <folding>
                 <element signature="e#4#17#0" expanded="true" />
                 <element signature="e#118#1039#0" />
@@ -36,7 +35,6 @@
                 <element signature="e#4040#4216#0" />
                 <element signature="e#4250#4413#0" />
                 <element signature="e#4449#4701#0" />
-                <element signature="e#4743#4914#0" />
                 <element signature="e#5211#5708#0" />
               </folding>
             </state>
@@ -75,9 +73,9 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="1634" />
-    <option name="y" value="-25" />
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="2069" />
+    <option name="y" value="-8" />
     <option name="width" value="1291" />
     <option name="height" value="729" />
   </component>
@@ -185,11 +183,11 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1912" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="1912" y="-8" width="1936" height="1056" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Favorites" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24973656" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24973656" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Version Control" />
       <window_info anchor="bottom" id="Python Console" />
@@ -197,7 +195,7 @@
       <window_info anchor="bottom" id="Event Log" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32936078" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32936078" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -238,8 +236,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/MiniGames/snake/snake.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="129">
-          <caret line="163" column="17" lean-forward="true" selection-start-line="163" selection-start-column="17" selection-end-line="163" selection-end-column="17" />
+        <state relative-caret-position="578">
+          <caret line="177" lean-forward="true" selection-start-line="177" selection-end-line="177" />
           <folding>
             <element signature="e#4#17#0" expanded="true" />
             <element signature="e#118#1039#0" />
@@ -257,7 +255,6 @@
             <element signature="e#4040#4216#0" />
             <element signature="e#4250#4413#0" />
             <element signature="e#4449#4701#0" />
-            <element signature="e#4743#4914#0" />
             <element signature="e#5211#5708#0" />
           </folding>
         </state>
