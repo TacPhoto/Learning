@@ -23,8 +23,9 @@ public class PascalTriangleJagged
         for (int i=0; i<arr.length; i++)
             arr[i] = new int[i+1];
 
-        for (int i=0; i<arr.length; i++)
-            for(int j=0; j<arr[i].length; j++)
+        arr[0][0] = 1;
+        for (int i = 1; i<arr.length; i++)
+            for(int j = 0; j < arr[i].length; j++)
                 arr[i][j] = 0;
 
         return arr;
@@ -37,7 +38,7 @@ public class PascalTriangleJagged
         {
             int var = 1;
 
-            for(int col = 0; col < row; col++)
+            for(int col = 0; col <= row; col++)
             {
                 arr[row + 1][col] += arr[row][col];
                 arr[row + 1][col + 1] += arr[row][col];
@@ -53,7 +54,7 @@ public class PascalTriangleJagged
         for(int i = 0; i < arr.length; i++)
         {
             for(int j = 0; j < arr[i].length; j++)
-                System.out.print(arr[i][j]);
+                System.out.print(arr[i][j] + " ");
             System.out.println();
         }
     }
