@@ -36,8 +36,6 @@ public class PascalTriangleJagged
     {
         for(int row = 0; row < arr.length - 1; row++)
         {
-            int var = 1;
-
             for(int col = 0; col <= row; col++)
             {
                 arr[row + 1][col] += arr[row][col];
