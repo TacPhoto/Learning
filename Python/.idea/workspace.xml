@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2fe306cc-7e88-49ef-bac6-2df7020e4224" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../Java/bin/PascalTriangleJagged.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Java/bin/PascalTriangleJagged.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Java/src/PascalTriangleJagged.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Java/src/PascalTriangleJagged.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -16,7 +15,7 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/MiniGames/snake/snake.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="578">
+            <state relative-caret-position="214">
               <caret line="177" lean-forward="true" selection-start-line="177" selection-end-line="177" />
               <folding>
                 <element signature="e#4#17#0" expanded="true" />
@@ -73,9 +72,9 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="476" />
-    <option name="y" value="-8" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="301" />
+    <option name="y" value="123" />
     <option name="width" value="1291" />
     <option name="height" value="729" />
   </component>
@@ -183,8 +182,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
+    <frame x="301" y="123" width="1291" height="729" extended-state="0" />
     <layout>
       <window_info id="Favorites" side_tool="true" />
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24973656" />
@@ -236,7 +234,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/MiniGames/snake/snake.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="578">
+        <state relative-caret-position="214">
           <caret line="177" lean-forward="true" selection-start-line="177" selection-end-line="177" />
           <folding>
             <element signature="e#4#17#0" expanded="true" />
