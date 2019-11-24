@@ -66,7 +66,7 @@ inline float max_sse(float a, float b);
 
 float simple_sign(float x)
 {
-	return (x >= 0.0f) ? -1.0f : 1.0f; //It frankly needs less cycles than https://developer.download.nvidia.com/cg/sign.html for a normal float. Tested on xbox shader compiler
+	return (x >= 0.0f) ? -1.0f : 1.0f; //It frankly needs less cycles than https://developer.download.nvidia.com/cg/sign.html for a single float. Tested on xbox shader compiler
 }
 
 
