@@ -59,8 +59,8 @@ inline float simple_floor(float x);
 inline float simple_ceil(float x);
 #ifdef SSE
 inline static float floor_sse2(float x);
-float min_sse(float a, float b);
-float max_sse(float a, float b);
+inline float min_sse(float a, float b);
+inline float max_sse(float a, float b);
 #endif //SSE
 
 
