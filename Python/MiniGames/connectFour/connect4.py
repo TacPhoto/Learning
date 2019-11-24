@@ -45,7 +45,15 @@ def is_winner(board, player): #not very efficient but easy to implement
             if board[row][col] == player and board[row + 1][col] == player and board[row + 2][col] == player and board[row + 3][col] == player:
                 return True
     #diagonal check
-        #TODO later
+    for row in range(ROW_COUNT - 3):
+        for row in range(COL_COUNT - 3):
+            if board[row][col] == player and board[row + 1][col + 1] == player and board[row + 2][col + 2] == player and board[row + 3][col + 3] == player:
+                return True
+
+    for row in range(ROW_COUNT - 3):
+         for row in range(3, COL_COUNT - 3):
+             if board[row][col] == player and board[row - 1][col + 1] == player and board[row - 2][col + 2] == player and board[row - 3][col + 3] == player:
+                 return True
 
 board = create_board()
 game_over = False
