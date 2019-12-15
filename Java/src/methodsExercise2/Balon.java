@@ -8,7 +8,7 @@ public class Balon
     public Balon()
     {
         float max = 0.009f, min = 005f;
-        this.contentVol = clamp((float)Math.random() / 100.f, 0.005f, 0.009f); // 0.005 to 0.009 m3
+        this.contentVol = clamp((float)Math.random() / 100.f, min, max); // 0.005 to 0.009 m3
     }
 
     float max(float a, float b)
