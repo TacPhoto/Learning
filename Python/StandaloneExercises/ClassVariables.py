@@ -50,7 +50,7 @@ class SomeClassButDifferent:
 
     def showSomeVal(self):
         print("from instance:" + str(self.someVal))
-        print("from class:" + str(SomeClass.someVal))
+        print("from class:" + str(SomeClassButDifferent.someVal))
         print("from instance again:" + str(self.someVal))
 
 
