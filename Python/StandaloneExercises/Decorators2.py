@@ -21,6 +21,10 @@ class Real_pizza:
         if bool == True:
             self._is_discount = True
 
+    @is_discount.deleter
+    def is_discount(self):
+        print("is_discount deleted")
+        self.is_discount = None
 
 pizza = Real_pizza(["cheese", "pepperoni"])
 print("-" * 10)
@@ -33,3 +37,5 @@ print("-" * 10)
 print(hawaiian.is_discount)
 hawaiian.is_discount = True
 print(hawaiian.is_discount)
+
+del hawaiian.is_discount
