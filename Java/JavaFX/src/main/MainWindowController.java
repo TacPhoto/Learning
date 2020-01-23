@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -20,16 +22,20 @@ public class MainWindowController implements Initializable {
     Label labelText;
     @FXML
     Button button1;
+    @FXML
+    TextField textField1;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         labelText.setText("Program is on");
-
+        button1.setGraphic((new ImageView("main/icon.png")));
     }
 
     public void buttonClicked(){
-        labelText.setText("Button clicked");
-        button1.setText("Clicked");
+        String txtFromTextField = textField1.getText();
+        labelText.setText(txtFromTextField);
+        button1.setText(txtFromTextField);
+        textField1.setText("");
     }
 
     public static void closeProgram(){

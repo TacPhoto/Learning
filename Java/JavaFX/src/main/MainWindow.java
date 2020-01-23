@@ -2,9 +2,11 @@ package main;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -26,6 +28,7 @@ public class MainWindow extends Application {
 
         stackPane.getChildren().add(MenuUtilities.prepareMenu());
         stackPane.setAlignment(Pos.TOP_CENTER);
+
 
         primaryStage.getIcons().add(new Image("main/icon.png"));
         primaryStage.setOnCloseRequest((e) -> {MainWindowController.closeProgram();});
