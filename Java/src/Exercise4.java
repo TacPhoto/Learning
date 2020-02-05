@@ -80,7 +80,7 @@ public class Exercise4
     losIntos = scan.nextInt();
     byte bitte = (byte) losIntos;
 
-    for(int i = 16; i-- > 0;)
+    for(int i = 16; i > 0; i--)
     {
         if((bitte & 0b1<<i) != 0b0)
         {
