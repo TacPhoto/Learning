@@ -29,7 +29,7 @@ public class MainWindow extends Application {
         stackPane.getChildren().add(MenuUtilities.prepareMenu());
         stackPane.setAlignment(Pos.TOP_CENTER);
 
-
+        MainWindowController.addControls(stackPane);
         primaryStage.getIcons().add(new Image("main/icon.png"));
         primaryStage.setOnCloseRequest((e) -> {MainWindowController.closeProgram();});
         primaryStage.setHeight(600.0);
