@@ -7,6 +7,8 @@ class MainWindow:
         self.app = QtWidgets.QApplication(sys.argv)
         self.window = QtWidgets.QMainWindow()
 
+        self.imagePath = "githubLogo.png"
+
         self.initGui()
 
         self.window.setWindowTitle("Whatever")
@@ -25,5 +27,17 @@ class MainWindow:
         self.cancelButton.setGeometry(10, 420, 120, 30)
         self.cancelButton.setStyleSheet("background-color: #4e4e4e; color: #f7f7f7")
 
+        #label that holds the image
+        self.label = QtWidgets.QLabel(self.window)
+        self.label.setGeometry(35, 50, 200, 200)
+        self.label.setAutoFillBackground(False)
+
+        #image
+        self.image = QtGui.QImage(self.imagePath)
+        self.pixmapImage = QtGui.QPixmap.fromImage(self.image)
+
+        #display image in the label
+        self.label.setPixmap(self.pixmapImage)
+        self.label.setScaledContents(True)
 
 main = MainWindow()
