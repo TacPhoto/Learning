@@ -142,4 +142,9 @@ public class MainWindowController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+
+    public void showSubWindow2() throws IOException {
+        SubWindow2 window2 = new SubWindow2();
+        window2.openSubWindow2();
+    }
 }
