@@ -1,8 +1,10 @@
 package main;
 
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -13,6 +15,9 @@ import java.util.ResourceBundle;
 public class SubWindow2 implements Initializable {
 
     Stage window2Stage;
+
+    @FXML
+    Button btnCloseSubWindow2;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -29,5 +34,10 @@ public class SubWindow2 implements Initializable {
         window2Stage.setResizable(false);
         window2Stage.setScene(scene);
         window2Stage.show();
+    }
+
+    public void close(){
+        window2Stage = (Stage)btnCloseSubWindow2.getScene().getWindow();
+        window2Stage.close();
     }
 }
