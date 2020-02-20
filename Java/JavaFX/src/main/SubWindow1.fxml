@@ -5,6 +5,5 @@
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="241.0" prefWidth="280.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Button fx:id="btnCloseSubWindow1" mnemonicParsing="false" text="Close" StackPane.alignment="CENTER" />
    </children>
 </StackPane>
