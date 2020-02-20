@@ -3,6 +3,7 @@ package main;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -24,6 +25,7 @@ public class SubWindow2 implements Initializable {
         Scene scene = new Scene(fxmlLoader.load());
         window2Stage = new Stage();
         window2Stage.setTitle("Window 2");
+        window2Stage.initModality(Modality.APPLICATION_MODAL);
         window2Stage.setResizable(false);
         window2Stage.setScene(scene);
         window2Stage.show();
