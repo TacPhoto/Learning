@@ -35,10 +35,15 @@
             <Insets left="10.0" top="200.0" />
          </StackPane.margin>
       </RadioButton>
-      <CheckBox fx:id="checkBox" mnemonicParsing="false" text="Click here!" StackPane.alignment="TOP_LEFT" onAction="#checkBoxClicked">
+      <CheckBox fx:id="checkBox" mnemonicParsing="false" onAction="#checkBoxClicked" text="Click here!" StackPane.alignment="TOP_LEFT">
          <StackPane.margin>
-            <Insets left="10.0" top="240.0" />
+            <Insets left="10.0" top="210.0" />
          </StackPane.margin>
       </CheckBox>
+      <Button fx:id="btwOpenSWindow1" mnemonicParsing="false" text="Button" StackPane.alignment="CENTER" onAction="#showSubWindow1">
+         <StackPane.margin>
+            <Insets top="180.0" />
+         </StackPane.margin>
+      </Button>
    </children>
 </StackPane>
