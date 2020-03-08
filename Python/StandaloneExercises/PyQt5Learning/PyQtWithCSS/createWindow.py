@@ -41,33 +41,46 @@ class MainWindow:
         sys.exit(self.app.exec_())
 
     def initGui(self):
+        # menu bar
+        menuBar = self.window.menuBar()
+
+        fileMenu = menuBar.addMenu("File")
+        moreMenu = menuBar.addMenu("More")
+
+        # craete menu actions
+        quitAction = QtWidgets.QAction("Quit", self.window)
+        quitAction.setShortcut("ALT+F4")
+        quitAction.triggered.connect(lambda: self.exit_app())
+
+        # add actions to the root manu
+        fileMenu.addAction(quitAction)
+
         # login button
         self.loginButton = QtWidgets.QPushButton("Login", self.window)
-        self.loginButton.setGeometry(140, 360, 120, 30)
-        # self.loginButton.setStyleSheet(
+        self.loginButton.setGeometry(140, 365, 120, 30)
 
         # register button
         self.registerButton = QtWidgets.QPushButton("Register", self.window)
-        self.registerButton.setGeometry(10, 360, 120, 30)
+        self.registerButton.setGeometry(10, 365, 120, 30)
 
         # label that holds the image
         self.label = QtWidgets.QLabel(self.window)
-        self.label.setGeometry(35, 20, 200, 200)
+        self.label.setGeometry(35, 33, 200, 200)
         self.label.setAutoFillBackground(False)
 
         # nickname text field
         self.pseudo = QtWidgets.QTextEdit(self.window)
-        self.pseudo.setGeometry(25, 230, 220, 30)
+        self.pseudo.setGeometry(25, 243, 220, 30)
         self.pseudo.setText("Nickname")
 
         # email text field
         self.email = QtWidgets.QTextEdit(self.window)
-        self.email.setGeometry(25, 270, 220, 30)
+        self.email.setGeometry(25, 283, 220, 30)
         self.email.setText("Email")
 
         # pseudo password text field
         self.password = QtWidgets.QTextEdit(self.window)
-        self.password.setGeometry(25, 310, 220, 30)
+        self.password.setGeometry(25, 323, 220, 30)
         self.password.setText("Password")
         self.password.setObjectName("passwordText")
 
@@ -78,6 +91,9 @@ class MainWindow:
         # display image in the label
         self.label.setPixmap(self.pixmapImage)
         self.label.setScaledContents(True)
+
+    def exit_app(self):
+        sys.exit(self.app.exec_())
 
 
 main = MainWindow()
