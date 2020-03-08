@@ -47,7 +47,7 @@ class MainWindow:
         fileMenu = menuBar.addMenu("File")
         moreMenu = menuBar.addMenu("More")
 
-        # craete menu actions
+        # create menu actions
         quitAction = QtWidgets.QAction("Quit", self.window)
         quitAction.setShortcut("ALT+F4")
         quitAction.triggered.connect(lambda: self.exit_app())
