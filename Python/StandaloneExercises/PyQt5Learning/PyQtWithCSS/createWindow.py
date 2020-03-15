@@ -30,14 +30,41 @@ class MainWindow:
         QTextEdit#passwordText{
         background-color: #202020;
         }
+        
+        QMenuBar{
+        background-color: #333333;
+        color: #888888;
+        }
+        
+        QMenuBar::item{
+        background-color: transparent;
+        }
+        
+        QMenuBar::item:selected {
+        background-color: transparent;
+        }
+        
+        QMenuBar::item:disabled{
+        background-color: transparent;
+        }
+        
+        QMenu{
+        background-color: #333333;
+        color: #888888;
+        }
+        
+        QMenu::item:selected {
+        background-color: #6e6e6e;
+        color: #2f2f2f;
+        }
         """
 
         self.initGui()
 
         self.window.setWindowTitle("Whatever")
         self.window.setGeometry(0, 0, 270, 410)
-        self.window.show()
         self.app.setStyleSheet(self.styleSheet)
+        self.window.show()
         sys.exit(self.app.exec_())
 
     def initGui(self):
@@ -50,10 +77,19 @@ class MainWindow:
         # create menu actions
         quitAction = QtWidgets.QAction("Quit", self.window)
         quitAction.setShortcut("ALT+F4")
+        quitAction.setIcon(QtGui.QIcon("githubLogo.png"))
         quitAction.triggered.connect(lambda: self.exit_app())
 
-        # add actions to the root manu
+        moreMore = QtWidgets.QAction("More More", self.window)
+        moreMoreMore = QtWidgets.QAction("More More More", self.window)
+
+        # add actions to the submenus
         fileMenu.addAction(quitAction)
+        moreMenu.addAction(moreMore)
+
+        moreMenu.addSeparator()
+        findAction = moreMenu.addMenu("More")
+        findAction.addAction(moreMoreMore)
 
         # login button
         self.loginButton = QtWidgets.QPushButton("Login", self.window)
