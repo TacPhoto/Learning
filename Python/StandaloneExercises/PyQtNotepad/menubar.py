@@ -1,8 +1,11 @@
 import sys
-import os
-from PyQt5.QtWidgets import QApplication, QTextEdit, QWidget, QPushButton, QVBoxLayout, QHBoxLayout, QFileDialog, \
+
+from PyQt5.QtWidgets import QApplication,\
     QAction, qApp, QMainWindow
 
+"""
+Just a skeleton of a menu. Will not be used.
+"""
 
 class Menu(QMainWindow):
     def __init__(self):
@@ -16,13 +19,13 @@ class Menu(QMainWindow):
         edit = bar.addMenu("Edit")
 
         # Create Actions for menus
-        save_action = QAction("Save", self)
+        save_action = QAction("&Save", self)
         save_action.setShortcut("Ctrl+S")
 
-        new_action = QAction("New", self)
+        new_action = QAction("&New", self)
         new_action.setShortcut("Ctrl+N")
 
-        quit_action = QAction("Quit", self)
+        quit_action = QAction("&Quit", self)
         quit_action.setShortcut("Ctrl+Q")
 
         find_action = QAction("Find", self)
