@@ -1,7 +1,10 @@
 package frontend;
 
+import backend.Employee.Employee;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 import javax.swing.JFrame;
 
 public class MainWindow extends JFrame{
@@ -55,8 +58,11 @@ public class MainWindow extends JFrame{
         JPanel toolsPanel = new JPanel(); //panel that contains all tools and operations
         getContentPane().add(BorderLayout.CENTER, toolsPanel);
 
-        JTable staffTable = new JTable(); //table with staff data, editable
-        getContentPane().add(BorderLayout.SOUTH, new JScrollPane(staffTable));
+        List<Employee> employeeList = null;//todo: implement creating new list and reading ne from file
+        EmployeeTable staffTableModel = new EmployeeTable(employeeList); //table with staff data, editable
+        JTable staffTable = new JTable(staffTableModel);
+        JScrollPane tablePane = new JScrollPane(staffTable);
+        getContentPane().add(BorderLayout.SOUTH, tablePane);
 
     }
 
