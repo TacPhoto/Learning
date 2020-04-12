@@ -49,7 +49,7 @@ public class EmployeeTable extends AbstractTableModel {
     {
         if(employeeList == null)
             return 0;
-        
+
         return employeeList.size();
     }
 
@@ -73,6 +73,33 @@ public class EmployeeTable extends AbstractTableModel {
             return row.getSalary();
         }
         return null;
+    }
+
+    @Override
+    public boolean isCellEditable(int rowIndex, int columnIndex) //we force tabe to be always editable
+    {
+        return true;
+    }
+
+    @Override
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex)
+    {
+        Employee row = employeeList.get(rowIndex);
+        if(0 == columnIndex) {
+            row.setName(((String) aValue).replaceAll("[^A-Za-z]+", ""));
+        }
+        else if(1 == columnIndex) {
+            row.setSurname(((String) aValue).replaceAll("[^A-Za-z]+", ""));
+        }
+        else if(2 == columnIndex) {
+            row.setPosition(backend.Employee.Position.valueOf((String) aValue) ); //todo: would be god to have a combo box gere
+        }
+        else if(3 == columnIndex) {
+            row.setSeniority((Integer) aValue);
+        }
+        else if(4 == columnIndex) {
+            row.setSalary((Double) aValue);
+        }
     }
 }
 
