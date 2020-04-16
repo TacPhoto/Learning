@@ -70,6 +70,13 @@ public class MainWindow extends JFrame{
         EmployeeTable staffTableModel = new EmployeeTable(employeeList); //table with staff data, editable
         JTable staffTable = new JTable(staffTableModel);
         JScrollPane tablePane = new JScrollPane(staffTable);
+
+        //add combobox to the table
+        JComboBox comboBox = new JComboBox(backend.Employee.Position.values());
+        comboBox.setEnabled(true);
+        DefaultCellEditor editor = new DefaultCellEditor(comboBox);
+        staffTable.getColumnModel().getColumn(2).setCellEditor(editor);
+
         getContentPane().add(BorderLayout.SOUTH, tablePane);
 
         //TEST
@@ -83,5 +90,4 @@ public class MainWindow extends JFrame{
         employeeList.add(test4);
         employeeList.remove(test4);
     }
-
 }

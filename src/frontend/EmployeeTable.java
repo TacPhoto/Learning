@@ -92,7 +92,7 @@ public class EmployeeTable extends AbstractTableModel {
             row.setSurname(((String) aValue).replaceAll("[^A-Za-z]+", ""));
         }
         else if(2 == columnIndex) {
-            row.setPosition(backend.Employee.Position.valueOf((String) aValue) ); //todo: would be god to have a combo box gere
+            row.setPosition((Position) aValue); //input secured by enum combobox
         }
         else if(3 == columnIndex) {
             row.setSeniority((Integer) aValue);
@@ -101,6 +101,7 @@ public class EmployeeTable extends AbstractTableModel {
             row.setSalary((Double) aValue);
         }
     }
+
 }
 
 

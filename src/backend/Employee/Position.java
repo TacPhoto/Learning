@@ -1,7 +1,8 @@
 package backend.Employee;
 
 public enum Position {
-    Intern
+    none
+    , Intern
     , FrontEndDev
     , BackEndDev
     , ManualQA
