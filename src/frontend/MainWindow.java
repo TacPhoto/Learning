@@ -1,6 +1,7 @@
 package frontend;
 
 import backend.Employee.Employee;
+import backend.Employee.EmployeeListController;
 import backend.Employee.Position;
 
 import javax.swing.*;
@@ -59,18 +60,16 @@ public class MainWindow extends JFrame{
 
         //add main panels to the main window
         JPanel toolsPanel = new JPanel(); //panel that contains all tools and operations
-        getContentPane().add(BorderLayout.CENTER, toolsPanel);
+        getContentPane().add(BorderLayout.NORTH, toolsPanel);
 
-        List<Employee> employeeList = new ArrayList<Employee>();//todo: implement creating new list and reading ne from file
-
-        //TEST
-        Employee test1 = new Employee("first", "second", Position.IT, 5, 2000);
-        employeeList.add(test1);
+        //initialize Employee List Controller
+        EmployeeListController employeeListController = new EmployeeListController();
 
         //create staff table and add it to the layout
-        EmployeeTable staffTableModel = new EmployeeTable(employeeList); //table with staff data, editable
+        EmployeeTable staffTableModel = new EmployeeTable(employeeListController.getEmployeeList()); //table with staff data, editable
         JTable staffTable = new JTable(staffTableModel);
         JScrollPane tablePane = new JScrollPane(staffTable);
+
 
         //add combobox to the table
         JComboBox comboBox = new JComboBox(backend.Employee.Position.values());
@@ -87,14 +86,12 @@ public class MainWindow extends JFrame{
         getContentPane().add(BorderLayout.SOUTH, tablePane);
 
         //TEST
-        Employee test2 = new Employee("addedLater", "second", Position.IT, 5, 2000);
-        employeeList.add(test2);
+        employeeListController.addEmployee("addedLater", "second", Position.IT, 5, 2000);
+
         //TEST
-        Employee test3 = new Employee("addedLater", "secofend", Position.IT, 5, 2000);
-        employeeList.add(test3);
+        employeeListController.addEmployee("addedLater", "secofend", Position.IT, 5, 2000);
+
         //TEST
-        Employee test4 = new Employee("removed", "second", Position.IT, 5, 2000);
-        employeeList.add(test4);
-        employeeList.remove(test4);
+        employeeListController.addEmployee("removed", "second", Position.IT, 5, 2000);
     }
 }

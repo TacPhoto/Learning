@@ -15,7 +15,8 @@ import java.util.List;
 
 public class EmployeeTable extends AbstractTableModel {
 
-    private List<Employee> employeeList;
+    private List<Employee> employeeList; //private, yet it will use reference and be the same object
+                                         //as employeeList in main function :)
 
     private final String[] columnNames = new String[]{
             "name", "surname",
