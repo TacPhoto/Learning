@@ -8,6 +8,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.table.TableCellRenderer;
 
 public class MainWindow extends JFrame{
     public MainWindow(){
@@ -76,6 +77,12 @@ public class MainWindow extends JFrame{
         comboBox.setEnabled(true);
         DefaultCellEditor editor = new DefaultCellEditor(comboBox);
         staffTable.getColumnModel().getColumn(2).setCellEditor(editor);
+
+        //add buttons to the table
+        TableCellRenderer buttonRenderer = new EmployeeTable.JTableButtonRenderer();
+        staffTable.getColumnModel().getColumn(5).setCellRenderer(buttonRenderer);
+        //staffTable.getColumn("Delete").setCellRenderer(buttonRenderer); //this forces referring to the column by name. we use column name for button name return different one for the colum
+        staffTable.addMouseListener(new EmployeeTable.JTableButtonMouseListener(staffTable));
 
         getContentPane().add(BorderLayout.SOUTH, tablePane);
 
