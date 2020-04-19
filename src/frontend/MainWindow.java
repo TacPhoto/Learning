@@ -85,34 +85,7 @@ public class MainWindow extends JFrame{
 
     }
 
-    private void initStaffTablePanel(){
-        //create staff table
-        staffTableModel = new EmployeeTable(employeeListController.getEmployeeList()); //table with staff data, editable
-        staffTable = new JTable(staffTableModel);
-
-        //create and add table sorter
-        TableRowSorter<EmployeeTable> sorter = new TableRowSorter<EmployeeTable>(staffTableModel);
-        staffTable.setRowSorter(sorter);
-        sorter.setSortable(5, false); //button column is not sortable
-
-        //create scroll pane
-        JScrollPane tablePane = new JScrollPane(staffTable);
-
-        //add combobox to the table
-        JComboBox comboBox = new JComboBox(backend.Employee.Position.values());
-        comboBox.setEnabled(true);
-        DefaultCellEditor editor = new DefaultCellEditor(comboBox);
-        staffTable.getColumnModel().getColumn(2).setCellEditor(editor);
-
-        //add buttons to the table
-        TableCellRenderer buttonRenderer = new EmployeeTable.JTableButtonRenderer();
-        staffTable.getColumnModel().getColumn(5).setCellRenderer(buttonRenderer);
-        //staffTable.getColumn("Delete").setCellRenderer(buttonRenderer); //this forces referring to the column by name. we use column name for button name return different one for the colum
-        staffTable.addMouseListener(new EmployeeTable.JTableButtonMouseListener(staffTable));
-
-        //add staff table to the layout
-        getContentPane().add(BorderLayout.CENTER, tablePane);
-
+    private void init_search(TableRowSorter sorter){{
         //create search panel
         JPanel searchPanel = new JPanel(new BorderLayout());
 
@@ -153,8 +126,40 @@ public class MainWindow extends JFrame{
             public void changedUpdate(DocumentEvent e) {
                 throw new UnsupportedOperationException("Not supported yet.");
             }
-        });
+        });}
     }
+
+    private void initStaffTablePanel(){
+        //create staff table
+        staffTableModel = new EmployeeTable(employeeListController.getEmployeeList()); //table with staff data, editable
+        staffTable = new JTable(staffTableModel);
+
+        //create and add table sorter
+        TableRowSorter<EmployeeTable> sorter = new TableRowSorter<EmployeeTable>(staffTableModel);
+        staffTable.setRowSorter(sorter);
+        sorter.setSortable(5, false); //button column is not sortable
+
+        //create scroll pane
+        JScrollPane tablePane = new JScrollPane(staffTable);
+
+        //add combobox to the table
+        JComboBox comboBox = new JComboBox(backend.Employee.Position.values());
+        comboBox.setEnabled(true);
+        DefaultCellEditor editor = new DefaultCellEditor(comboBox);
+        staffTable.getColumnModel().getColumn(2).setCellEditor(editor);
+
+        //add buttons to the table
+        TableCellRenderer buttonRenderer = new EmployeeTable.JTableButtonRenderer();
+        staffTable.getColumnModel().getColumn(5).setCellRenderer(buttonRenderer);
+        //staffTable.getColumn("Delete").setCellRenderer(buttonRenderer); //this forces referring to the column by name. we use column name for button name return different one for the colum
+        staffTable.addMouseListener(new EmployeeTable.JTableButtonMouseListener(staffTable));
+
+        //add staff table to the layout
+        getContentPane().add(BorderLayout.CENTER, tablePane);
+
+        init_search(sorter);
+    }
+    
     private void init_ui(){
 
         //initialize menu bar
