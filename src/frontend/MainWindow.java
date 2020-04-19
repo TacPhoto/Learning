@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import javax.swing.JFrame;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableRowSorter;
 
 public class MainWindow extends JFrame{
     EmployeeListController employeeListController;
@@ -86,9 +87,16 @@ public class MainWindow extends JFrame{
         toolsPanel.add(saveToolButton);
         toolsPanel.add(searchToolButton);
 
-        //create staff table and add it to the layout
+        //create staff table
         staffTableModel = new EmployeeTable(employeeListController.getEmployeeList()); //table with staff data, editable
         staffTable = new JTable(staffTableModel);
+
+        //create and add table sorter
+        TableRowSorter<EmployeeTable> sorter = new TableRowSorter<EmployeeTable>(staffTableModel);
+        staffTable.setRowSorter(sorter);
+        sorter.setSortable(5, false); //button column is not sortable
+
+        //add staff table to the layout
         JScrollPane tablePane = new JScrollPane(staffTable);
 
         //add combobox to the table
