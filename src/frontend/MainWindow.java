@@ -1,30 +1,33 @@
 package frontend;
 
-import backend.Employee.Employee;
 import backend.Employee.EmployeeListController;
 import backend.Employee.Position;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.table.TableCellRenderer;
 
 public class MainWindow extends JFrame{
     EmployeeListController employeeListController;
+    JTable staffTable;
+    EmployeeTable staffTableModel;
+    int width = 1200;
 
     public MainWindow(){
 
         //Frame
         super( "Employee Manager" );
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setMinimumSize(new Dimension(1200, 800)); //todo: tweak min size according to tool pane size
+        setMinimumSize(new Dimension(width, 800)); //todo: tweak min size according to tool pane size
 
         employeeListController = new EmployeeListController();
 
         //layout
         init_ui();
+
+        //add table to employeeListController, it will let it notify table about changes
+        employeeListController.setStaffTableModel(staffTableModel);
 
         //show window
         setVisible(true);
@@ -44,9 +47,11 @@ public class MainWindow extends JFrame{
         menuBar.add(helpMenu);
 
         //create and add FILE menu items
+        JMenuItem menuItemNew = new JMenuItem("New");
         JMenuItem menuItemOpen = new JMenuItem("Open");
         JMenuItem menuItemSaveAs = new JMenuItem("Save as");
 
+        fileMenu.add(menuItemNew);
         fileMenu.add(menuItemOpen);
         fileMenu.add(menuItemSaveAs);
 
@@ -70,13 +75,21 @@ public class MainWindow extends JFrame{
         JPanel toolsPanel = new JPanel(); //panel that contains all tools and operations
         getContentPane().add(BorderLayout.NORTH, toolsPanel);
 
-        //initialize Employee List Controller
+        //create tools buttons
+        ToolButton saveToolButton = new ToolButton("Save", employeeListController);
+        ToolButton addToolButton = new ToolButton("Add", employeeListController);
+        ToolButton searchToolButton = new ToolButton("Search", employeeListController);
+
+
+        //add tools buttons to toolsPanel
+        toolsPanel.add(addToolButton);
+        toolsPanel.add(saveToolButton);
+        toolsPanel.add(searchToolButton);
 
         //create staff table and add it to the layout
-        EmployeeTable staffTableModel = new EmployeeTable(employeeListController.getEmployeeList()); //table with staff data, editable
-        JTable staffTable = new JTable(staffTableModel);
+        staffTableModel = new EmployeeTable(employeeListController.getEmployeeList()); //table with staff data, editable
+        staffTable = new JTable(staffTableModel);
         JScrollPane tablePane = new JScrollPane(staffTable);
-
 
         //add combobox to the table
         JComboBox comboBox = new JComboBox(backend.Employee.Position.values());
@@ -90,7 +103,7 @@ public class MainWindow extends JFrame{
         //staffTable.getColumn("Delete").setCellRenderer(buttonRenderer); //this forces referring to the column by name. we use column name for button name return different one for the colum
         staffTable.addMouseListener(new EmployeeTable.JTableButtonMouseListener(staffTable));
 
-        getContentPane().add(BorderLayout.SOUTH, tablePane);
+        getContentPane().add(BorderLayout.CENTER, tablePane);
 
         //TEST
         employeeListController.addEmployee("addedLater", "second", Position.IT, 5, 2000);
