@@ -41,9 +41,6 @@ public class ToolButton extends JButton implements ActionListener {
                 case "Save":
                     System.out.println("Save");
                     break;
-                case "Search":
-                    System.out.println("Search");
-                    break;
                 default:
                     System.out.println("DEBUG: button has no action specify. It is bind by button text");
             }

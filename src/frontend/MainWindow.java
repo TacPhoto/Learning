@@ -6,6 +6,8 @@ import backend.Employee.Position;
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.JFrame;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableRowSorter;
 
@@ -73,12 +75,10 @@ public class MainWindow extends JFrame{
         //create tools buttons
         ToolButton saveToolButton = new ToolButton("Save", employeeListController);
         ToolButton addToolButton = new ToolButton("Add", employeeListController);
-        ToolButton searchToolButton = new ToolButton("Search", employeeListController);
 
         //add tools buttons to toolsPanel
         toolsPanel.add(addToolButton);
         toolsPanel.add(saveToolButton);
-        toolsPanel.add(searchToolButton);
 
         //add toolsPanel to the layout
         getContentPane().add(BorderLayout.NORTH, toolsPanel);
@@ -95,7 +95,7 @@ public class MainWindow extends JFrame{
         staffTable.setRowSorter(sorter);
         sorter.setSortable(5, false); //button column is not sortable
 
-        //add staff table to the layout
+        //create scroll pane
         JScrollPane tablePane = new JScrollPane(staffTable);
 
         //add combobox to the table
@@ -110,7 +110,50 @@ public class MainWindow extends JFrame{
         //staffTable.getColumn("Delete").setCellRenderer(buttonRenderer); //this forces referring to the column by name. we use column name for button name return different one for the colum
         staffTable.addMouseListener(new EmployeeTable.JTableButtonMouseListener(staffTable));
 
+        //add staff table to the layout
         getContentPane().add(BorderLayout.CENTER, tablePane);
+
+        //create search panel
+        JPanel searchPanel = new JPanel(new BorderLayout());
+
+        //create and add elements of search panel
+        JLabel label = new JLabel("Filter: ");
+        searchPanel.add(BorderLayout.WEST ,label);
+        final JTextField filterText = new JTextField("");
+        searchPanel.add(BorderLayout.CENTER, filterText);
+
+        //add search panel to the layout
+        getContentPane().add(BorderLayout.SOUTH, searchPanel);
+
+        //implement searching
+        filterText.getDocument().addDocumentListener(new DocumentListener() {
+            private String getText(){
+                return filterText.getText();
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                if (getText().trim().length() == 0) {
+                    sorter.setRowFilter(null);
+                } else {
+                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + getText()));
+                }
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                if (getText().trim().length() == 0) {
+                    sorter.setRowFilter(null);
+                } else {
+                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + getText()));
+                }
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                throw new UnsupportedOperationException("Not supported yet.");
+            }
+        });
     }
     private void init_ui(){
 
