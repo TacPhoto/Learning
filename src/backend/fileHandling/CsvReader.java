@@ -2,6 +2,7 @@ package backend.fileHandling;
 
 import backend.Employee.EmployeeListController;
 import backend.Employee.Position;
+import frontend.EmployeeTable;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,7 +15,9 @@ public class CsvReader {
     private EmployeeListController employeeListController;
     private BufferedReader reader;
     private List<String> lineList = new ArrayList<String>();
+    private EmployeeTable staffTable;
     String delimiter;
+
 
     public CsvReader(String csvPath, EmployeeListController employeeListController) throws IOException{
         this.reader = Files.newBufferedReader(Paths.get(csvPath));
@@ -43,7 +46,7 @@ public class CsvReader {
             return false;
 
         boolean isValidEnum = false;
-        for(Position pos : Position.values()){
+        for(Position pos : Position.values()){ //enum check
             if(pos.name().equals(lineSplit[2])) {
                 isValidEnum = true;
                 break;
@@ -54,7 +57,7 @@ public class CsvReader {
             return false;
 
         if(!lineSplit[3].chars().allMatch(Character::isDigit) &&
-        !lineSplit[3].matches("[-+]?[0-9]*\\.?[0-9]+")) //salarycheck
+        !lineSplit[3].matches("[-+]?[0-9]*\\.?[0-9]+")) //salary check
             return false;
 
         return isValidEnum;
@@ -72,6 +75,7 @@ public class CsvReader {
     }
 
     private void populateTable(){
+        staffTable.setEditable(false);
 
         for(String line : lineList) {
             String[] lineSplit = line.split(delimiter);
@@ -84,6 +88,7 @@ public class CsvReader {
             }
         }
 
+        staffTable.setEditable(true);
     }
 
 }

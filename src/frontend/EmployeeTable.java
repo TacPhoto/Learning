@@ -15,6 +15,8 @@ import java.util.List;
 
 public class EmployeeTable extends AbstractTableModel {
 
+    boolean isEditable;
+
     private List<Employee> employeeList; //private, yet it will use reference and be the same object
                                          //as employeeList in main function :)
 
@@ -32,6 +34,7 @@ public class EmployeeTable extends AbstractTableModel {
 
     public EmployeeTable(List<Employee> employeeList) {
         this.employeeList = employeeList;
+        isEditable = true;
     }
 
     @Override
@@ -86,10 +89,16 @@ public class EmployeeTable extends AbstractTableModel {
         return null;
     }
 
+    public void setEditable(boolean mode){
+        if(mode)
+            isEditable = true;
+        isEditable = false;
+    }
+
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) //we force table to be always editable
     {
-        return true;
+        return isEditable;
     }
 
     @Override

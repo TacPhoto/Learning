@@ -22,7 +22,7 @@ public class MainWindow extends JFrame{
         //Frame
         super( "Employee Manager" );
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setMinimumSize(new Dimension(width, 800)); //todo: tweak min size according to tool pane size
+        setMinimumSize(new Dimension(width, 800));
 
         employeeListController = new EmployeeListController();
 
