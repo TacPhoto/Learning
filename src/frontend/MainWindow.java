@@ -67,25 +67,30 @@ public class MainWindow extends JFrame{
         getContentPane().add(BorderLayout.NORTH, menuBar);
     }
 
-    private void init_ui(){
-
-        //initialize menu bar
-        initMenuBar();
-
-        //add main panels to the main window
+    private void initToolsPane(){
         JPanel toolsPanel = new JPanel(); //panel that contains all tools and operations
-        getContentPane().add(BorderLayout.NORTH, toolsPanel);
 
         //create tools buttons
         ToolButton saveToolButton = new ToolButton("Save", employeeListController);
         ToolButton addToolButton = new ToolButton("Add", employeeListController);
         ToolButton searchToolButton = new ToolButton("Search", employeeListController);
 
-
         //add tools buttons to toolsPanel
         toolsPanel.add(addToolButton);
         toolsPanel.add(saveToolButton);
         toolsPanel.add(searchToolButton);
+
+        //add toolsPanel to the layout
+        getContentPane().add(BorderLayout.NORTH, toolsPanel);
+
+    }
+    private void init_ui(){
+
+        //initialize menu bar
+        initMenuBar();
+        //initialize tools panel
+        initToolsPane();
+
 
         //create staff table
         staffTableModel = new EmployeeTable(employeeListController.getEmployeeList()); //table with staff data, editable
