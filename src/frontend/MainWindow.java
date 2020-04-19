@@ -84,14 +84,8 @@ public class MainWindow extends JFrame{
         getContentPane().add(BorderLayout.NORTH, toolsPanel);
 
     }
-    private void init_ui(){
 
-        //initialize menu bar
-        initMenuBar();
-        //initialize tools panel
-        initToolsPane();
-
-
+    private void initStaffTablePanel(){
         //create staff table
         staffTableModel = new EmployeeTable(employeeListController.getEmployeeList()); //table with staff data, editable
         staffTable = new JTable(staffTableModel);
@@ -117,6 +111,16 @@ public class MainWindow extends JFrame{
         staffTable.addMouseListener(new EmployeeTable.JTableButtonMouseListener(staffTable));
 
         getContentPane().add(BorderLayout.CENTER, tablePane);
+    }
+    private void init_ui(){
+
+        //initialize menu bar
+        initMenuBar();
+        //initialize tools panel
+        initToolsPane();
+        //initialize staff table panel
+        initStaffTablePanel();
+
 
         //TEST
         employeeListController.addEmployee("addedLater", "second", Position.IT, 5, 2000);
