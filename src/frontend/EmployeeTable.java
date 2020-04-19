@@ -102,9 +102,9 @@ public class EmployeeTable extends AbstractTableModel {
         } else if (2 == columnIndex) {
             row.setPosition((Position) aValue); //input secured by enum combobox
         } else if (3 == columnIndex) {
-            row.setSeniority((Integer) aValue);
+            row.setSeniority(abs((Integer) aValue));
         } else if (4 == columnIndex) {
-            row.setSalary((Double) aValue);
+            row.setSalary(abs((Double) aValue));
         }
 
     }
@@ -136,6 +136,18 @@ public class EmployeeTable extends AbstractTableModel {
             JButton button = (JButton)value;
             return button;
         }
+    }
+
+    private float abs(float a){
+        return(a > -a) ? a : -a;
+    }
+
+    private double abs(double a){
+        return(a > -a) ? a : -a;
+    }
+
+    private int abs(int a){
+        return(a > -a) ? a : -a;
     }
 }
 

@@ -159,7 +159,7 @@ public class MainWindow extends JFrame{
 
         init_search(sorter);
     }
-    
+
     private void init_ui(){
 
         //initialize menu bar
