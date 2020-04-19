@@ -138,6 +138,10 @@ public class EmployeeTable extends AbstractTableModel {
         }
     }
 
+    //honestly, I don't like all these mathf functions. no functions on complex types
+    //sometimes it is good to have a tiny function written by your self and not to write those long lines
+    //https://developer.download.nvidia.com/cg/abs.html
+    //https://developer.download.nvidia.com/cg/max.html
     private float abs(float a){
         return(a > -a) ? a : -a;
     }
