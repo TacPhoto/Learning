@@ -12,6 +12,8 @@ import javax.swing.JFrame;
 import javax.swing.table.TableCellRenderer;
 
 public class MainWindow extends JFrame{
+    EmployeeListController employeeListController;
+
     public MainWindow(){
 
         //Frame
@@ -19,11 +21,17 @@ public class MainWindow extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setMinimumSize(new Dimension(1200, 800)); //todo: tweak min size according to tool pane size
 
+        employeeListController = new EmployeeListController();
+
         //layout
         init_ui();
 
         //show window
         setVisible(true);
+
+        //Test
+        employeeListController.addEmployee("last", "second", Position.IT, 5, 2000);
+
     }
 
     private void initMenuBar(){
@@ -63,7 +71,6 @@ public class MainWindow extends JFrame{
         getContentPane().add(BorderLayout.NORTH, toolsPanel);
 
         //initialize Employee List Controller
-        EmployeeListController employeeListController = new EmployeeListController();
 
         //create staff table and add it to the layout
         EmployeeTable staffTableModel = new EmployeeTable(employeeListController.getEmployeeList()); //table with staff data, editable
