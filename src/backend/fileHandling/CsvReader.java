@@ -5,9 +5,9 @@ import backend.Employee.Position;
 import frontend.EmployeeTable;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +20,7 @@ public class CsvReader {
 
 
     public CsvReader(String csvPath, EmployeeListController employeeListController) throws IOException{
-        this.reader = Files.newBufferedReader(Paths.get(csvPath));
+        this.reader = new BufferedReader(new InputStreamReader(new FileInputStream(csvPath), "utf-8"));
         this.employeeListController = employeeListController;
         delimiter = ";";
     }
