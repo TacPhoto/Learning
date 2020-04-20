@@ -30,7 +30,7 @@ public class MainWindow extends JFrame{
         init_ui();
 
         //add table to employeeListController, it will let it notify table about changes
-        employeeListController.setStaffTableModel(staffTableModel);
+        connectTableAndController();
 
         //show window
         setVisible(true);
@@ -178,5 +178,10 @@ public class MainWindow extends JFrame{
 
         //TEST
         employeeListController.addEmployee("removed", "second", Position.IT, 5, 2000);
+    }
+
+    private void connectTableAndController() {
+        employeeListController.setStaffTableModel(staffTableModel);
+        staffTableModel.setEmployeeListController(employeeListController);
     }
 }

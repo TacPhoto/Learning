@@ -91,4 +91,10 @@ public class CsvReader {
         staffTable.setEditable(true);
     }
 
+
+    public void readDataFromCsv() throws IOException {
+        csvToStringList();
+        populateTable();
+    }
+
 }

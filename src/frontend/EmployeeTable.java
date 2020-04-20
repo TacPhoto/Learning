@@ -1,6 +1,8 @@
 package frontend;
 
 import backend.Employee.Employee;
+
+import backend.Employee.EmployeeListController;
 import backend.Employee.Position;
 
 import javax.swing.*;
@@ -17,6 +19,7 @@ public class EmployeeTable extends AbstractTableModel {
 
     boolean isEditable;
 
+    private EmployeeListController employeeListController;
     private List<Employee> employeeList; //private, yet it will use reference and be the same object
                                          //as employeeList in main function :)
 
@@ -75,12 +78,11 @@ public class EmployeeTable extends AbstractTableModel {
             return row.getSeniority();
         } else if (4 == columnIndex) {
             return row.getSalary();
-        } else if (5 == columnIndex) {
+        } else if (5 == columnIndex) { //Delete button clicked
             final JButton button = new JButton(columnNames[columnIndex]);
             button.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent arg0) {
-                    JOptionPane.showMessageDialog(JOptionPane.getFrameForComponent(button),
-                            "Button clicked! Row: " + rowIndex); //todo: implement some function. it's only a test right now
+                    employeeListController.removeEmployee(rowIndex);
                 }
             });
             return button;
@@ -93,6 +95,10 @@ public class EmployeeTable extends AbstractTableModel {
         if(mode)
             isEditable = true;
         isEditable = false;
+    }
+
+    public void setEmployeeListController(EmployeeListController employeeListController){
+        this.employeeListController = employeeListController;
     }
 
     @Override

@@ -32,4 +32,10 @@ public class EmployeeListController {
             staffTableModel.fireTableDataChanged();
     }
 
+    public void removeEmployee(int index){
+        employeeList.remove(index);
+
+        if(staffTableModel != null)
+            staffTableModel.fireTableDataChanged();
+    }
 }
