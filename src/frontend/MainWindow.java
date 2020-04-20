@@ -66,7 +66,8 @@ public class MainWindow extends JFrame{
         //add actions to menus items
 
         //add menuBar to mainWindow
-        getContentPane().add(BorderLayout.NORTH, menuBar);
+        this.setJMenuBar(menuBar);
+
     }
 
     private void initToolsPane(){
@@ -161,6 +162,10 @@ public class MainWindow extends JFrame{
     }
 
     private void init_ui(){
+        Container contentPane = getContentPane();
+        contentPane.setLayout(new BorderLayout());
+
+
 
         //initialize menu bar
         initMenuBar();
