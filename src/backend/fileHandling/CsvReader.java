@@ -37,6 +37,9 @@ public class CsvReader {
     }
 
     private boolean isValidLineSplit(String[] lineSplit){
+        if(lineSplit.length < 5)
+            return false;
+
         for(int i = 0; i < 5; i++) //overall empty values check
             return lineSplit[i] != null;
 
@@ -85,6 +88,7 @@ public class CsvReader {
                 addEmployee(lineSplit);
             else{
                 System.out.println("ERROR: DATA FROM FILE IS INVALID");
+                //todo: implement error and table cleanup
                 break;
             }
         }
