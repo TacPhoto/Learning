@@ -19,9 +19,10 @@ public class CsvReader {
     String delimiter;
 
 
-    public CsvReader(String csvPath, EmployeeListController employeeListController) throws IOException{
+    public CsvReader(String csvPath, EmployeeListController employeeListController, EmployeeTable staffTable) throws IOException{
         this.reader = new BufferedReader(new InputStreamReader(new FileInputStream(csvPath), "utf-8"));
         this.employeeListController = employeeListController;
+        this.staffTable = staffTable;
         delimiter = ";";
     }
 
@@ -36,7 +37,7 @@ public class CsvReader {
     }
 
     private boolean isValidLineSplit(String[] lineSplit){
-        for(int i = 0; i < lineSplit.length; i++) //overall empty values check
+        for(int i = 0; i < 5; i++) //overall empty values check
             return lineSplit[i] != null;
 
         if(!lineSplit[0].chars().allMatch(Character::isLetter)) //surname check

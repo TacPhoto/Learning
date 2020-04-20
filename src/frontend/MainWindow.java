@@ -2,9 +2,12 @@ package frontend;
 
 import backend.Employee.EmployeeListController;
 import backend.Employee.Position;
+import backend.fileHandling.CsvReader;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.io.IOException;
 import javax.swing.JFrame;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -16,6 +19,7 @@ public class MainWindow extends JFrame{
     JTable staffTable;
     EmployeeTable staffTableModel;
     int width = 1200;
+    String csvPath;
 
     public MainWindow(){
 
@@ -35,9 +39,30 @@ public class MainWindow extends JFrame{
         //show window
         setVisible(true);
 
+        /*
+        //TEST
+        employeeListController.addEmployee("addedLater", "second", Position.IT, 5, 2000);
+        //TEST
+        employeeListController.addEmployee("addedLater", "secofend", Position.IT, 5, 2000);
+        //TEST
+        employeeListController.addEmployee("removed", "second", Position.IT, 5, 2000);
         //Test
         employeeListController.addEmployee("last", "second", Position.IT, 5, 2000);
+        */
+    }
 
+    private void loadCsvButton() throws IOException {
+        JFileChooser fileChooser = new JFileChooser();
+        int i = fileChooser.showOpenDialog(null);
+
+        //check if user selected any file
+        if(i ==fileChooser.APPROVE_OPTION){
+            csvPath = fileChooser.getSelectedFile().getAbsolutePath();
+
+            CsvReader csvRader = new CsvReader(csvPath, employeeListController, staffTableModel);
+            csvRader.readDataFromCsv();
+
+        }
     }
 
     private void initMenuBar(){
@@ -51,8 +76,21 @@ public class MainWindow extends JFrame{
 
         //create and add FILE menu items
         JMenuItem menuItemNew = new JMenuItem("New");
-        JMenuItem menuItemOpen = new JMenuItem("Open");
+        JMenuItem menuItemOpen = new JMenuItem();
         JMenuItem menuItemSaveAs = new JMenuItem("Save as");
+
+        //add actions and text to menus items
+        menuItemOpen.setAction(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    loadCsvButton();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+        menuItemOpen.setText("Open");
 
         fileMenu.add(menuItemNew);
         fileMenu.add(menuItemOpen);
@@ -63,7 +101,7 @@ public class MainWindow extends JFrame{
 
         helpMenu.add(menuItemAbout);
 
-        //add actions to menus items
+
 
         //add menuBar to mainWindow
         this.setJMenuBar(menuBar);
@@ -175,15 +213,7 @@ public class MainWindow extends JFrame{
         initStaffTablePanel();
 
 
-        //TEST
-        employeeListController.addEmployee("addedLater", "second", Position.IT, 5, 2000);
-
-        //TEST
-        employeeListController.addEmployee("addedLater", "secofend", Position.IT, 5, 2000);
-
-        //TEST
-        employeeListController.addEmployee("removed", "second", Position.IT, 5, 2000);
-    }
+        }
 
     private void connectTableAndController() {
         employeeListController.setStaffTableModel(staffTableModel);
