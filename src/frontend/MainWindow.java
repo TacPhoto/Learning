@@ -59,8 +59,8 @@ public class MainWindow extends JFrame{
         if(i ==fileChooser.APPROVE_OPTION){
             csvPath = fileChooser.getSelectedFile().getAbsolutePath();
 
-            CsvReader csvRader = new CsvReader(csvPath, employeeListController, staffTableModel);
-            csvRader.readDataFromCsv();
+            CsvReader csvReader = new CsvReader(csvPath, employeeListController, staffTableModel);
+            csvReader.readDataFromCsv();
 
         }
     }

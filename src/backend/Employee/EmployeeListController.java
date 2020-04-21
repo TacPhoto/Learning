@@ -38,4 +38,11 @@ public class EmployeeListController {
         if(staffTableModel != null)
             staffTableModel.fireTableDataChanged();
     }
+
+    public void clearList(){
+        employeeList.clear();
+
+        if(staffTableModel != null)
+            staffTableModel.fireTableDataChanged();
+    }
 }

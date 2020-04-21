@@ -4,6 +4,7 @@ import backend.Employee.EmployeeListController;
 import backend.Employee.Position;
 import frontend.EmployeeTable;
 
+import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -41,7 +42,8 @@ public class CsvReader {
             return false;
 
         for(int i = 0; i < 5; i++) //overall empty values check
-            return lineSplit[i] != null;
+            if(lineSplit[i] == null)
+                return false;
 
         if(!lineSplit[0].chars().allMatch(Character::isLetter)) //surname check
             return false;
@@ -50,11 +52,13 @@ public class CsvReader {
             return false;
 
         boolean isValidEnum = false;
-        for(Position pos : Position.values()){ //enum check
-            if(pos.name().equals(lineSplit[2])) {
-                isValidEnum = true;
-                break;
-            }
+
+        try{
+            Position.valueOf(lineSplit[2]);
+            isValidEnum = true;
+        }catch(Exception e){
+            System.out.println("Enum value validation error");
+            return false;
         }
 
         if(!lineSplit[3].chars().allMatch(Character::isDigit)) //seniority check
@@ -88,7 +92,13 @@ public class CsvReader {
                 addEmployee(lineSplit);
             else{
                 System.out.println("ERROR: DATA FROM FILE IS INVALID");
-                //todo: implement error and table cleanup
+                employeeListController.clearList();
+
+                JOptionPane.showMessageDialog(
+                        new JFrame()
+                        , "File validation error"
+                        , "ERROR"
+                        , JOptionPane.ERROR_MESSAGE);
                 break;
             }
         }
