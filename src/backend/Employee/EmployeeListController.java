@@ -13,8 +13,9 @@ public class EmployeeListController {
         this.employeeList = new ArrayList<Employee>();
     }
 
-    public void setListFromFile(String csvPath){ //todo: implement csvReader etc
-        //employeeList =
+    private void updateList(){
+        if(staffTableModel != null)
+            staffTableModel.fireTableDataChanged();
     }
 
     public void setStaffTableModel(EmployeeTable staffTableModel){
@@ -27,22 +28,16 @@ public class EmployeeListController {
 
     public void addEmployee(String surname, String name, Position position, int seniority, double salary){
         employeeList.add(new Employee(surname, name, position, seniority, salary));
-
-        if(staffTableModel != null)
-            staffTableModel.fireTableDataChanged();
+        updateList();
     }
 
     public void removeEmployee(int index){
         employeeList.remove(index);
-
-        if(staffTableModel != null)
-            staffTableModel.fireTableDataChanged();
+        updateList();
     }
 
     public void clearList(){
         employeeList.clear();
-
-        if(staffTableModel != null)
-            staffTableModel.fireTableDataChanged();
+        updateList();
     }
 }
