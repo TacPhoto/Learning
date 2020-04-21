@@ -24,5 +24,13 @@ public class CsvWriter {
         writer.write(employee.getPosition().toString() + delimiter);
         writer.write(String.valueOf(employee.getSalary()) + delimiter);
         writer.write("\n");
+
+        writer.flush();
+    }
+
+    public void saveList(){
+        for(Employee employee: employeeList){
+            serializeEmployee(employee);
+        }
     }
 }
