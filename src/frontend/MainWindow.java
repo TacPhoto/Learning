@@ -77,6 +77,7 @@ public class MainWindow extends JFrame{
         //create and add FILE menu items
         JMenuItem menuItemNew = new JMenuItem("New");
         JMenuItem menuItemOpen = new JMenuItem();
+        JMenuItem menuItemSave = new JMenuItem("Save");
         JMenuItem menuItemSaveAs = new JMenuItem("Save as");
 
         //add actions and text to menus items
@@ -94,6 +95,7 @@ public class MainWindow extends JFrame{
 
         fileMenu.add(menuItemNew);
         fileMenu.add(menuItemOpen);
+        fileMenu.add(menuItemSave);
         fileMenu.add(menuItemSaveAs);
 
         //create and add HELP menu items

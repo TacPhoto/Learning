@@ -33,4 +33,8 @@ public class CsvWriter {
             serializeEmployee(employee);
         }
     }
+
+    public void setOutputPath(String outputPath) {
+        this.outputPath = outputPath;
+    }
 }
