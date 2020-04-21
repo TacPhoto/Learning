@@ -3,6 +3,7 @@ package backend.fileHandling;
 import backend.Employee.EmployeeListController;
 import backend.Employee.Position;
 import frontend.EmployeeTable;
+import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.io.BufferedReader;
@@ -38,6 +39,9 @@ public class CsvReader {
     }
 
     private boolean isValidLineSplit(String[] lineSplit){
+        if(lineSplit == null) //should not happen
+            return false;
+
         if(lineSplit.length < 5)
             return false;
 
@@ -71,7 +75,7 @@ public class CsvReader {
         return isValidEnum;
     }
 
-    private void addEmployee(String[] lineSplit){
+    private void addEmployee(@NotNull String[] lineSplit){
             employeeListController.addEmployee(
                     lineSplit[0]                         //surname
                     , lineSplit[1]                       //name
