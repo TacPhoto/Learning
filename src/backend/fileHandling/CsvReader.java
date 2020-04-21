@@ -18,7 +18,7 @@ public class CsvReader {
     private BufferedReader reader;
     private List<String> lineList = new ArrayList<String>();
     private EmployeeTable staffTable;
-    String delimiter;
+    private String delimiter; //we use String instead of char we would have to convert it to String to use split()
 
 
     public CsvReader(String csvPath, EmployeeListController employeeListController, EmployeeTable staffTable) throws IOException{
