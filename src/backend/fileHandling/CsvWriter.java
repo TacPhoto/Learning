@@ -26,6 +26,7 @@ public class CsvWriter {
         writer.write(employee.getSurname() + delimiter);
         writer.write(employee.getName() + delimiter);
         writer.write(employee.getPosition().toString() + delimiter);
+        writer.write(String.valueOf(employee.getSeniority()) + delimiter);
         writer.write(String.valueOf(employee.getSalary()) + delimiter);
         writer.flush();
     }
