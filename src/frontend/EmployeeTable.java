@@ -105,6 +105,9 @@ public class EmployeeTable extends AbstractTableModel {
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) //we force table to be always editable
     {
+        if(columnIndex == 5)
+            return false;
+
         return isEditable;
     }
 
