@@ -1,4 +1,4 @@
-package backend.Employee;
+package backend.employee;
 
 public class Employee {
     private String surname;

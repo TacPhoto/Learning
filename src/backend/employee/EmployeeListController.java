@@ -1,4 +1,4 @@
-package backend.Employee;
+package backend.employee;
 
 import frontend.EmployeeTable;
 
@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeListController {
-    private List<Employee> employeeList;
+    private final List<Employee> employeeList;
     private EmployeeTable staffTableModel;
 
     public EmployeeListController() {
@@ -48,11 +48,8 @@ public class EmployeeListController {
          * considered as invalid. It should be used to prevent saving
          * an incomplete list
          */
-        if(employee.getSurname() == null || employee.getSurname().equals("") ||
-           employee.getName() == null || employee.getName().equals(""))
-            return false;
-
-        return true;
+        return employee.getSurname() != null && !employee.getSurname().equals("") &&
+                employee.getName() != null && !employee.getName().equals("");
     }
 
     public boolean isListValid(){

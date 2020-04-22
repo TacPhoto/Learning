@@ -1,6 +1,6 @@
 package frontend;
 
-import backend.Employee.EmployeeListController;
+import backend.employee.EmployeeListController;
 import backend.fileHandling.CsvReader;
 import backend.fileHandling.CsvWriter;
 
@@ -14,10 +14,10 @@ import java.awt.event.ActionEvent;
 import java.io.IOException;
 
 public class MainWindow extends JFrame{
-    EmployeeListController employeeListController;
+    final EmployeeListController employeeListController;
     JTable staffTable;
     EmployeeTable staffTableModel;
-    int width = 1200;
+    final int width = 1200;
     String csvPath;
     String outputPath;
 
@@ -56,6 +56,7 @@ public class MainWindow extends JFrame{
         int i = fileChooser.showOpenDialog(null);
 
         //check if user selected any file
+        //noinspection AccessStaticViaInstance
         if(i ==fileChooser.APPROVE_OPTION){
             csvPath = fileChooser.getSelectedFile().getAbsolutePath();
 
@@ -93,6 +94,7 @@ public class MainWindow extends JFrame{
         int i = fileChooser.showOpenDialog(null);
 
         //check if user selected any file
+        //noinspection AccessStaticViaInstance
         if(i ==fileChooser.APPROVE_OPTION) {
             outputPath = fileChooser.getSelectedFile().getAbsolutePath();
             saveCsv();
@@ -243,7 +245,7 @@ public class MainWindow extends JFrame{
         JScrollPane tablePane = new JScrollPane(staffTable);
 
         //add combobox to the table
-        JComboBox comboBox = new JComboBox(backend.Employee.Position.values());
+        JComboBox<backend.employee.Position> comboBox = new JComboBox<>(backend.employee.Position.values());
         comboBox.setEnabled(true);
         DefaultCellEditor editor = new DefaultCellEditor(comboBox);
         staffTable.getColumnModel().getColumn(2).setCellEditor(editor);

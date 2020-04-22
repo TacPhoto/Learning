@@ -1,7 +1,7 @@
 package backend.fileHandling;
 
-import backend.Employee.EmployeeListController;
-import backend.Employee.Position;
+import backend.employee.EmployeeListController;
+import backend.employee.Position;
 import frontend.EmployeeTable;
 import org.jetbrains.annotations.NotNull;
 
@@ -10,25 +10,26 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CsvReader {
     private EmployeeListController employeeListController;
     private BufferedReader reader;
-    private List<String> lineList = new ArrayList<String>();
+    private final List<String> lineList = new ArrayList<String>();
     private EmployeeTable staffTable;
     private String delimiter; //we use String instead of char we would have to convert it to String to use split()
 
 
     public CsvReader(String csvPath, EmployeeListController employeeListController, EmployeeTable staffTable) throws IOException{
-        this.reader = new BufferedReader(new InputStreamReader(new FileInputStream(csvPath), "utf-8"));
+        this.reader = new BufferedReader(new InputStreamReader(new FileInputStream(csvPath), StandardCharsets.UTF_8));
         this.employeeListController = employeeListController;
         this.staffTable = staffTable;
         delimiter = ";";
     }
 
-    private void csvToStringList() throws IOException {
+    private void csvToStringList() {
         try {
             String line;
             while((line = reader.readLine()) != null)
@@ -55,7 +56,7 @@ public class CsvReader {
         if(!lineSplit[1].chars().allMatch(Character::isLetter)) //name check
             return false;
 
-        boolean isValidEnum = false;
+        boolean isValidEnum;
 
         try{
             Position.valueOf(lineSplit[2]);
@@ -72,6 +73,7 @@ public class CsvReader {
         !lineSplit[3].matches("[-+]?[0-9]*\\.?[0-9]+")) //salary check
             return false;
 
+        //noinspection ConstantConditions
         return isValidEnum;
     }
 

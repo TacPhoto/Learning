@@ -1,15 +1,13 @@
 package frontend;
 
-import backend.Employee.Employee;
-import backend.Employee.EmployeeListController;
-import backend.Employee.Position;
+import backend.employee.Employee;
+import backend.employee.EmployeeListController;
+import backend.employee.Position;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
@@ -19,7 +17,7 @@ public class EmployeeTable extends AbstractTableModel {
     boolean isEditable;
 
     private EmployeeListController employeeListController;
-    private List<Employee> employeeList; //private, yet it will use reference and be the same object
+    private final List<Employee> employeeList; //private, yet it will use reference and be the same object
                                          //as employeeList in main function :)
 
     private final String[] columnNames = new String[]{
@@ -30,7 +28,7 @@ public class EmployeeTable extends AbstractTableModel {
 
     private final Class[] columnClass = new Class[]{
             String.class, String.class, Position.class, Integer.class, Double.class, JButton.class
-            //name        surname       position        serniority     salary        delete
+            //name        surname       position        seniority     salary        delete
     };
 
 
@@ -79,11 +77,7 @@ public class EmployeeTable extends AbstractTableModel {
             return row.getSalary();
         } else if (5 == columnIndex) { //Delete button clicked
             final JButton button = new JButton(columnNames[columnIndex]);
-            button.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent arg0) {
-                    employeeListController.removeEmployee(rowIndex);
-                }
-            });
+            button.addActionListener(arg0 -> employeeListController.removeEmployee(rowIndex));
             return button;
         }
 
@@ -91,10 +85,7 @@ public class EmployeeTable extends AbstractTableModel {
     }
 
     public void setEditable(boolean mode){
-        if(mode)
-            isEditable = true;
-        else
-            isEditable = false;
+        isEditable = mode;
     }
 
     public void setEmployeeListController(EmployeeListController employeeListController){
@@ -118,6 +109,7 @@ public class EmployeeTable extends AbstractTableModel {
         } else if (1 == columnIndex) {
             row.setSurname(((String) aValue).replaceAll("[^A-Za-z]+", ""));
         } else if (2 == columnIndex) {
+            //noinspection SpellCheckingInspection
             row.setPosition((Position) aValue); //input secured by enum combobox
         } else if (3 == columnIndex) {
             row.setSeniority(abs((Integer) aValue));
@@ -151,8 +143,7 @@ public class EmployeeTable extends AbstractTableModel {
 
     public static class JTableButtonRenderer implements TableCellRenderer {
         @Override public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-            JButton button = (JButton)value;
-            return button;
+            return (JButton)value;
         }
     }
 
@@ -160,15 +151,19 @@ public class EmployeeTable extends AbstractTableModel {
     //sometimes it is good to have a tiny function written by your self and not to write those long lines
     //https://developer.download.nvidia.com/cg/abs.html
     //https://developer.download.nvidia.com/cg/max.html
+    @SuppressWarnings("SpellCheckingInspection")
     private float abs(float a){
+        //noinspection ManualMinMaxCalculation,ManualMinMaxCalculation,ManualMinMaxCalculation,ManualMinMaxCalculation
         return(a > -a) ? a : -a;
     }
 
     private double abs(double a){
+        //noinspection ManualMinMaxCalculation
         return(a > -a) ? a : -a;
     }
 
     private int abs(int a){
+        //noinspection ManualMinMaxCalculation
         return(a > -a) ? a : -a;
     }
 }

@@ -1,7 +1,7 @@
 package backend.fileHandling;
 
-import backend.Employee.Employee;
-import backend.Employee.EmployeeListController;
+import backend.employee.Employee;
+import backend.employee.EmployeeListController;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -10,7 +10,7 @@ import java.io.PrintWriter;
 import java.util.List;
 
 public class CsvWriter {
-    private List<Employee> employeeList;
+    private final List<Employee> employeeList;
     private String outputPath;
     private PrintWriter writer;
     private char delimiter;

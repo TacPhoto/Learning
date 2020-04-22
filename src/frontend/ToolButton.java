@@ -1,14 +1,14 @@
 package frontend;
 
-import backend.Employee.EmployeeListController;
-import backend.Employee.Position;
+import backend.employee.EmployeeListController;
+import backend.employee.Position;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ToolButton extends JButton implements ActionListener {
-    private String text;
+    private final String text;
     private EmployeeListController employeeListController;
 
     public ToolButton(String text){
@@ -33,6 +33,7 @@ public class ToolButton extends JButton implements ActionListener {
 
     class ToolListener implements ActionListener {
         @Override public void actionPerformed(ActionEvent e) {
+            //noinspection SwitchStatementWithTooFewBranches
             switch (text){
                 case "Add":
                     System.out.println("Add clicked");
