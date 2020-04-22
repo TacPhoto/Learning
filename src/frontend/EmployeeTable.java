@@ -94,7 +94,8 @@ public class EmployeeTable extends AbstractTableModel {
     public void setEditable(boolean mode){
         if(mode)
             isEditable = true;
-        isEditable = false;
+        else
+            isEditable = false;
     }
 
     public void setEmployeeListController(EmployeeListController employeeListController){
