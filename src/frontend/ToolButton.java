@@ -11,14 +11,14 @@ public class ToolButton extends JButton implements ActionListener {
     private final String text;
     private EmployeeListController employeeListController;
 
-    public ToolButton(String text){
+    public ToolButton(String text) {
         super(text);
         this.text = text;
         this.addActionListener(new ToolListener() {
         });
     }
 
-    public ToolButton(String text, EmployeeListController employeeListController){
+    public ToolButton(String text, EmployeeListController employeeListController) {
         super(text);
         this.text = text;
         this.employeeListController = employeeListController;
@@ -32,12 +32,13 @@ public class ToolButton extends JButton implements ActionListener {
     }
 
     class ToolListener implements ActionListener {
-        @Override public void actionPerformed(ActionEvent e) {
+        @Override
+        public void actionPerformed(ActionEvent e) {
             //noinspection SwitchStatementWithTooFewBranches
-            switch (text){
+            switch (text) {
                 case "Add":
                     System.out.println("Add clicked");
-                    employeeListController.addEmployee("","", Position.none, 0, 0);
+                    employeeListController.addEmployee("", "", Position.none, 0, 0);
                     break;
                 default:
                     System.out.println("DEBUG: button has no action specify. It is bind by button text");

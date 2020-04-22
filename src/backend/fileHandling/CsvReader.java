@@ -22,7 +22,7 @@ public class CsvReader {
     private String delimiter; //we use String instead of char we would have to convert it to String to use split()
 
 
-    public CsvReader(String csvPath, EmployeeListController employeeListController, EmployeeTable staffTable) throws IOException{
+    public CsvReader(String csvPath, EmployeeListController employeeListController, EmployeeTable staffTable) throws IOException {
         this.reader = new BufferedReader(new InputStreamReader(new FileInputStream(csvPath), StandardCharsets.UTF_8));
         this.employeeListController = employeeListController;
         this.staffTable = staffTable;
@@ -32,71 +32,71 @@ public class CsvReader {
     private void csvToStringList() {
         try {
             String line;
-            while((line = reader.readLine()) != null)
+            while ((line = reader.readLine()) != null)
                 lineList.add(line);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private boolean isValidLineSplit(String[] lineSplit){
-        if(lineSplit == null) //should not happen
+    private boolean isValidLineSplit(String[] lineSplit) {
+        if (lineSplit == null) //should not happen
             return false;
 
-        if(lineSplit.length < 5)
+        if (lineSplit.length < 5)
             return false;
 
-        for(int i = 0; i < 5; i++) //overall empty values check
-            if(lineSplit[i] == null)
+        for (int i = 0; i < 5; i++) //overall empty values check
+            if (lineSplit[i] == null)
                 return false;
 
-        if(!lineSplit[0].chars().allMatch(Character::isLetter)) //surname check
+        if (!lineSplit[0].chars().allMatch(Character::isLetter)) //surname check
             return false;
 
-        if(!lineSplit[1].chars().allMatch(Character::isLetter)) //name check
+        if (!lineSplit[1].chars().allMatch(Character::isLetter)) //name check
             return false;
 
         boolean isValidEnum;
 
-        try{
+        try {
             Position.valueOf(lineSplit[2]);
             isValidEnum = true;
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println("Enum value validation error");
             return false;
         }
 
-        if(!lineSplit[3].chars().allMatch(Character::isDigit)) //seniority check
+        if (!lineSplit[3].chars().allMatch(Character::isDigit)) //seniority check
             return false;
 
-        if(!lineSplit[3].chars().allMatch(Character::isDigit) &&
-        !lineSplit[3].matches("[-+]?[0-9]*\\.?[0-9]+")) //salary check
+        if (!lineSplit[3].chars().allMatch(Character::isDigit) &&
+                !lineSplit[3].matches("[-+]?[0-9]*\\.?[0-9]+")) //salary check
             return false;
 
         //noinspection ConstantConditions
         return isValidEnum;
     }
 
-    private void addEmployee(@NotNull String[] lineSplit){
-            employeeListController.addEmployee(
-                    lineSplit[0]                         //surname
-                    , lineSplit[1]                       //name
-                    , Position.valueOf(lineSplit[2])     //position
-                    , Integer.parseInt(lineSplit[3])     //seniority
-                    , Double.parseDouble(lineSplit[4])   //salary
-            );
+    private void addEmployee(@NotNull String[] lineSplit) {
+        employeeListController.addEmployee(
+                lineSplit[0]                         //surname
+                , lineSplit[1]                       //name
+                , Position.valueOf(lineSplit[2])     //position
+                , Integer.parseInt(lineSplit[3])     //seniority
+                , Double.parseDouble(lineSplit[4])   //salary
+        );
 
     }
 
-    private void populateTable(){
+    private void populateTable() {
         staffTable.setEditable(false);
 
-        for(String line : lineList) {
+        for (String line : lineList) {
             String[] lineSplit = line.split(delimiter);
 
             if (isValidLineSplit(lineSplit))
                 addEmployee(lineSplit);
-            else{
+            else {
                 System.out.println("ERROR: DATA FROM FILE IS INVALID");
                 employeeListController.clearList();
 
@@ -108,12 +108,12 @@ public class CsvReader {
                 break;
             }
         }
-        
+
         staffTable.setEditable(true);
     }
 
 
-    public void readDataFromCsv() throws IOException {
+    public void readDataFromCsv() {
         csvToStringList();
         populateTable();
     }

@@ -18,7 +18,7 @@ public class EmployeeTable extends AbstractTableModel {
 
     private EmployeeListController employeeListController;
     private final List<Employee> employeeList; //private, yet it will use reference and be the same object
-                                         //as employeeList in main function :)
+    //as employeeList in main function :)
 
     private final String[] columnNames = new String[]{
             "name", "surname",
@@ -39,7 +39,7 @@ public class EmployeeTable extends AbstractTableModel {
 
     @Override
     public String getColumnName(int column) {
-        if(column == 5) //we return empty name for Deletion buttons column
+        if (column == 5) //we return empty name for Deletion buttons column
             return "";
         return columnNames[column];
     }
@@ -84,18 +84,18 @@ public class EmployeeTable extends AbstractTableModel {
         return null;
     }
 
-    public void setEditable(boolean mode){
+    public void setEditable(boolean mode) {
         isEditable = mode;
     }
 
-    public void setEmployeeListController(EmployeeListController employeeListController){
+    public void setEmployeeListController(EmployeeListController employeeListController) {
         this.employeeListController = employeeListController;
     }
 
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) //we force table to be always editable
     {
-        if(columnIndex == 5) //disables editability of Delete button column (enabling it will not enable changing it's value but looks bad
+        if (columnIndex == 5) //disables editability of Delete button column (enabling it will not enable changing it's value but looks bad
             return false;
 
         return isEditable;
@@ -129,21 +129,22 @@ public class EmployeeTable extends AbstractTableModel {
         public void mouseClicked(MouseEvent e) {
             //get column and row
             int column = table.getColumnModel().getColumnIndexAtX(e.getX());
-            int row    = e.getY()/table.getRowHeight();
+            int row = e.getY() / table.getRowHeight();
 
             //validate column and row
             if (row < table.getRowCount() && row >= 0 && column < table.getColumnCount() && column >= 0) {
                 Object value = table.getValueAt(row, column);
                 if (value instanceof JButton) {
-                    ((JButton)value).doClick(); //click event
+                    ((JButton) value).doClick(); //click event
                 }
             }
         }
     }
 
     public static class JTableButtonRenderer implements TableCellRenderer {
-        @Override public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-            return (JButton)value;
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            return (JButton) value;
         }
     }
 
@@ -152,19 +153,19 @@ public class EmployeeTable extends AbstractTableModel {
     //https://developer.download.nvidia.com/cg/abs.html
     //https://developer.download.nvidia.com/cg/max.html
     @SuppressWarnings("SpellCheckingInspection")
-    private float abs(float a){
+    private float abs(float a) {
         //noinspection ManualMinMaxCalculation,ManualMinMaxCalculation,ManualMinMaxCalculation,ManualMinMaxCalculation
-        return(a > -a) ? a : -a;
+        return (a > -a) ? a : -a;
     }
 
-    private double abs(double a){
+    private double abs(double a) {
         //noinspection ManualMinMaxCalculation
-        return(a > -a) ? a : -a;
+        return (a > -a) ? a : -a;
     }
 
-    private int abs(int a){
+    private int abs(int a) {
         //noinspection ManualMinMaxCalculation
-        return(a > -a) ? a : -a;
+        return (a > -a) ? a : -a;
     }
 }
 

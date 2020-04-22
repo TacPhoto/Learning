@@ -13,12 +13,12 @@ public class EmployeeListController {
         this.employeeList = new ArrayList<Employee>();
     }
 
-    private void updateList(){
-        if(staffTableModel != null)
+    private void updateList() {
+        if (staffTableModel != null)
             staffTableModel.fireTableDataChanged();
     }
 
-    public void setStaffTableModel(EmployeeTable staffTableModel){
+    public void setStaffTableModel(EmployeeTable staffTableModel) {
         this.staffTableModel = staffTableModel;
     }
 
@@ -26,35 +26,35 @@ public class EmployeeListController {
         return employeeList;
     }
 
-    public void addEmployee(String surname, String name, Position position, int seniority, double salary){
+    public void addEmployee(String surname, String name, Position position, int seniority, double salary) {
         employeeList.add(new Employee(surname, name, position, seniority, salary));
         updateList();
     }
 
-    public void removeEmployee(int index){
+    public void removeEmployee(int index) {
         employeeList.remove(index);
         updateList();
     }
 
-    public void clearList(){
+    public void clearList() {
         employeeList.clear();
         updateList();
     }
 
-    private boolean isEmployeeValid(Employee employee){
-        /**
-         * employee properties are secured by EmployeeTable inputs however
-         * name and surname can be left as empty. If so, employee record is
-         * considered as invalid. It should be used to prevent saving
-         * an incomplete list
+    private boolean isEmployeeValid(Employee employee) {
+        /*
+          employee properties are secured by EmployeeTable inputs however
+          name and surname can be left as empty. If so, employee record is
+          considered as invalid. It should be used to prevent saving
+          an incomplete list
          */
         return employee.getSurname() != null && !employee.getSurname().equals("") &&
                 employee.getName() != null && !employee.getName().equals("");
     }
 
-    public boolean isListValid(){
-        for(Employee employee : employeeList){
-            if(!isEmployeeValid(employee))
+    public boolean isListValid() {
+        for (Employee employee : employeeList) {
+            if (!isEmployeeValid(employee))
                 return false;
         }
 

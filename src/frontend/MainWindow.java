@@ -13,7 +13,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 
-public class MainWindow extends JFrame{
+public class MainWindow extends JFrame {
     final EmployeeListController employeeListController;
     JTable staffTable;
     EmployeeTable staffTableModel;
@@ -21,10 +21,10 @@ public class MainWindow extends JFrame{
     String csvPath;
     String outputPath;
 
-    public MainWindow(){
+    public MainWindow() {
 
         //Frame
-        super( "Employee Manager" );
+        super("Employee Manager");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setMinimumSize(new Dimension(width, 800));
 
@@ -57,7 +57,7 @@ public class MainWindow extends JFrame{
 
         //check if user selected any file
         //noinspection AccessStaticViaInstance
-        if(i ==fileChooser.APPROVE_OPTION){
+        if (i == fileChooser.APPROVE_OPTION) {
             csvPath = fileChooser.getSelectedFile().getAbsolutePath();
 
             CsvReader csvReader = new CsvReader(csvPath, employeeListController, staffTableModel);
@@ -67,12 +67,10 @@ public class MainWindow extends JFrame{
     }
 
     private void saveCsv() throws IOException {
-        if(employeeListController.isListValid()) {
+        if (employeeListController.isListValid()) {
             CsvWriter csvWriter = new CsvWriter(employeeListController, outputPath);
             csvWriter.saveList();
-        }
-        else
-        {
+        } else {
             JOptionPane.showMessageDialog(
                     new JFrame()
                     , "User can save list with employees with no position, no salary or no seniority\n" +
@@ -83,7 +81,7 @@ public class MainWindow extends JFrame{
     }
 
     private void saveButton() throws IOException {
-        if(csvPath != null) {
+        if (csvPath != null) {
             outputPath = csvPath;
             saveCsv();
         }
@@ -95,14 +93,14 @@ public class MainWindow extends JFrame{
 
         //check if user selected any file
         //noinspection AccessStaticViaInstance
-        if(i ==fileChooser.APPROVE_OPTION) {
+        if (i == fileChooser.APPROVE_OPTION) {
             outputPath = fileChooser.getSelectedFile().getAbsolutePath();
             saveCsv();
             csvPath = outputPath;
         }
     }
 
-    private void initMenuBar(){
+    private void initMenuBar() {
         JMenuBar menuBar = new JMenuBar();
 
         //create and add main menu items
@@ -167,13 +165,12 @@ public class MainWindow extends JFrame{
         helpMenu.add(menuItemAbout);
 
 
-
         //add menuBar to mainWindow
         this.setJMenuBar(menuBar);
 
     }
 
-    private void initToolsPane(){
+    private void initToolsPane() {
         JPanel toolsPanel = new JPanel(); //panel that contains all tools and operations
 
         //create tools buttons
@@ -187,51 +184,53 @@ public class MainWindow extends JFrame{
 
     }
 
-    private void init_search(TableRowSorter sorter){{
-        //create search panel
-        JPanel searchPanel = new JPanel(new BorderLayout());
+    private void init_search(TableRowSorter sorter) {
+        {
+            //create search panel
+            JPanel searchPanel = new JPanel(new BorderLayout());
 
-        //create and add elements of search panel
-        JLabel label = new JLabel("Filter: ");
-        searchPanel.add(BorderLayout.WEST ,label);
-        final JTextField filterText = new JTextField("");
-        searchPanel.add(BorderLayout.CENTER, filterText);
+            //create and add elements of search panel
+            JLabel label = new JLabel("Filter: ");
+            searchPanel.add(BorderLayout.WEST, label);
+            final JTextField filterText = new JTextField("");
+            searchPanel.add(BorderLayout.CENTER, filterText);
 
-        //add search panel to the layout
-        getContentPane().add(BorderLayout.SOUTH, searchPanel);
+            //add search panel to the layout
+            getContentPane().add(BorderLayout.SOUTH, searchPanel);
 
-        //implement searching
-        filterText.getDocument().addDocumentListener(new DocumentListener() {
-            private String getText(){
-                return filterText.getText();
-            }
-
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                if (getText().trim().length() == 0) {
-                    sorter.setRowFilter(null);
-                } else {
-                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + getText()));
+            //implement searching
+            filterText.getDocument().addDocumentListener(new DocumentListener() {
+                private String getText() {
+                    return filterText.getText();
                 }
-            }
 
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                if (getText().trim().length() == 0) {
-                    sorter.setRowFilter(null);
-                } else {
-                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + getText()));
+                @Override
+                public void insertUpdate(DocumentEvent e) {
+                    if (getText().trim().length() == 0) {
+                        sorter.setRowFilter(null);
+                    } else {
+                        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + getText()));
+                    }
                 }
-            }
 
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                throw new UnsupportedOperationException("Not supported yet.");
-            }
-        });}
+                @Override
+                public void removeUpdate(DocumentEvent e) {
+                    if (getText().trim().length() == 0) {
+                        sorter.setRowFilter(null);
+                    } else {
+                        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + getText()));
+                    }
+                }
+
+                @Override
+                public void changedUpdate(DocumentEvent e) {
+                    throw new UnsupportedOperationException("Not supported yet.");
+                }
+            });
+        }
     }
 
-    private void initStaffTablePanel(){
+    private void initStaffTablePanel() {
         //create staff table
         staffTableModel = new EmployeeTable(employeeListController.getEmployeeList()); //table with staff data, editable
         staffTable = new JTable(staffTableModel);
@@ -262,7 +261,7 @@ public class MainWindow extends JFrame{
         init_search(sorter);
     }
 
-    private void init_ui(){
+    private void init_ui() {
         Container contentPane = getContentPane();
         contentPane.setLayout(new BorderLayout());
 
@@ -273,7 +272,7 @@ public class MainWindow extends JFrame{
         //initialize staff table panel
         initStaffTablePanel();
 
-        }
+    }
 
     private void connectTableAndController() {
         employeeListController.setStaffTableModel(staffTableModel);
