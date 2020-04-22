@@ -68,8 +68,19 @@ public class MainWindow extends JFrame{
     }
 
     private void saveCsv() throws IOException {
-        CsvWriter csvWriter = new CsvWriter(employeeListController, outputPath);
-        csvWriter.saveList();
+        if(employeeListController.isListValid()) {
+            CsvWriter csvWriter = new CsvWriter(employeeListController, outputPath);
+            csvWriter.saveList();
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(
+                    new JFrame()
+                    , "User can save list with employees with no position, no salary or no seniority\n" +
+                            "but cannot save list with employee that has no name or no surname. Please fix the list."
+                    , "ERROR"
+                    , JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void saveButton() throws IOException {

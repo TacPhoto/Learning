@@ -40,4 +40,27 @@ public class EmployeeListController {
         employeeList.clear();
         updateList();
     }
+
+    private boolean isEmployeeValid(Employee employee){
+        /**
+         * employee properties are secured by EmployeeTable inputs however
+         * name and surname can be left as empty. If so, employee record is
+         * considered as invalid. It should be used to prevent saving
+         * an incomplete list
+         */
+        if(employee.getSurname() == null || employee.getSurname().equals("") ||
+           employee.getName() == null || employee.getName().equals(""))
+            return false;
+
+        return true;
+    }
+
+    public boolean isListValid(){
+        for(Employee employee : employeeList){
+            if(!isEmployeeValid(employee))
+                return false;
+        }
+
+        return true;
+    }
 }
