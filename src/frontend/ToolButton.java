@@ -38,9 +38,6 @@ public class ToolButton extends JButton implements ActionListener {
                     System.out.println("Add clicked");
                     employeeListController.addEmployee("","", Position.none, 0, 0);
                     break;
-                case "Save":
-                    System.out.println("Save");
-                    break;
                 default:
                     System.out.println("DEBUG: button has no action specify. It is bind by button text");
             }

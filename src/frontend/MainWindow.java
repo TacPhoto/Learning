@@ -177,12 +177,10 @@ public class MainWindow extends JFrame{
         JPanel toolsPanel = new JPanel(); //panel that contains all tools and operations
 
         //create tools buttons
-        ToolButton saveToolButton = new ToolButton("Save", employeeListController);
         ToolButton addToolButton = new ToolButton("Add", employeeListController);
 
         //add tools buttons to toolsPanel
         toolsPanel.add(addToolButton);
-        toolsPanel.add(saveToolButton);
 
         //add toolsPanel to the layout
         getContentPane().add(BorderLayout.NORTH, toolsPanel);
