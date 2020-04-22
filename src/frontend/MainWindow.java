@@ -1,19 +1,17 @@
 package frontend;
 
 import backend.Employee.EmployeeListController;
-import backend.Employee.Position;
 import backend.fileHandling.CsvReader;
 import backend.fileHandling.CsvWriter;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.io.IOException;
-import javax.swing.JFrame;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableRowSorter;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.io.IOException;
 
 public class MainWindow extends JFrame{
     EmployeeListController employeeListController;
@@ -266,15 +264,12 @@ public class MainWindow extends JFrame{
         Container contentPane = getContentPane();
         contentPane.setLayout(new BorderLayout());
 
-
-
         //initialize menu bar
         initMenuBar();
         //initialize tools panel
         initToolsPane();
         //initialize staff table panel
         initStaffTablePanel();
-
 
         }
 

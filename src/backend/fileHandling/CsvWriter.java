@@ -2,9 +2,11 @@ package backend.fileHandling;
 
 import backend.Employee.Employee;
 import backend.Employee.EmployeeListController;
-import frontend.EmployeeTable;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 public class CsvWriter {
@@ -36,7 +38,9 @@ public class CsvWriter {
         }
     }
 
-    public void setOutputPath(String outputPath) {
+    public void setOutputPath(String outputPath) throws IOException {
         this.outputPath = outputPath;
+        writer.close(); //to be sure that stream is closed
+        writer = new PrintWriter(new BufferedWriter(new FileWriter(outputPath))); //override old writer because
     }
 }
