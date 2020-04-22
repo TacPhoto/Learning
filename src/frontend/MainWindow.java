@@ -3,6 +3,7 @@ package frontend;
 import backend.Employee.EmployeeListController;
 import backend.Employee.Position;
 import backend.fileHandling.CsvReader;
+import backend.fileHandling.CsvWriter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,6 +21,7 @@ public class MainWindow extends JFrame{
     EmployeeTable staffTableModel;
     int width = 1200;
     String csvPath;
+    String outputPath;
 
     public MainWindow(){
 
@@ -65,6 +67,30 @@ public class MainWindow extends JFrame{
         }
     }
 
+    private void saveCsv() throws IOException {
+        CsvWriter csvWriter = new CsvWriter(employeeListController, outputPath);
+        csvWriter.saveList();
+    }
+
+    private void saveButton() throws IOException {
+        if(csvPath != null) {
+            outputPath = csvPath;
+            saveCsv();
+        }
+    }
+
+    private void saveAsButton() throws IOException {
+        JFileChooser fileChooser = new JFileChooser();
+        int i = fileChooser.showOpenDialog(null);
+
+        //check if user selected any file
+        if(i ==fileChooser.APPROVE_OPTION) {
+            outputPath = fileChooser.getSelectedFile().getAbsolutePath();
+            saveCsv();
+            csvPath = outputPath;
+        }
+    }
+
     private void initMenuBar(){
         JMenuBar menuBar = new JMenuBar();
 
@@ -77,8 +103,8 @@ public class MainWindow extends JFrame{
         //create and add FILE menu items
         JMenuItem menuItemNew = new JMenuItem("New");
         JMenuItem menuItemOpen = new JMenuItem();
-        JMenuItem menuItemSave = new JMenuItem("Save");
-        JMenuItem menuItemSaveAs = new JMenuItem("Save as");
+        JMenuItem menuItemSave = new JMenuItem();
+        JMenuItem menuItemSaveAs = new JMenuItem();
 
         //add actions and text to menus items
         menuItemOpen.setAction(new AbstractAction() {
@@ -93,6 +119,32 @@ public class MainWindow extends JFrame{
         });
         menuItemOpen.setText("Open");
 
+        menuItemSave.setAction(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    saveButton();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+        menuItemSave.setText("Save");
+
+        menuItemSaveAs.setAction(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    saveAsButton();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+        menuItemSaveAs.setText("Save As");
+
+
+        //add menu items to FILE menu
         fileMenu.add(menuItemNew);
         fileMenu.add(menuItemOpen);
         fileMenu.add(menuItemSave);

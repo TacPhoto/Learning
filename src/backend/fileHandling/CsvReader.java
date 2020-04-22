@@ -106,7 +106,7 @@ public class CsvReader {
                 break;
             }
         }
-
+        
         staffTable.setEditable(true);
     }
 
