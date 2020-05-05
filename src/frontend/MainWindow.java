@@ -5,6 +5,7 @@ import backend.fileHandling.CsvReader;
 import backend.fileHandling.CsvWriter;
 
 import javax.swing.*;
+import javax.swing.RowFilter.ComparisonType;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.TableCellRenderer;
@@ -12,6 +13,8 @@ import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MainWindow extends JFrame {
     final EmployeeListController employeeListController;
@@ -38,17 +41,6 @@ public class MainWindow extends JFrame {
 
         //show window
         setVisible(true);
-
-        /*
-        //TEST
-        employeeListController.addEmployee("addedLater", "second", Position.IT, 5, 2000);
-        //TEST
-        employeeListController.addEmployee("addedLater", "secofend", Position.IT, 5, 2000);
-        //TEST
-        employeeListController.addEmployee("removed", "second", Position.IT, 5, 2000);
-        //Test
-        employeeListController.addEmployee("last", "second", Position.IT, 5, 2000);
-        */
     }
 
     private void loadCsvButton() throws IOException {
@@ -152,7 +144,6 @@ public class MainWindow extends JFrame {
         });
         menuItemSaveAs.setText("Save As");
 
-
         //add menu items to FILE menu
         fileMenu.add(menuItemNew);
         fileMenu.add(menuItemOpen);
@@ -163,7 +154,6 @@ public class MainWindow extends JFrame {
         JMenuItem menuItemAbout = new JMenuItem("About");
 
         helpMenu.add(menuItemAbout);
-
 
         //add menuBar to mainWindow
         this.setJMenuBar(menuBar);
@@ -198,27 +188,67 @@ public class MainWindow extends JFrame {
             //add search panel to the layout
             getContentPane().add(BorderLayout.SOUTH, searchPanel);
 
+            Pattern doublePattern = Pattern.compile("[-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?"); //extracts first found Double from text
+
             DocumentListener textSorter = new DocumentListener() {
                 private String getText() {
                     return filterText.getText();
                 }
 
-                private void setTextFilter(){
-                    if (getText().trim().length() == 0) {
+                private void setLessFilter(String text) {
+                    Matcher matcher = doublePattern.matcher(text);
+
+                    if (matcher.find()) {
+                        double number = Double.parseDouble(matcher.group());
+                        sorter.setRowFilter(RowFilter.numberFilter(ComparisonType.BEFORE, number, 4)); //column 4 - salary
+                    } else
                         sorter.setRowFilter(null);
-                    } else {
-                        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + getText()));
-                    }
+                }
+
+                private void setMoreFilter(String text) {
+                    Matcher matcher = doublePattern.matcher(text);
+
+                    if (matcher.find()) {
+                        double number = Double.parseDouble(matcher.group());
+                        sorter.setRowFilter(RowFilter.numberFilter(ComparisonType.AFTER, number, 4)); //column 4 - salary
+                    } else
+                        sorter.setRowFilter(null);
+                }
+
+                private void setNumericFilter(String text) {
+                    /**
+                     *setNumericFilter sets filter only for salary column.
+                     */
+                    if (text.charAt(0) == '<')
+                        setLessFilter(text);
+                    else if (text.charAt(0) == '>')
+                        setMoreFilter(text);
+                }
+
+                private void setTextFilter(String text) {
+                    sorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+                }
+
+                private void setFilter() {
+                    String text = getText().trim();
+                    Matcher matcher = doublePattern.matcher(text);
+
+                    if (text.length() == 0)
+                        sorter.setRowFilter(null);
+                    else if (matcher.find())
+                        setNumericFilter(text);
+                    else
+                        setTextFilter(text);
                 }
 
                 @Override
                 public void insertUpdate(DocumentEvent e) {
-                    setTextFilter();
+                    setFilter();
                 }
 
                 @Override
                 public void removeUpdate(DocumentEvent e) {
-                    setTextFilter();
+                    setFilter();
                 }
 
                 @Override
@@ -227,7 +257,7 @@ public class MainWindow extends JFrame {
                 }
             };
 
-            //implement searching
+            //add sorter
             filterText.getDocument().addDocumentListener(textSorter);
         }
     }
