@@ -198,14 +198,12 @@ public class MainWindow extends JFrame {
             //add search panel to the layout
             getContentPane().add(BorderLayout.SOUTH, searchPanel);
 
-            //implement searching
-            filterText.getDocument().addDocumentListener(new DocumentListener() {
+            DocumentListener textSorter = new DocumentListener() {
                 private String getText() {
                     return filterText.getText();
                 }
 
-                @Override
-                public void insertUpdate(DocumentEvent e) {
+                private void setTextFilter(){
                     if (getText().trim().length() == 0) {
                         sorter.setRowFilter(null);
                     } else {
@@ -214,19 +212,23 @@ public class MainWindow extends JFrame {
                 }
 
                 @Override
+                public void insertUpdate(DocumentEvent e) {
+                    setTextFilter();
+                }
+
+                @Override
                 public void removeUpdate(DocumentEvent e) {
-                    if (getText().trim().length() == 0) {
-                        sorter.setRowFilter(null);
-                    } else {
-                        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + getText()));
-                    }
+                    setTextFilter();
                 }
 
                 @Override
                 public void changedUpdate(DocumentEvent e) {
                     throw new UnsupportedOperationException("Not supported yet.");
                 }
-            });
+            };
+
+            //implement searching
+            filterText.getDocument().addDocumentListener(textSorter);
         }
     }
 
