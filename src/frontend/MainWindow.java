@@ -32,6 +32,7 @@ public class MainWindow extends JFrame {
         setMinimumSize(new Dimension(width, 800));
 
         employeeListController = new EmployeeListController();
+        String csvPath = "";
 
         //layout
         init_ui();
@@ -50,6 +51,8 @@ public class MainWindow extends JFrame {
         //check if user selected any file
         //noinspection AccessStaticViaInstance
         if (i == fileChooser.APPROVE_OPTION) {
+            employeeListController.clearList(); //prevents concatenating old and new data
+
             csvPath = fileChooser.getSelectedFile().getAbsolutePath();
 
             CsvReader csvReader = new CsvReader(csvPath, employeeListController, staffTableModel);
@@ -74,7 +77,23 @@ public class MainWindow extends JFrame {
 
     private void saveButton() throws IOException {
         if (csvPath != null) {
+
+            if(csvPath.equals("")){
+                JFileChooser fileChooser = new JFileChooser();
+
+                int i = fileChooser.showOpenDialog(null);
+
+                if (i == fileChooser.APPROVE_OPTION) {
+                    outputPath = fileChooser.getSelectedFile().getAbsolutePath();
+                    saveCsv();
+                    csvPath = outputPath;
+                }
+                else //failsafe if user does not choose file
+                    return;
+            }
+
             outputPath = csvPath;
+
             saveCsv();
         }
     }
@@ -89,6 +108,19 @@ public class MainWindow extends JFrame {
             outputPath = fileChooser.getSelectedFile().getAbsolutePath();
             saveCsv();
             csvPath = outputPath;
+        }
+    }
+
+    private void newButton(){
+        int dialogButton = JOptionPane.YES_NO_OPTION;
+        int dialogResult = JOptionPane.showConfirmDialog (null
+                , "Do you really want to create a new table? Remember to save your table before that."
+                , "Warning"
+                , dialogButton);
+
+        if (dialogButton == JOptionPane.YES_OPTION) {
+            csvPath = "";
+            employeeListController.clearList();
         }
     }
 
@@ -112,7 +144,7 @@ public class MainWindow extends JFrame {
         menuBar.add(aboutMenu);
 
         //create and add FILE menu items
-        JMenuItem menuItemNew = new JMenuItem("New");
+        JMenuItem menuItemNew = new JMenuItem();
         JMenuItem menuItemOpen = new JMenuItem();
         JMenuItem menuItemSave = new JMenuItem();
         JMenuItem menuItemSaveAs = new JMenuItem();
@@ -153,6 +185,14 @@ public class MainWindow extends JFrame {
             }
         });
         menuItemSaveAs.setText("Save As");
+
+        menuItemNew.setAction(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                    newButton();
+            }
+        });
+        menuItemNew.setText("New");
 
         //add menu items to FILE menu
         fileMenu.add(menuItemNew);
