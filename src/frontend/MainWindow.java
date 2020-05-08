@@ -5,16 +5,12 @@ import backend.fileHandling.CsvReader;
 import backend.fileHandling.CsvWriter;
 
 import javax.swing.*;
-import javax.swing.RowFilter.ComparisonType;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class MainWindow extends JFrame {
     final EmployeeListController employeeListController;
@@ -23,7 +19,7 @@ public class MainWindow extends JFrame {
     final int width = 1200;
     String csvPath;
     String outputPath;
-
+    FileNameExtensionFilter csvFilter;
     public MainWindow() {
 
         //Frame
@@ -32,7 +28,8 @@ public class MainWindow extends JFrame {
         setMinimumSize(new Dimension(width, 800));
 
         employeeListController = new EmployeeListController();
-        String csvPath = "";
+        this.csvFilter = new FileNameExtensionFilter("CSV file", "CSV", "csv");
+        this.csvPath = "";
 
         //layout
         init_ui();
@@ -46,6 +43,8 @@ public class MainWindow extends JFrame {
 
     private void loadCsvButton() throws IOException {
         JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileFilter(csvFilter);
+
         int i = fileChooser.showOpenDialog(null);
 
         //check if user selected any file
@@ -57,8 +56,23 @@ public class MainWindow extends JFrame {
 
             CsvReader csvReader = new CsvReader(csvPath, employeeListController, staffTableModel);
             csvReader.readDataFromCsv();
-
         }
+    }
+
+    private String correctCsvPath(String inputPath){
+        if(!inputPath.toLowerCase().endsWith(".csv"))
+            return inputPath + ".csv";
+
+        return inputPath;
+    }
+
+    private void validationFailDialog(){
+        JOptionPane.showMessageDialog(
+                new JFrame()
+                , "User can save list with employees with no position, no salary or no seniority\n" +
+                        "but cannot save list with employee that has no name or no surname. Please fix the list."
+                , "ERROR"
+                , JOptionPane.ERROR_MESSAGE);
     }
 
     private void saveCsv() throws IOException {
@@ -66,26 +80,38 @@ public class MainWindow extends JFrame {
             CsvWriter csvWriter = new CsvWriter(employeeListController, outputPath);
             csvWriter.saveList();
         } else {
-            JOptionPane.showMessageDialog(
-                    new JFrame()
-                    , "User can save list with employees with no position, no salary or no seniority\n" +
-                            "but cannot save list with employee that has no name or no surname. Please fix the list."
-                    , "ERROR"
-                    , JOptionPane.ERROR_MESSAGE);
+            validationFailDialog();
+        }
+    }
+
+
+    private void saveCsv(boolean skipValidation) throws IOException {
+        if(!skipValidation) {
+            if (employeeListController.isListValid()) {
+                CsvWriter csvWriter = new CsvWriter(employeeListController, outputPath);
+                csvWriter.saveList();
+            } else {
+                validationFailDialog();
+            }
+        }
+        else{
+            CsvWriter csvWriter = new CsvWriter(employeeListController, outputPath);
+            csvWriter.saveList();
         }
     }
 
     private void saveButton() throws IOException {
         if (csvPath != null) {
 
-            if(csvPath.equals("")){
+            if(csvPath.equals("") && employeeListController.isListValid()){
                 JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setFileFilter(csvFilter);
 
-                int i = fileChooser.showOpenDialog(null);
+                int i = fileChooser.showSaveDialog(null);
 
                 if (i == fileChooser.APPROVE_OPTION) {
-                    outputPath = fileChooser.getSelectedFile().getAbsolutePath();
-                    saveCsv();
+                    outputPath = correctCsvPath(fileChooser.getSelectedFile().getAbsolutePath());
+                    saveCsv(true); //cautious with use
                     csvPath = outputPath;
                 }
                 else //failsafe if user does not choose file
@@ -99,15 +125,22 @@ public class MainWindow extends JFrame {
     }
 
     private void saveAsButton() throws IOException {
-        JFileChooser fileChooser = new JFileChooser();
-        int i = fileChooser.showOpenDialog(null);
+        if(employeeListController.isListValid()) {
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setFileFilter(csvFilter);
 
-        //check if user selected any file
-        //noinspection AccessStaticViaInstance
-        if (i == fileChooser.APPROVE_OPTION) {
-            outputPath = fileChooser.getSelectedFile().getAbsolutePath();
-            saveCsv();
-            csvPath = outputPath;
+            int i = fileChooser.showSaveDialog(null);
+
+            //check if user selected any file
+            //noinspection AccessStaticViaInstance
+            if (i == fileChooser.APPROVE_OPTION) {
+                outputPath = correctCsvPath(fileChooser.getSelectedFile().getAbsolutePath());
+                saveCsv(true); //cautious with use
+                csvPath = outputPath;
+            }
+        }
+        else {
+            validationFailDialog();
         }
     }
 
