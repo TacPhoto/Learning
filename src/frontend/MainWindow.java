@@ -92,14 +92,24 @@ public class MainWindow extends JFrame {
         }
     }
 
+    private void aboutButton(){
+        JOptionPane.showMessageDialog(
+                new JFrame()
+                , "Karol Kowalczyk 2020\nS20240\n\n" +
+                        "Use search panel to filter text values in the table\n" +
+                        "To filter table members by salary use  >  and  <  characters before comparing number"
+                , "About"
+                , JOptionPane.NO_OPTION);
+    }
+
     private void initMenuBar() {
         JMenuBar menuBar = new JMenuBar();
 
         //create and add main menu items
         JMenu fileMenu = new JMenu("File");
-        JMenu helpMenu = new JMenu("Help");
+        JMenu aboutMenu = new JMenu("About");
         menuBar.add(fileMenu);
-        menuBar.add(helpMenu);
+        menuBar.add(aboutMenu);
 
         //create and add FILE menu items
         JMenuItem menuItemNew = new JMenuItem("New");
@@ -150,10 +160,20 @@ public class MainWindow extends JFrame {
         fileMenu.add(menuItemSave);
         fileMenu.add(menuItemSaveAs);
 
-        //create and add HELP menu items
-        JMenuItem menuItemAbout = new JMenuItem("About");
+        //create and add About menu items
+        JMenuItem menuItemAbout = new JMenuItem();
 
-        helpMenu.add(menuItemAbout);
+        //set actions and text for About menu items
+        menuItemAbout.setAction(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                    aboutButton();
+            }
+        });
+        menuItemAbout.setText("About");
+
+        //add items to About menu
+        aboutMenu.add(menuItemAbout);
 
         //add menuBar to mainWindow
         this.setJMenuBar(menuBar);
@@ -182,7 +202,7 @@ public class MainWindow extends JFrame {
             //create and add elements of search panel
             JLabel label = new JLabel("Filter: ");
             searchPanel.add(BorderLayout.WEST, label);
-            
+
             final JTextField filterText = new JTextField("");
             searchPanel.add(BorderLayout.CENTER, filterText);
 
