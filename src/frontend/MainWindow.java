@@ -10,7 +10,11 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.FilePermission;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.security.AccessController;
 
 public class MainWindow extends JFrame {
     final EmployeeListController employeeListController;
@@ -76,6 +80,20 @@ public class MainWindow extends JFrame {
     }
 
     private void saveCsv() throws IOException {
+        File file = new File(outputPath);
+        if( (!file.canWrite() || !file.exists())
+                && (new File(file.getParent())).canWrite()){
+            JOptionPane.showMessageDialog(
+                    new JFrame()
+                    , "You cannot write to this file or location." +
+                            "Check if the file is not read only." +
+                            "Check if you are permitted to write in this location"
+                    , "ERROR"
+                    , JOptionPane.ERROR_MESSAGE);
+
+            return;
+        }
+
         if (employeeListController.isListValid()) {
             CsvWriter csvWriter = new CsvWriter(employeeListController, outputPath);
             csvWriter.saveList();
@@ -84,8 +102,21 @@ public class MainWindow extends JFrame {
         }
     }
 
-
     private void saveCsv(boolean skipValidation) throws IOException {
+        File file = new File(outputPath);
+        if( (!file.canWrite() || !file.exists())
+                && (new File(file.getParent())).canWrite()){
+            JOptionPane.showMessageDialog(
+                    new JFrame()
+                    , "You cannot write to this file or location." +
+                            "Check if the file is not read only." +
+                            "Check if you are permitted to write in this location"
+                    , "ERROR"
+                    , JOptionPane.ERROR_MESSAGE);
+
+            return;
+        }
+
         if(!skipValidation) {
             if (employeeListController.isListValid()) {
                 CsvWriter csvWriter = new CsvWriter(employeeListController, outputPath);
@@ -102,25 +133,30 @@ public class MainWindow extends JFrame {
 
     private void saveButton() throws IOException {
         if (csvPath != null) {
+            if(employeeListController.isListValid()){
+                if(csvPath.equals("")){
+                    JFileChooser fileChooser = new JFileChooser();
+                    fileChooser.setFileFilter(csvFilter);
 
-            if(csvPath.equals("") && employeeListController.isListValid()){
-                JFileChooser fileChooser = new JFileChooser();
-                fileChooser.setFileFilter(csvFilter);
+                    int i = fileChooser.showSaveDialog(null);
 
-                int i = fileChooser.showSaveDialog(null);
-
-                if (i == fileChooser.APPROVE_OPTION) {
-                    outputPath = correctCsvPath(fileChooser.getSelectedFile().getAbsolutePath());
-                    saveCsv(true); //cautious with use
-                    csvPath = outputPath;
+                    if (i == fileChooser.APPROVE_OPTION) {
+                        outputPath = correctCsvPath(fileChooser.getSelectedFile().getAbsolutePath());
+                        saveCsv(true); //cautious with use
+                        csvPath = outputPath;
+                    }
+                    else //failsafe if user does not choose file
+                        return;
                 }
-                else //failsafe if user does not choose file
-                    return;
-            }
 
             outputPath = csvPath;
-
-            saveCsv();
+            saveCsv(true); //cautious with use
+            }
+            else
+            {
+                validationFailDialog();
+                return;
+            }
         }
     }
 
