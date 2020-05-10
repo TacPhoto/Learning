@@ -53,7 +53,7 @@ public class EmployeeListController {
     }
 
     public boolean isListValid() {
-        if(employeeList == null || employeeList.size() == 0)
+        if(employeeList.size() == 0)
             return false;
 
         if(employeeList.get(0) == null)

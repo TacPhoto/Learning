@@ -43,8 +43,8 @@ public class TableSorter implements DocumentListener {
     }
 
     private void setNumericFilter(String text) {
-        /**
-         *setNumericFilter sets filter only for salary column.
+        /*
+         setNumericFilter sets filter only for salary column.
          */
         if (text.charAt(0) == '<')
             setLessFilter(text);

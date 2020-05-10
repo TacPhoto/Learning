@@ -37,11 +37,10 @@ public class ToolButton extends JButton implements ActionListener {
             //noinspection SwitchStatementWithTooFewBranches
             switch (text) {
                 case "Add":
-                    System.out.println("Add clicked");
                     employeeListController.addEmployee("", "", Position.none, 0, 0);
                     break;
                 default:
-                    System.out.println("DEBUG: button has no action specify. It is bind by button text");
+                    System.out.println("DEBUG: button has no action specified. It is binded by button text");
             }
         }
     }

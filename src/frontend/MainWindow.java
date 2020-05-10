@@ -3,6 +3,7 @@ package frontend;
 import backend.employee.EmployeeListController;
 import backend.fileHandling.CsvReader;
 import backend.fileHandling.CsvWriter;
+import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -10,11 +11,9 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.InputEvent;
 import java.io.File;
-import java.io.FilePermission;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.security.AccessController;
 
 public class MainWindow extends JFrame {
     final EmployeeListController employeeListController;
@@ -31,6 +30,7 @@ public class MainWindow extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setMinimumSize(new Dimension(width, 800));
 
+        //initialize variables and objects
         employeeListController = new EmployeeListController();
         this.csvFilter = new FileNameExtensionFilter("CSV file", "CSV", "csv");
         this.csvPath = "";
@@ -63,6 +63,7 @@ public class MainWindow extends JFrame {
         }
     }
 
+    @NotNull
     private String correctCsvPath(String inputPath){
         if(!inputPath.toLowerCase().endsWith(".csv"))
             return inputPath + ".csv";
@@ -81,8 +82,10 @@ public class MainWindow extends JFrame {
 
     private void saveCsv() throws IOException {
         File file = new File(outputPath);
-        if( (!file.canWrite() || !file.exists())
-                && (new File(file.getParent())).canWrite()){
+        if( !( //could use logic laws to get rid of this  negation but it's imo easier to understand this way
+                (file.canWrite() || !file.exists()) //if file exists, check if it can be written. if not, ignore that
+                        && (new File(file.getParent())).canWrite())
+        ){ //check if can write in the directory
             JOptionPane.showMessageDialog(
                     new JFrame()
                     , "You cannot write to this file or location." +
@@ -104,8 +107,10 @@ public class MainWindow extends JFrame {
 
     private void saveCsv(boolean skipValidation) throws IOException {
         File file = new File(outputPath);
-        if( (!file.canWrite() || !file.exists())
-                && (new File(file.getParent())).canWrite()){
+        if( !( //could use logic laws to get rid of this  negation but it's imo easier to understand this way
+                (file.canWrite() || !file.exists()) //if file exists, check if it can be written. if not, ignore that
+                && (new File(file.getParent())).canWrite())
+        ){ //check if can write in the directory
             JOptionPane.showMessageDialog(
                     new JFrame()
                     , "You cannot write to this file or location." +
@@ -113,7 +118,13 @@ public class MainWindow extends JFrame {
                             "Check if you are permitted to write in this location"
                     , "ERROR"
                     , JOptionPane.ERROR_MESSAGE);
-
+/*
+            //DEBUG
+            System.out.println("file.canWrite():                         " + file.canWrite());
+            System.out.println("!file.exists():                          " + !file.exists());
+            System.out.println("(file.canWrite() || !file.exists():      " + (file.canWrite() || !file.exists()));
+            System.out.println("(new File(file.getParent())).canWrite(): " + (new File(file.getParent())).canWrite());
+*/
             return;
         }
 
@@ -140,7 +151,7 @@ public class MainWindow extends JFrame {
 
                     int i = fileChooser.showSaveDialog(null);
 
-                    if (i == fileChooser.APPROVE_OPTION) {
+                    if (i == JFileChooser.APPROVE_OPTION) {
                         outputPath = correctCsvPath(fileChooser.getSelectedFile().getAbsolutePath());
                         saveCsv(true); //cautious with use
                         csvPath = outputPath;
@@ -155,7 +166,8 @@ public class MainWindow extends JFrame {
             else
             {
                 validationFailDialog();
-                return;
+                //noinspection UnnecessaryReturnStatement
+                return; //unnecessary but left here in case this code grows bigger in future
             }
         }
     }
@@ -187,7 +199,7 @@ public class MainWindow extends JFrame {
                 , "Warning"
                 , dialogButton);
 
-        if (dialogButton == JOptionPane.YES_OPTION) {
+        if (dialogResult == JOptionPane.YES_OPTION) {
             csvPath = "";
             employeeListController.clearList();
         }
@@ -200,7 +212,7 @@ public class MainWindow extends JFrame {
                         "Use search panel to filter text values in the table\n" +
                         "To filter table members by salary use  >  and  <  characters before comparing number"
                 , "About"
-                , JOptionPane.NO_OPTION);
+                , JOptionPane.INFORMATION_MESSAGE);
     }
 
     private void initMenuBar() {
@@ -281,6 +293,12 @@ public class MainWindow extends JFrame {
         });
         menuItemAbout.setText("About");
 
+        //set shortcuts
+        menuItemNew.setAccelerator(KeyStroke.getKeyStroke('N', InputEvent.CTRL_DOWN_MASK));
+        menuItemOpen.setAccelerator(KeyStroke.getKeyStroke('O', InputEvent.CTRL_DOWN_MASK));
+        menuItemSave.setAccelerator(KeyStroke.getKeyStroke('S', InputEvent.CTRL_DOWN_MASK));
+        menuItemSaveAs.setAccelerator(KeyStroke.getKeyStroke('S', InputEvent.CTRL_DOWN_MASK+InputEvent.SHIFT_DOWN_MASK));
+
         //add items to About menu
         aboutMenu.add(menuItemAbout);
 
@@ -327,28 +345,27 @@ public class MainWindow extends JFrame {
     }
 
     private void initStaffTablePanel() {
-        //create staff table
+        //staff table setup
         staffTableModel = new EmployeeTable(employeeListController.getEmployeeList()); //table with staff data, editable
         staffTable = new JTable(staffTableModel);
 
-        //create and add table sorter
+        //table sorter setup
         TableRowSorter<EmployeeTable> sorter = new TableRowSorter<EmployeeTable>(staffTableModel);
         staffTable.setRowSorter(sorter);
-        sorter.setSortable(5, false); //button column is not sortable
+        sorter.setSortable(5, false); //5col - button column is not sortable
 
         //create scroll pane
         JScrollPane tablePane = new JScrollPane(staffTable);
 
-        //add combobox to the table
+        //combobox setup
         JComboBox<backend.employee.Position> comboBox = new JComboBox<>(backend.employee.Position.values());
         comboBox.setEnabled(true);
         DefaultCellEditor editor = new DefaultCellEditor(comboBox);
         staffTable.getColumnModel().getColumn(2).setCellEditor(editor);
 
-        //add buttons to the table
+        //button setup
         TableCellRenderer buttonRenderer = new EmployeeTable.JTableButtonRenderer();
         staffTable.getColumnModel().getColumn(5).setCellRenderer(buttonRenderer);
-        //staffTable.getColumn("Delete").setCellRenderer(buttonRenderer); //this forces referring to the column by name. we use column name for button name return different one for the colum
         staffTable.addMouseListener(new EmployeeTable.JTableButtonMouseListener(staffTable));
 
         //add staff table to the layout
