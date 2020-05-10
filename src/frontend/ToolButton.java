@@ -9,14 +9,7 @@ import java.awt.event.ActionListener;
 
 public class ToolButton extends JButton implements ActionListener {
     private final String text;
-    private EmployeeListController employeeListController;
-
-    public ToolButton(String text) {
-        super(text);
-        this.text = text;
-        this.addActionListener(new ToolListener() {
-        });
-    }
+    private final EmployeeListController employeeListController;
 
     public ToolButton(String text, EmployeeListController employeeListController) {
         super(text);

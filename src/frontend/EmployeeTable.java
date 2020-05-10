@@ -109,7 +109,6 @@ public class EmployeeTable extends AbstractTableModel {
         } else if (1 == columnIndex) {
             row.setSurname(((String) aValue).replaceAll("[^A-Za-z]+", ""));
         } else if (2 == columnIndex) {
-            //noinspection SpellCheckingInspection
             row.setPosition((Position) aValue); //input secured by enum combobox
         } else if (3 == columnIndex) {
             row.setSeniority(abs((Integer) aValue));
@@ -146,16 +145,6 @@ public class EmployeeTable extends AbstractTableModel {
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
             return (JButton) value;
         }
-    }
-
-    //honestly, I don't like all these mathf/java.math functions. nor functions from complex data types
-    //sometimes it is good to have a tiny function written by your self and not to write those long lines
-    //https://developer.download.nvidia.com/cg/abs.html
-    //https://developer.download.nvidia.com/cg/max.html
-    @SuppressWarnings("SpellCheckingInspection")
-    private float abs(float a) {
-        //noinspection ManualMinMaxCalculation,ManualMinMaxCalculation,ManualMinMaxCalculation,ManualMinMaxCalculation
-        return (a > -a) ? a : -a;
     }
 
     private double abs(double a) {

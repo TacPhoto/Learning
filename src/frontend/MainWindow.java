@@ -22,7 +22,7 @@ public class MainWindow extends JFrame {
     final int width = 1200;
     String csvPath;
     String outputPath;
-    FileNameExtensionFilter csvFilter;
+    final FileNameExtensionFilter csvFilter;
     public MainWindow() {
 
         //Frame
@@ -80,31 +80,7 @@ public class MainWindow extends JFrame {
                 , JOptionPane.ERROR_MESSAGE);
     }
 
-    private void saveCsv() throws IOException {
-        File file = new File(outputPath);
-        if( !( //could use logic laws to get rid of this  negation but it's imo easier to understand this way
-                (file.canWrite() || !file.exists()) //if file exists, check if it can be written. if not, ignore that
-                        && (new File(file.getParent())).canWrite())
-        ){ //check if can write in the directory
-            JOptionPane.showMessageDialog(
-                    new JFrame()
-                    , "You cannot write to this file or location." +
-                            "Check if the file is not read only." +
-                            "Check if you are permitted to write in this location"
-                    , "ERROR"
-                    , JOptionPane.ERROR_MESSAGE);
-
-            return;
-        }
-
-        if (employeeListController.isListValid()) {
-            CsvWriter csvWriter = new CsvWriter(employeeListController, outputPath);
-            csvWriter.saveList();
-        } else {
-            validationFailDialog();
-        }
-    }
-
+    @SuppressWarnings("SameParameterValue")
     private void saveCsv(boolean skipValidation) throws IOException {
         File file = new File(outputPath);
         if( !( //could use logic laws to get rid of this  negation but it's imo easier to understand this way

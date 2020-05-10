@@ -12,13 +12,11 @@ import java.util.List;
 
 public class CsvWriter {
     private final List<Employee> employeeList;
-    private String outputPath;
     private PrintWriter writer;
     private char delimiter;
 
     public CsvWriter(@NotNull EmployeeListController employeeListController, String outputPath) throws IOException {
         this.employeeList = employeeListController.getEmployeeList();
-        this.outputPath = outputPath;
         this.writer = new PrintWriter(new BufferedWriter(new FileWriter(outputPath)));
         delimiter = ';';
     }
@@ -40,9 +38,4 @@ public class CsvWriter {
         }
     }
 
-    public void setOutputPath(String outputPath) throws IOException {
-        this.outputPath = outputPath;
-        writer.close(); //to be sure that stream is closed
-        writer = new PrintWriter(new BufferedWriter(new FileWriter(outputPath))); //override old writer because
-    }
 }

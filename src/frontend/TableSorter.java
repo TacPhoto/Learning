@@ -8,9 +8,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class TableSorter implements DocumentListener {
-    Pattern doublePattern;
-    TableRowSorter sorter;
-    JTextField filterText;
+    final Pattern doublePattern;
+    final TableRowSorter sorter;
+    final JTextField filterText;
 
     public TableSorter(TableRowSorter sorter, JTextField filterText) {
         this.sorter = sorter;
