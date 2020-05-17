@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
  * Use numeric value to search in seniority column
  * Use text value to search in name, surname and position column at the same time
  * Use > or < symbols with floating point value to search by bigger/lower value
- * than the typed one in salary column
+ * than the one typed in salary column
  */
 public class EmployeeTableSorter implements DocumentListener {
     final Pattern doublePattern;
