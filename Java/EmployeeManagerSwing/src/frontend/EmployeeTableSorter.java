@@ -8,7 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * EmployeeTableSorter provides an active search in EmployeeTableModel based JTable.
+ * EmployeeTableSorter provides an active search to EmployeeTableModel based JTable.
  *
  * User know-how:
  * Use numeric value to search in seniority column
