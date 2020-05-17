@@ -7,12 +7,21 @@ import javax.swing.table.TableRowSorter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class TableSorter implements DocumentListener {
+/**
+ * EmployeeTableSorter provides an active search in EmployeeTableModel based JTable.
+ *
+ * User know-how:
+ * Use numeric value to search in seniority column
+ * Use text value to search in name, surname and position column at the same time
+ * Use > or < symbols with floating point value to search by bigger/lower value
+ * than the typed one in salary column
+ */
+public class EmployeeTableSorter implements DocumentListener {
     final Pattern doublePattern;
     final TableRowSorter sorter;
     final JTextField filterText;
 
-    public TableSorter(TableRowSorter sorter, JTextField filterText) {
+    public EmployeeTableSorter(TableRowSorter sorter, JTextField filterText) {
         this.sorter = sorter;
         this.filterText = filterText;
         this.doublePattern = Pattern.compile("[-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?"); //extracts first found Double from text
@@ -43,9 +52,8 @@ public class TableSorter implements DocumentListener {
     }
 
     private void setNumericFilter(String text) {
-        /*
-         setNumericFilter sets filter only for salary column.
-         */
+        //setNumericFilter sets filter only for salary column
+
         if (text.charAt(0) == '<')
             setLessFilter(text);
         else if (text.charAt(0) == '>')

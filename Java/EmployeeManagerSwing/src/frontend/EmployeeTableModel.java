@@ -12,7 +12,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
-public class EmployeeTable extends AbstractTableModel {
+/**
+ * EmployeeTableModel is an AbstractTableModel designed to work with JTable
+ * It can work with Employee class data
+ * Should be controlled by EmployeeListController
+ */
+public class EmployeeTableModel extends AbstractTableModel {
 
     boolean isEditable;
 
@@ -32,7 +37,7 @@ public class EmployeeTable extends AbstractTableModel {
     };
 
 
-    public EmployeeTable(List<Employee> employeeList) {
+    public EmployeeTableModel(List<Employee> employeeList) {
         this.employeeList = employeeList;
         isEditable = true;
     }

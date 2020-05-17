@@ -10,6 +10,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
+/**
+ * CsvWriter is meant to save EmployeeTable data to CSV file
+ * It does not provide any kind of validation nor safety checks
+ * Use EmployeeListController to check if the list is valid before using CsvWriter
+ */
 public class CsvWriter {
     private final List<Employee> employeeList;
     private PrintWriter writer;

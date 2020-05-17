@@ -2,7 +2,7 @@ package backend.fileHandling;
 
 import backend.employee.EmployeeListController;
 import backend.employee.Position;
-import frontend.EmployeeTable;
+import frontend.EmployeeTableModel;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
@@ -14,15 +14,21 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * CsvReader reads EmployeeTable from CSV file
+ * It has validation.
+ * If it encounters invalid data, it will fallback table to empty state
+ * and display an error prompt.
+ */
 public class CsvReader {
     private EmployeeListController employeeListController;
     private BufferedReader reader;
     private final List<String> lineList = new ArrayList<String>();
-    private EmployeeTable staffTable;
+    private EmployeeTableModel staffTable;
     private String delimiter; //we use String instead of char we would have to convert it to String to use split()
 
 
-    public CsvReader(String csvPath, EmployeeListController employeeListController, EmployeeTable staffTable) throws IOException {
+    public CsvReader(String csvPath, EmployeeListController employeeListController, EmployeeTableModel staffTable) throws IOException {
         this.reader = new BufferedReader(new InputStreamReader(new FileInputStream(csvPath), StandardCharsets.UTF_8));
         this.employeeListController = employeeListController;
         this.staffTable = staffTable;
@@ -40,6 +46,11 @@ public class CsvReader {
     }
 
     private boolean isValidLineSplit(String[] lineSplit) {
+        /**
+        * isValidLineSplit validates a single line of data taken from source csv file
+         * it checks if it can be used to initialize single Employee object.
+         * it returns false if any error is encountered..
+         */
         if (lineSplit == null) //should not happen
             return false;
 
@@ -78,6 +89,10 @@ public class CsvReader {
     }
 
     private void addEmployee(@NotNull String[] lineSplit) {
+        /**
+         * addEmployee initializes and adds to the EmployeeTable
+         * a single Employee object based on source Csv file
+         */
         employeeListController.addEmployee(
                 lineSplit[0]                         //surname
                 , lineSplit[1]                       //name
@@ -89,6 +104,10 @@ public class CsvReader {
     }
 
     private void populateTable() {
+        /**
+         * populateTable populates whole EmployeeTable with data from Csv file
+         * if any record is invalid, it will fallback to empty state
+         */
         staffTable.setEditable(false);
 
         for (String line : lineList) {

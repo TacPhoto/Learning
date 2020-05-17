@@ -17,12 +17,13 @@ import java.io.IOException;
 
 public class MainWindow extends JFrame {
     final EmployeeListController employeeListController;
-    JTable staffTable;
-    EmployeeTable staffTableModel;
+    JTable EmployeeTable;
+    EmployeeTableModel EmployeeTableModel;
     final int width = 1200;
     String csvPath;
     String outputPath;
     final FileNameExtensionFilter csvFilter;
+
     public MainWindow() {
 
         //Frame
@@ -36,7 +37,7 @@ public class MainWindow extends JFrame {
         this.csvPath = "";
 
         //layout
-        init_ui();
+        initUi();
 
         //add table to employeeListController, it will let it notify table about changes
         connectTableAndController();
@@ -58,7 +59,7 @@ public class MainWindow extends JFrame {
 
             csvPath = fileChooser.getSelectedFile().getAbsolutePath();
 
-            CsvReader csvReader = new CsvReader(csvPath, employeeListController, staffTableModel);
+            CsvReader csvReader = new CsvReader(csvPath, employeeListController, EmployeeTableModel);
             csvReader.readDataFromCsv();
         }
     }
@@ -94,13 +95,7 @@ public class MainWindow extends JFrame {
                             "Check if you are permitted to write in this location"
                     , "ERROR"
                     , JOptionPane.ERROR_MESSAGE);
-/*
-            //DEBUG
-            System.out.println("file.canWrite():                         " + file.canWrite());
-            System.out.println("!file.exists():                          " + !file.exists());
-            System.out.println("(file.canWrite() || !file.exists():      " + (file.canWrite() || !file.exists()));
-            System.out.println("(new File(file.getParent())).canWrite(): " + (new File(file.getParent())).canWrite());
-*/
+
             return;
         }
 
@@ -286,10 +281,10 @@ public class MainWindow extends JFrame {
     private void initToolsPane() {
         JPanel toolsPanel = new JPanel(); //panel that contains all tools and operations
 
-        //create tools buttons
+        //create tool buttons
         ToolButton addToolButton = new ToolButton("Add", employeeListController);
 
-        //add tools buttons to toolsPanel
+        //add tool buttons to toolsPanel
         toolsPanel.add(addToolButton);
 
         //add toolsPanel to the layout
@@ -297,7 +292,7 @@ public class MainWindow extends JFrame {
 
     }
 
-    private void init_search(TableRowSorter sorter) {
+    private void initSearch(TableRowSorter sorter) {
         {
             //create search panel
             JPanel searchPanel = new JPanel(new BorderLayout());
@@ -313,7 +308,7 @@ public class MainWindow extends JFrame {
             getContentPane().add(BorderLayout.SOUTH, searchPanel);
 
             //create table sorter
-            TableSorter textSorter = new TableSorter(sorter, filterText);
+            EmployeeTableSorter textSorter = new EmployeeTableSorter(sorter, filterText);
 
             //add sorter to the table
             filterText.getDocument().addDocumentListener(textSorter);
@@ -322,35 +317,35 @@ public class MainWindow extends JFrame {
 
     private void initStaffTablePanel() {
         //staff table setup
-        staffTableModel = new EmployeeTable(employeeListController.getEmployeeList()); //table with staff data, editable
-        staffTable = new JTable(staffTableModel);
+        EmployeeTableModel = new EmployeeTableModel(employeeListController.getEmployeeList()); //table with staff data, editable
+        EmployeeTable = new JTable(EmployeeTableModel);
 
         //table sorter setup
-        TableRowSorter<EmployeeTable> sorter = new TableRowSorter<EmployeeTable>(staffTableModel);
-        staffTable.setRowSorter(sorter);
+        TableRowSorter<EmployeeTableModel> sorter = new TableRowSorter<EmployeeTableModel>(EmployeeTableModel);
+        EmployeeTable.setRowSorter(sorter);
         sorter.setSortable(5, false); //5col - button column is not sortable
 
         //create scroll pane
-        JScrollPane tablePane = new JScrollPane(staffTable);
+        JScrollPane tablePane = new JScrollPane(EmployeeTable);
 
         //combobox setup
         JComboBox<backend.employee.Position> comboBox = new JComboBox<>(backend.employee.Position.values());
         comboBox.setEnabled(true);
         DefaultCellEditor editor = new DefaultCellEditor(comboBox);
-        staffTable.getColumnModel().getColumn(2).setCellEditor(editor);
+        EmployeeTable.getColumnModel().getColumn(2).setCellEditor(editor);
 
         //button setup
-        TableCellRenderer buttonRenderer = new EmployeeTable.JTableButtonRenderer();
-        staffTable.getColumnModel().getColumn(5).setCellRenderer(buttonRenderer);
-        staffTable.addMouseListener(new EmployeeTable.JTableButtonMouseListener(staffTable));
+        TableCellRenderer buttonRenderer = new EmployeeTableModel.JTableButtonRenderer();
+        EmployeeTable.getColumnModel().getColumn(5).setCellRenderer(buttonRenderer);
+        EmployeeTable.addMouseListener(new EmployeeTableModel.JTableButtonMouseListener(EmployeeTable));
 
         //add staff table to the layout
         getContentPane().add(BorderLayout.CENTER, tablePane);
 
-        init_search(sorter);
+        initSearch(sorter);
     }
 
-    private void init_ui() {
+    private void initUi() {
         Container contentPane = getContentPane();
         contentPane.setLayout(new BorderLayout());
 
@@ -364,7 +359,7 @@ public class MainWindow extends JFrame {
     }
 
     private void connectTableAndController() {
-        employeeListController.setStaffTableModel(staffTableModel);
-        staffTableModel.setEmployeeListController(employeeListController);
+        employeeListController.setStaffTableModel(EmployeeTableModel);
+        EmployeeTableModel.setEmployeeListController(employeeListController);
     }
 }

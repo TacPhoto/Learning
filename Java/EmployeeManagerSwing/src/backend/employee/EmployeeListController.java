@@ -1,13 +1,20 @@
 package backend.employee;
 
-import frontend.EmployeeTable;
+import frontend.EmployeeTableModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * EmployeeListController is used to control employeeList
+ * It updates the EmployeeTable if it's necessary
+ *
+ * To work properly needs to be connected to already properly initialized EmployeeTable
+ * Can validate EmployeeTable data.
+ */
 public class EmployeeListController {
     private final List<Employee> employeeList;
-    private EmployeeTable staffTableModel;
+    private EmployeeTableModel staffTableModel;
 
     public EmployeeListController() {
         this.employeeList = new ArrayList<Employee>();
@@ -18,7 +25,7 @@ public class EmployeeListController {
             staffTableModel.fireTableDataChanged();
     }
 
-    public void setStaffTableModel(EmployeeTable staffTableModel) {
+    public void setStaffTableModel(EmployeeTableModel staffTableModel) {
         this.staffTableModel = staffTableModel;
     }
 
