@@ -27,8 +27,6 @@ public class Osiol
             if(!(i == null))
                 load += i.podajUdzwig();
 
-        if(load / 1000.f > (float)masa)
-            return true;
-        return false;
+        return load / 1000.f > (float) masa;
     }
 }

@@ -31,7 +31,7 @@ class Exercise2
 
     public static void printSorted(int a, int b, int c)
     {
-        int arr[] = {a, b, c}; //the bypass mentioned before
+        int[] arr = {a, b, c}; //the bypass mentioned before
 
         for(int j = 0; j < ( arr.length - 1 ); j++)
         {

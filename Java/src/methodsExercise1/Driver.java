@@ -70,7 +70,7 @@ public class Driver {
 
 
     public static void xoSquare(int len, int starter) {
-        char arr[][] = new char[len][len];
+        char[][] arr = new char[len][len];
         for (int row = 0; row < arr.length; row++) {
             for (int col = 0; col < arr.length; col++) {
                 if(starter == 0) {
@@ -159,7 +159,7 @@ public class Driver {
             dec = dec / 16;
         }
 
-        char temp[] = new char[6];
+        char[] temp = new char[6];
         char[] bin = new char[10 * 6];
         int binCount = 0;
         for (int mainCount = 0; mainCount < 10; mainCount++) {
@@ -180,9 +180,9 @@ public class Driver {
 
         for(int i = 0; i < numCol- 2; i++)
         {
-            int first = (int)(arr[numRow/2][i]);
-            int second = (int)(arr[numRow/2][i+1]);
-            int third = (int)(arr[numRow/2][i+2]);
+            int first = arr[numRow/2][i];
+            int second = arr[numRow/2][i+1];
+            int third = arr[numRow/2][i+2];
             if(( first < second ) & (second < third))
                 return true;
             if(( third < second ) & (third < second))
@@ -192,9 +192,9 @@ public class Driver {
 
         for(int i = 0; i < numRow- 2; i++)
         {
-            int first = (int)(arr[i][numCol/2]);
-            int second = (int)(arr[i+1][numCol/2]);
-            int third = (int)(arr[i+2][numCol/2]);
+            int first = arr[i][numCol/2];
+            int second = arr[i+1][numCol/2];
+            int third = arr[i+2][numCol/2];
             if(( first < second ) & (second < third))
                 return true;
             if(( third < second ) & (third < second))

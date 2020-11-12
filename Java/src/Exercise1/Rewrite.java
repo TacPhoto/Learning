@@ -9,7 +9,7 @@ import java.nio.file.Paths;
 
 public class Rewrite
 {
-    public static void main(String args[]) throws IOException {
+    public static void main(String[] args) throws IOException {
      String inputPath = "Z:\\serverLog.txt";
      String outputPath = "Z:\\goLrevres.txt";
      String content = "";

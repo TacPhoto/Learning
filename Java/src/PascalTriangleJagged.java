@@ -18,7 +18,7 @@ public class PascalTriangleJagged
 
     public static int[][] createPascalArray(int len)
     {
-        int arr[][] = new int[len][];
+        int[][] arr = new int[len][];
 
         for (int i=0; i<arr.length; i++)
             arr[i] = new int[i+1];
@@ -32,7 +32,7 @@ public class PascalTriangleJagged
     }
 
 
-    public static int[][] fillPascalArray(int arr[][])
+    public static int[][] fillPascalArray(int[][] arr)
     {
         for(int row = 0; row < arr.length - 1; row++)
         {
@@ -47,7 +47,7 @@ public class PascalTriangleJagged
     }
 
 
-    public static void printJaggedArray(int arr[][])
+    public static void printJaggedArray(int[][] arr)
     {
         for(int i = 0; i < arr.length; i++)
         {

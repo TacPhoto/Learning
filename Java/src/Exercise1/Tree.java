@@ -42,10 +42,7 @@ public class Tree {
             weight += fruit.getMass();
         }
 
-        if (weight / 1000. >= 5.)
-            return true;
-        else
-            return false;
+        return weight / 1000. >= 5.;
     }
 
     public void harvesting()

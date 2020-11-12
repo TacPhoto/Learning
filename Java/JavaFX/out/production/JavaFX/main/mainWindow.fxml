@@ -8,7 +8,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.StackPane?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="465.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.MainWindowController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.MainWindowController">
    <children>
       <Label fx:id="labelText" text="Label" StackPane.alignment="TOP_CENTER">
          <StackPane.margin>
@@ -40,25 +40,15 @@
             <Insets left="10.0" top="210.0" />
          </StackPane.margin>
       </CheckBox>
-      <Button fx:id="btwOpenSWindow1" mnemonicParsing="false" onAction="#showSubWindow1" text="Window 1" StackPane.alignment="CENTER">
+      <Button fx:id="btwOpenSWindow1" mnemonicParsing="false" text="Window 1" StackPane.alignment="CENTER" onAction="#showSubWindow1">
          <StackPane.margin>
-            <Insets top="140.0" />
+            <Insets top="180.0" />
          </StackPane.margin>
       </Button>
-      <Button fx:id="btwOpenSWindow2" mnemonicParsing="false" onAction="#showSubWindow2" text="Window 2" StackPane.alignment="CENTER">
+      <Button fx:id="btwOpenSWindow2" mnemonicParsing="false" text="Window 2" StackPane.alignment="CENTER" onAction="#showSubWindow2">
          <StackPane.margin>
-            <Insets top="200.0" />
+            <Insets top="235.0" />
          </StackPane.margin>
       </Button>
-      <TextField fx:id="textField2" maxWidth="350.0" minWidth="200.0" prefHeight="25.0" prefWidth="410.0" StackPane.alignment="CENTER">
-         <StackPane.margin>
-            <Insets left="10.0" right="10.0" top="320.0" />
-         </StackPane.margin>
-      </TextField>
-      <TextField fx:id="textField" maxWidth="350.0" minWidth="200.0" prefHeight="25.0" prefWidth="410.0" StackPane.alignment="CENTER">
-         <StackPane.margin>
-            <Insets left="10.0" right="10.0" top="260.0" />
-         </StackPane.margin>
-      </TextField>
    </children>
 </StackPane>

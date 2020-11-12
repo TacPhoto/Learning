@@ -20,7 +20,7 @@ public class IsPalindromeRecurive
     }
 
 
-    static boolean isPalindromeBackend(char word[], int left, int right)
+    static boolean isPalindromeBackend(char[] word, int left, int right)
     {
         if (left == right)
             return true;

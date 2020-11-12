@@ -2,7 +2,7 @@ package Stack;
 
 public class Stack
 {
-    int stack[] = new int[5]; //will not be dynamic
+    int[] stack = new int[5]; //will not be dynamic
     int top = 0;
 
     public void push(int data)

@@ -2,7 +2,7 @@ class exercise12
 {
     public static void main(String[] args) {
         {
-            char arr[] = {'a', 'b', 'c', 'd'};
+            char[] arr = {'a', 'b', 'c', 'd'};
 
             int len = arr.length;
 
