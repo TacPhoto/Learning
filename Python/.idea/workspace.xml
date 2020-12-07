@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2fe306cc-7e88-49ef-bac6-2df7020e4224" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../Java/JavaFX/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Java/JavaFX/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Java/JavaFX/out/production/JavaFX/main/SubWindow2.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/../Java/JavaFX/out/production/JavaFX/main/SubWindow2.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Java/JavaFX/out/production/JavaFX/main/mainWindow.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/../Java/JavaFX/out/production/JavaFX/main/mainWindow.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Java/src/TCP_ClientOrganized.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Java/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,9 +97,10 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="656" y="348" key="com.intellij.ide.util.TipDialog" timestamp="1601321601061">
+    <state x="656" y="348" key="com.intellij.ide.util.TipDialog" timestamp="1607364907954">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
+    <state x="656" y="348" key="com.intellij.ide.util.TipDialog/0.0.1920.1050/-1920.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1607364907954" />
     <state x="656" y="348" key="com.intellij.ide.util.TipDialog/0.0.1920.1050/1920.0.1920.1050/-1920.0.1920.1050@0.0.1920.1050" timestamp="1601321601061" />
   </component>
 </project>
