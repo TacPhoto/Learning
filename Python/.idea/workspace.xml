@@ -2,8 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2fe306cc-7e88-49ef-bac6-2df7020e4224" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../Java/src/TCP_ClientOrganized.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Java/src/KlientSerwerThread.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Java/src/TCP_ORganized2.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/StandaloneExercises/Client.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/StandaloneExercises/TCP.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/StandaloneExercises/TCP_Server.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Java/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Java/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java/TCP_Response.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../Java/TCP_Response.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java/bin/TCP_ClientOrganized.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Java/bin/TCP_ClientOrganized.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java/bin/TCP_Server.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Java/bin/TCP_Server.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java/src/TCP_ClientMultithreaded.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Java/src/TCP_ClientMultithreaded.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java/src/TCP_ClientOrganized.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Java/src/TCP_ClientOrganized.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java/src/TCP_Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Java/src/TCP_Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Python.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Python.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,12 +33,6 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="301" />
-    <option name="y" value="123" />
-    <option name="width" value="1291" />
-    <option name="height" value="729" />
-  </component>
   <component name="ProjectId" id="1UwuyCL8CP5lCATO1FpNlzxclW1" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -38,7 +45,80 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.TCP_Server">
+    <configuration name="TCP_Server_and_Cliend_Compound" type="CompoundRunConfigurationType">
+      <toRun name="TCP_Server" type="PythonConfigurationType" />
+      <toRun name="Client" type="PythonConfigurationType" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="CompoundRunConfigurationType">
+      <toRun name="TCP_Server" type="PythonConfigurationType" />
+      <toRun name="Client" type="PythonConfigurationType" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Client" type="PythonConfigurationType" factoryName="Python">
+      <module name="Python" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/StandaloneExercises" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/StandaloneExercises/Client.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TCP" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Python" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Users\karol\AppData\Local\Programs\Python\Python38\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/StandaloneExercises" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/StandaloneExercises/TCP.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TCP_Server" type="PythonConfigurationType" factoryName="Python">
+      <module name="Python" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/StandaloneExercises" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/StandaloneExercises/TCP_Server.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="snake" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Python" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -61,8 +141,16 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Compound.TCP_Server_and_Cliend_Compound" />
+      <item itemvalue="Python.Client" />
+      <item itemvalue="Python.TCP_Server" />
+      <item itemvalue="Python.snake" />
+      <item itemvalue="Python.TCP" />
+    </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.TCP" />
         <item itemvalue="Python.snake" />
       </list>
     </recent_temporary>
@@ -97,10 +185,58 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="656" y="348" key="com.intellij.ide.util.TipDialog" timestamp="1607364907954">
+    <state x="679" y="139" key="#TCP" timestamp="1607853079472">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="656" y="348" key="com.intellij.ide.util.TipDialog/0.0.1920.1050/-1920.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1607364907954" />
-    <state x="656" y="348" key="com.intellij.ide.util.TipDialog/0.0.1920.1050/1920.0.1920.1050/-1920.0.1920.1050@0.0.1920.1050" timestamp="1601321601061" />
+    <state x="679" y="139" key="#TCP/0.0.1920.1050/1920.0.1920.1050/-1920.0.1920.1050@0.0.1920.1050" timestamp="1607853079472" />
+    <state x="414" y="179" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1607863793691">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="414" y="179" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1050/1920.0.1920.1050/-1920.0.1920.1050@0.0.1920.1050" timestamp="1607863793691" />
+    <state width="1899" height="209" key="GridCell.Tab.0.bottom" timestamp="1607867159445">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state width="1899" height="209" key="GridCell.Tab.0.bottom/0.0.1920.1050/1920.0.1920.1050/-1920.0.1920.1050@0.0.1920.1050" timestamp="1607867159445" />
+    <state width="1899" height="209" key="GridCell.Tab.0.bottom/0.0.1920.1050/1920.0.1920.1050/-1920.0.1920.1050@1920.0.1920.1050" timestamp="1607865777487" />
+    <state width="1899" height="209" key="GridCell.Tab.0.center" timestamp="1607867159445">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state width="1899" height="209" key="GridCell.Tab.0.center/0.0.1920.1050/1920.0.1920.1050/-1920.0.1920.1050@0.0.1920.1050" timestamp="1607867159445" />
+    <state width="1899" height="209" key="GridCell.Tab.0.center/0.0.1920.1050/1920.0.1920.1050/-1920.0.1920.1050@1920.0.1920.1050" timestamp="1607865777487" />
+    <state width="1899" height="209" key="GridCell.Tab.0.left" timestamp="1607867159445">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state width="1899" height="209" key="GridCell.Tab.0.left/0.0.1920.1050/1920.0.1920.1050/-1920.0.1920.1050@0.0.1920.1050" timestamp="1607867159445" />
+    <state width="1899" height="209" key="GridCell.Tab.0.left/0.0.1920.1050/1920.0.1920.1050/-1920.0.1920.1050@1920.0.1920.1050" timestamp="1607865777487" />
+    <state width="1899" height="209" key="GridCell.Tab.0.right" timestamp="1607867159445">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state width="1899" height="209" key="GridCell.Tab.0.right/0.0.1920.1050/1920.0.1920.1050/-1920.0.1920.1050@0.0.1920.1050" timestamp="1607867159445" />
+    <state width="1899" height="209" key="GridCell.Tab.0.right/0.0.1920.1050/1920.0.1920.1050/-1920.0.1920.1050@1920.0.1920.1050" timestamp="1607865777487" />
+    <state width="1899" height="349" key="GridCell.Tab.1.bottom" timestamp="1607867159441">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state width="1899" height="349" key="GridCell.Tab.1.bottom/0.0.1920.1050/1920.0.1920.1050/-1920.0.1920.1050@0.0.1920.1050" timestamp="1607867159441" />
+    <state width="1899" height="349" key="GridCell.Tab.1.center" timestamp="1607867159441">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state width="1899" height="349" key="GridCell.Tab.1.center/0.0.1920.1050/1920.0.1920.1050/-1920.0.1920.1050@0.0.1920.1050" timestamp="1607867159441" />
+    <state width="1899" height="349" key="GridCell.Tab.1.left" timestamp="1607867159441">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state width="1899" height="349" key="GridCell.Tab.1.left/0.0.1920.1050/1920.0.1920.1050/-1920.0.1920.1050@0.0.1920.1050" timestamp="1607867159441" />
+    <state width="1899" height="349" key="GridCell.Tab.1.right" timestamp="1607867159441">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state width="1899" height="349" key="GridCell.Tab.1.right/0.0.1920.1050/1920.0.1920.1050/-1920.0.1920.1050@0.0.1920.1050" timestamp="1607867159441" />
+    <state x="461" y="167" key="SettingsEditor" timestamp="1607853172823">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="461" y="167" key="SettingsEditor/0.0.1920.1050/1920.0.1920.1050/-1920.0.1920.1050@0.0.1920.1050" timestamp="1607853172823" />
+    <state x="656" y="348" key="com.intellij.ide.util.TipDialog" timestamp="1608741345816">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="656" y="348" key="com.intellij.ide.util.TipDialog/0.0.1920.1050/-1920.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1608741345816" />
+    <state x="656" y="348" key="com.intellij.ide.util.TipDialog/0.0.1920.1050/1920.0.1920.1050/-1920.0.1920.1050@0.0.1920.1050" timestamp="1607852921459" />
   </component>
 </project>

@@ -12,8 +12,8 @@ public class TCP_ClientMultithreaded {
     static OutputStreamWriter sosw;
     static Socket client;
 
-    static String severName = "172.21.48.165";
-    static int severPort = 10005;
+    static String severName = "172.21.48.151";
+    static int severPort = 20005;
     static InetAddress serverAddress;
 
     static FileWriter responseFileWriter;
@@ -41,7 +41,7 @@ public class TCP_ClientMultithreaded {
     }
 
     public static void getResponse() throws IOException {
-        log("HTTP response receiving");
+        //log("HTTP response receiving");
 
         String response = br.readLine();
 

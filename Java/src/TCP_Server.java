@@ -1,19 +1,23 @@
 import java.io.*;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.net.*;
 
 public class TCP_Server {
 
 
     public static void main(String[] args) throws IOException {
         log("Start");
-        int serverPort = 10000;
+        int serverPort = 8080;
         log("Server socket opening");
         ServerSocket serverSocket = new ServerSocket(serverPort);
         log("Server socket opened");
 
+        log(NetworkInterface.getNetworkInterfaces().toString());
+
         log("Server socket listening for incoming connections (accepting mode)");
         Socket client = serverSocket.accept();
+        log(NetworkInterface.getNetworkInterfaces().toString());
+        System.out.println(client.getInetAddress().toString() + ":" + client.getPort());
+        System.out.println("TEst");
         log("Server connection from client: " + client.getInetAddress().toString() + ":" + client.getPort());
 
         log("TCP streams collecting");

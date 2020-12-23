@@ -1,9 +1,8 @@
 import java.io.*;
-import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.Socket;
 
-public class TCP_ClientOrganized {
+class TCP_Client2 {
     static BufferedReader br;
     static BufferedWriter bw;
     static InputStream sis;
@@ -26,7 +25,7 @@ public class TCP_ClientOrganized {
         }
     }
 
-    public TCP_ClientOrganized() throws IOException {
+    public TCP_Client2() throws IOException {
     }
 
     public static void sendRequest(String request) throws IOException {
@@ -52,8 +51,6 @@ public class TCP_ClientOrganized {
         }
 
         responseFileWriter.flush();
-
-        response = null;
     }
 
     public static void closeConnection() throws IOException {
@@ -88,8 +85,8 @@ public class TCP_ClientOrganized {
 
     public static void main(String[] args) throws IOException {
         establishConnection();
-        sendRequest("\n");
 
+        sendRequest("\n");
 
         while(true) {
             getResponse();
