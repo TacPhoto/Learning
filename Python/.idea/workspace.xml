@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2fe306cc-7e88-49ef-bac6-2df7020e4224" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../Java/src/KlientSerwerThread.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Java/src/TCP_ORganized2.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Java/src/KlientSerwerThread/KlientSerwerThread.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Java/src/TCP_Client2.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Java/src/UDPServer.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/StandaloneExercises/Client.py" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/StandaloneExercises/TCP.py" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/StandaloneExercises/TCP_Server.py" afterDir="false" />

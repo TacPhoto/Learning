@@ -13,7 +13,7 @@ public class TCP_ClientOrganized {
     static Socket client;
 
     static String severName = "0.0.0.0";
-    static int severPort = 8080;
+    static int severPort = 10005;
     static InetAddress serverAddress;
 
     static FileWriter responseFileWriter;
@@ -88,15 +88,15 @@ public class TCP_ClientOrganized {
 
     public static void main(String[] args) throws IOException {
         establishConnection();
-        sendRequest("\n");
-
+        sendRequest("%LISTLOCALFILES%\n");
 
         while(true) {
             getResponse();
         }
-
-        //closeConnection();
-        //responseFileWriter.close();
+/*
+        closeConnection();
+        responseFileWriter.close();
+ */
     }
 
     public static void log(String message) {
