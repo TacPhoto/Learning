@@ -23,6 +23,23 @@ public class RequestParser {
             return "Socket: " + socket + "\n" + fileUtils.getFileListString() + "\r\n";
         }
 
+        if(request.startsWith("%DOYOUHAVE%")){
+            request = request.replace("%DOYOUHAVE%", "").trim();
+
+            String commandArg[] = request.split(" ");
+            String fileName = commandArg[0];
+            String checkSum = commandArg[1];
+
+            if(fileUtils.getFile(fileName) != null){
+                if(fileUtils.getFile(fileName).checkSum.equals(checkSum)){
+                    return "%IHAVE%\r\n";
+                }
+            }
+
+            return "%NO%";
+
+        }
+
         if(request.startsWith("%PULL%")) {
             request = request.replace("%PULL%", "").trim();
 
@@ -36,7 +53,36 @@ public class RequestParser {
                         fileContent + "\r\n%FILEEND%\r\n");
             }
             else {
-                return "File not found";
+                return "File not found\r\n";
+            }
+        }
+
+
+        if(request.startsWith("%PULLPART%")) {
+            String command = getFirstStringLine(request);
+            command = command.replace("%PULLPART%", "").trim();
+            System.out.println("COMMAND:"+command);
+
+            String[] commandArr = command.split(" ");
+            int partNum = Integer.parseInt(commandArr[0]);
+            int partNumAll = Integer.parseInt(commandArr[1]);
+            String fileName = commandArr[2];
+
+            if(partNum > partNumAll){
+                return "Requested part number is higher then number of all available parts\r\n";
+            }
+
+            FileData fileData = fileUtils.getFile(fileName);
+
+            if (fileData != null) {
+                String fileContent = FileUtils.fileToBase64String(fileData, partNum, partNumAll);
+                return ("%FILEBEGINNING%\r\n" +
+                        fileData.file.getName() + ".part" + partNum + "\r\n" +
+                        FileData.calculateCheckSum(fileContent, "base64") +"\r\n" +
+                        fileContent + "\r\n%FILEEND%\r\n");
+            }
+            else {
+                return "File not found\r\n";
             }
         }
 
@@ -47,14 +93,11 @@ public class RequestParser {
 
             if(FileUtils.parseAndSaveFile(fileUtils.downloadedFilesPath.toAbsolutePath().toString(),
                     request)){
-                return "File received. Socket: " + socket;
+                return "File received. Socket: " + socket + "\r\n";
             }else {
                 System.out.println("Failed to receive a file, sending a new pull request");
 
-                Scanner scanner = new Scanner(request);
-                request = scanner.nextLine().trim();
-
-                return "%PULL% " + request;
+                return "%PULL% " + getFirstStringLine(request) + "\r\n";
             }
 
         }
@@ -62,4 +105,8 @@ public class RequestParser {
         return null;
     }
 
+    public static String getFirstStringLine(String s){
+        Scanner scanner = new Scanner(s);
+        return scanner.nextLine().trim();
+    }
 }

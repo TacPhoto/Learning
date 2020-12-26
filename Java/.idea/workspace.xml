@@ -2,15 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="00173a31-f3dd-43e0-823a-9a144b840dd3" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/FileTransfer/HostData.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/FileTransfer/ServerDriver.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TCP_Response.txt" beforeDir="false" afterPath="$PROJECT_DIR$/TCP_Response.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/FileTransfer/FileData.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/FileTransfer/FileData.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/FileTransfer/FileTransfer.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/FileTransfer/FileTransfer.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/FileTransfer/FileUtils.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/FileTransfer/FileUtils.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/FileTransfer/RequestParser.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/FileTransfer/RequestParser.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/FileTransfer/TCP_Server.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/TCP_Client.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/TCP_Client2.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/TCP_Client2.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/TCP_ClientOrganized.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/TCP_ClientOrganized.class" afterDir="false" />
@@ -18,7 +14,6 @@
       <change beforePath="$PROJECT_DIR$/src/FileTransfer/FileTransfer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/FileTransfer/FileTransfer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/FileTransfer/FileUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/FileTransfer/FileUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/FileTransfer/RequestParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/FileTransfer/RequestParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FileTransfer/TCP_Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/FileTransfer/TCP_ServerThread.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/TCP_Client.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/TCP_Client2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/TCP_Client2.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/TCP_ClientOrganized.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/TCP_ClientOrganized.java" afterDir="false" />
@@ -172,28 +167,28 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="707" y="380" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1920.1050/-1920.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1605205099114" />
-    <state width="1877" height="277" key="GridCell.Tab.0.bottom" timestamp="1608994728676">
+    <state width="1877" height="372" key="GridCell.Tab.0.bottom" timestamp="1608999271381">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1877" height="277" key="GridCell.Tab.0.bottom/0.0.1920.1050/-1920.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1608994728676" />
+    <state width="1877" height="372" key="GridCell.Tab.0.bottom/0.0.1920.1050/-1920.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1608999271381" />
     <state width="1877" height="398" key="GridCell.Tab.0.bottom/0.0.1920.1050/1920.0.1920.1050/-1920.0.1920.1050@-1920.0.1920.1050" timestamp="1607854383334" />
     <state width="1877" height="164" key="GridCell.Tab.0.bottom/0.0.1920.1050/1920.0.1920.1050/-1920.0.1920.1050@0.0.1920.1050" timestamp="1607866786795" />
-    <state width="1877" height="277" key="GridCell.Tab.0.center" timestamp="1608994728676">
+    <state width="1877" height="372" key="GridCell.Tab.0.center" timestamp="1608999271381">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1877" height="277" key="GridCell.Tab.0.center/0.0.1920.1050/-1920.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1608994728676" />
+    <state width="1877" height="372" key="GridCell.Tab.0.center/0.0.1920.1050/-1920.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1608999271381" />
     <state width="1877" height="398" key="GridCell.Tab.0.center/0.0.1920.1050/1920.0.1920.1050/-1920.0.1920.1050@-1920.0.1920.1050" timestamp="1607854383333" />
     <state width="1877" height="164" key="GridCell.Tab.0.center/0.0.1920.1050/1920.0.1920.1050/-1920.0.1920.1050@0.0.1920.1050" timestamp="1607866786794" />
-    <state width="1877" height="277" key="GridCell.Tab.0.left" timestamp="1608994728676">
+    <state width="1877" height="372" key="GridCell.Tab.0.left" timestamp="1608999271381">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1877" height="277" key="GridCell.Tab.0.left/0.0.1920.1050/-1920.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1608994728676" />
+    <state width="1877" height="372" key="GridCell.Tab.0.left/0.0.1920.1050/-1920.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1608999271381" />
     <state width="1877" height="398" key="GridCell.Tab.0.left/0.0.1920.1050/1920.0.1920.1050/-1920.0.1920.1050@-1920.0.1920.1050" timestamp="1607854383333" />
     <state width="1877" height="164" key="GridCell.Tab.0.left/0.0.1920.1050/1920.0.1920.1050/-1920.0.1920.1050@0.0.1920.1050" timestamp="1607866786794" />
-    <state width="1877" height="277" key="GridCell.Tab.0.right" timestamp="1608994728676">
+    <state width="1877" height="372" key="GridCell.Tab.0.right" timestamp="1608999271381">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1877" height="277" key="GridCell.Tab.0.right/0.0.1920.1050/-1920.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1608994728676" />
+    <state width="1877" height="372" key="GridCell.Tab.0.right/0.0.1920.1050/-1920.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1608999271381" />
     <state width="1877" height="398" key="GridCell.Tab.0.right/0.0.1920.1050/1920.0.1920.1050/-1920.0.1920.1050@-1920.0.1920.1050" timestamp="1607854383333" />
     <state width="1877" height="164" key="GridCell.Tab.0.right/0.0.1920.1050/1920.0.1920.1050/-1920.0.1920.1050@0.0.1920.1050" timestamp="1607866786794" />
     <state x="656" y="348" key="com.intellij.ide.util.TipDialog" timestamp="1608994071513">
@@ -206,14 +201,18 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="609" y="139" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1920.1050/-1920.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1608812945214" />
-    <state x="769" y="441" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1608742857539">
+    <state x="769" y="441" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1608996346823">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="769" y="441" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1050/-1920.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1608742857539" />
+    <state x="769" y="441" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1050/-1920.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1608996346823" />
     <state x="1913" y="0" width="974" height="1057" key="dock-window-1" timestamp="1608994042198">
       <screen x="1920" y="0" width="1920" height="1050" />
     </state>
     <state x="1913" y="0" width="974" height="1057" key="dock-window-1/0.0.1920.1050/-1920.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1608994042198" />
+    <state x="690" y="280" width="540" height="499" key="extract.method.dialog" timestamp="1608996696065">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="690" y="280" width="540" height="499" key="extract.method.dialog/0.0.1920.1050/-1920.0.1920.1050/1920.0.1920.1050@0.0.1920.1050" timestamp="1608996696065" />
     <state x="666" y="153" key="refactoring.ChangeSignatureDialog" timestamp="1608742583554">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>

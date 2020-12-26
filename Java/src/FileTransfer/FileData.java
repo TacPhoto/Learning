@@ -2,6 +2,7 @@ package FileTransfer;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.MessageDigest;
@@ -27,6 +28,26 @@ public class FileData {
         byte[] digest = md.digest();
         return Base64.getEncoder().encodeToString(digest);
     }
+
+
+    public static String calculateCheckSum(byte[] bytes) throws NoSuchAlgorithmException, IOException {
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        md.update(bytes);
+        byte[] digest = md.digest();
+        return Base64.getEncoder().encodeToString(digest);
+    }
+
+    public static String calculateCheckSum(String string, String mode) throws NoSuchAlgorithmException, IOException {
+
+        byte bytes[] = mode.equals("base64") ?
+                Base64.getDecoder().decode(string.getBytes(StandardCharsets.UTF_8)) : string.getBytes();
+
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        md.update(bytes);
+        byte[] digest = md.digest();
+        return Base64.getEncoder().encodeToString(digest);
+    }
+
 
     @Override
     public String toString(){

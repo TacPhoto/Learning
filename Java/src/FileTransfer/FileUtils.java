@@ -2,6 +2,7 @@ package FileTransfer;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -83,6 +84,26 @@ public class FileUtils {
 
 
         return true;
+    }
+
+
+    public static String fileToBase64String(FileData fileData, int partNum, int partNumAll) throws IOException {
+        File file = fileData.file;
+        FileInputStream fileInputStream = new FileInputStream(file);
+
+        byte fileBytes[] = new byte[(int) file.length()];
+        fileInputStream.read(fileBytes);
+
+        int j = 0;
+        byte partBytes[] = new byte[(int) file.length() / partNumAll];
+        for(int i = partBytes.length * (partNum - 1); i < partBytes.length * partNum; i++){
+            partBytes[j] = fileBytes[i];
+            j++;
+        }
+
+        String s = Base64.getEncoder().encodeToString(partBytes);
+
+        return s;
     }
 
 

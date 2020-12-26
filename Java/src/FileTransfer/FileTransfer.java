@@ -19,12 +19,16 @@ public class FileTransfer {
         //  server port, home_directory, push, name, hosts..
         //  man / help
 
-        // TODO:  DOWNLOAD FILE IN PARTS
-        //  - send number of part to get and amount of all parts
-        //  - save each part as a separate file
-        //  - validate each part separately. retry if broken
-        //  - when all are downloaded, merge them
-        //  - calculate md5 and compare
+        // TODO: ask host if he has a file
+
+        // TODO:  DOWNLOAD FILE IN PARTS with hosts specified
+        //  - ask host for part of a file
+        //  - when have all parts, merge them and delete redundant files
+
+        // TODO: DOWNLOAD FILE IN PARTS with hosts not specified
+        //  - create list of hosts paired with files they have
+        //  - count hosts which have desired file
+        //  - ask each host for a part of a file
 
         int serverPort = 10005;
 
