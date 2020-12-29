@@ -11,10 +11,11 @@ public:
 public:
 	int nFieldWidth = 10;
 	int nFieldHeight = 10;
+	int mines = 30;
+	int hints;
 	wxButton** btn;
 	int* nField = nullptr; //tells wether mine exists or not
 	bool bFirstClick = true;
-
 	
 	wxMenuBar *menuBar = nullptr;
 	wxMenu *menuGameSession = nullptr;
@@ -28,6 +29,18 @@ public:
 	wxMenuItem *menuNormal = nullptr;
 	wxMenuItem *menuHard = nullptr;
 	wxMenuItem *menuShowHelp = nullptr;
+
+	wxString labelBaseTitle;
+
+	struct lastClickedField
+	{
+		int x;
+		int y;
+	} lastClicked;
+
+	enum level {easy, normal, hard} lvl;
+
+	void setLevel(level);
 
 	void setMenuBar();
 

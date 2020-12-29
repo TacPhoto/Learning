@@ -1,21 +1,29 @@
 #include "cMain.h"
 
 wxBEGIN_EVENT_TABLE(cMain, wxFrame)
-	EVT_BUTTON(600, OnButtonSaveClicked) // menuSave
-	EVT_BUTTON(601, OnButtonMenuClicked) // menuLoad
-	EVT_BUTTON(602, OnButtonRestartClicked) // menuRestart
+	EVT_MENU(600, OnButtonSaveClicked) // menuSave
+	EVT_MENU(601, OnButtonMenuClicked) // menuLoad
+	EVT_MENU(602, OnButtonRestartClicked) // menuRestart
 
-	EVT_BUTTON(610, OnButtonEasyClicked) // menuEasy
-	EVT_BUTTON(611, OnButtonNormalClicked) // menuNormal
-	EVT_BUTTON(612, OnButtonHardClicked) // menuHard
+	EVT_MENU(610, cMain::OnButtonEasyClicked) // menuEasy
+	EVT_MENU(611, OnButtonNormalClicked) // menuNormal
+	EVT_MENU(612, OnButtonHardClicked) // menuHard
 
-	EVT_BUTTON(613, OnButtonShowHelpClicked) // menuShowHelp
+	EVT_MENU(613, OnButtonShowHelpClicked) // menuShowHelp
 
 wxEND_EVENT_TABLE()
 
-cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Minesweeper", wxPoint(20, 20), wxSize(800, 600))
+
+cMain::cMain() : wxFrame(nullptr, wxID_ANY, labelBaseTitle, wxPoint(20, 20), wxSize(800, 600))
 {
+	wxString labelBaseTitle = wxT("Minesweeper");
+	this->SetLabel(labelBaseTitle);
+
 	setMenuBar();
+	level lvl;
+	setLevel(easy);
+
+	struct lastClickedField lastClicked = {5, 5};
 
 	btn = new wxButton * [nFieldWidth * nFieldHeight];
 	wxGridSizer* grid = new wxGridSizer(nFieldWidth, nFieldHeight, 0, 0);
@@ -43,7 +51,6 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Minesweeper", wxPoint(20, 20), wxSi
 	this->SetSizer(grid);
 	grid->Layout();
 
-	//this->SetLabel(wxT("Test"));
 
 }
 
@@ -100,6 +107,35 @@ cMain::~cMain()
 
 }
 
+void cMain::setLevel(level l)
+{
+	lvl = l;
+	wxString newTitle;// = wxT("");
+
+	switch (lvl)
+	{
+	case easy:
+		mines = 15;
+		hints = 2;
+		newTitle = _("Minesweeper - Easy | Hints: ") + wxString::Format(wxT("%d"), (int)hints);
+		break;
+	case normal:
+		hints = 1;
+		mines = 30;
+		newTitle = _("Minesweeper - Normal | Hints: ") + wxString::Format(wxT("%d"), (int)hints);
+		break;
+	case hard:
+		hints = 0;
+		mines = 45;
+		newTitle = _("Minesweeper - Hard | Hints: ") + wxString::Format(wxT("%d"), (int)hints);
+		break;
+	}
+
+	this->SetLabel(newTitle);
+
+
+}
+
 void cMain::OnButtonClicked(wxCommandEvent& evt)
 {
 	// Get button coordinate
@@ -134,22 +170,6 @@ void cMain::OnButtonClicked(wxCommandEvent& evt)
 	evt.Skip();
 }
 
-void cMain::resetGame()
-{
-	// Reset game
-	bFirstClick = true;
-	for (int x = 0; x < nFieldWidth; x++) {
-		for (int y = 0; y < nFieldHeight; y++)
-		{
-			int index = y * nFieldWidth + x;
-
-			nField[index] = 0;
-			btn[index]->SetLabel("");
-			btn[index]->Enable(true);
-		}
-	}
-}
-
 void cMain::updateNeighbouringMinesNum(int x, int y)
 {
 	int index = y * nFieldWidth + x;
@@ -174,6 +194,25 @@ void cMain::updateNeighbouringMinesNum(int x, int y)
 			btn[index]->SetLabel(std::to_string(mine_count));
 		}
 	}
+}
+
+void cMain::resetGame()
+{
+	// Reset game
+	bFirstClick = true;
+	for (int x = 0; x < nFieldWidth; x++) {
+		for (int y = 0; y < nFieldHeight; y++)
+		{
+			int index = y * nFieldWidth + x;
+
+			nField[index] = 0;
+			btn[index]->SetLabel("");
+			btn[index]->Enable(true);
+		}
+	}
+
+	lastClicked.x = 5;
+	lastClicked.y = 5;
 }
 
 void cMain::populateMinefield(int amount, int x, int y)
@@ -207,21 +246,31 @@ void cMain::OnButtonMenuClicked(wxCommandEvent& evt)
 
 void cMain::OnButtonRestartClicked(wxCommandEvent& evt)
 {
+	resetGame();
+
 	evt.Skip();
 }
 
 void cMain::OnButtonEasyClicked(wxCommandEvent& evt)
 {
+	setLevel(easy);
+	resetGame();
 	evt.Skip();
 }
 
 void cMain::OnButtonNormalClicked(wxCommandEvent& evt)
 {
+	setLevel(normal);
+	resetGame();
+
 	evt.Skip();
 }
 
 void cMain::OnButtonHardClicked(wxCommandEvent& evt)
 {
+	setLevel(hard);
+	resetGame();
+
 	evt.Skip();
 }
 
@@ -229,3 +278,4 @@ void cMain::OnButtonShowHelpClicked(wxCommandEvent& evt)
 {
 	evt.Skip();
 }
+
