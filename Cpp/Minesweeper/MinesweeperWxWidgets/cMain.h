@@ -14,9 +14,9 @@ public:
 	int mines = 30;
 	int hints;
 	wxButton** btn;
-	int* nField = nullptr; //tells wether mine exists or not
+	int* nField = nullptr; // Tells wether mine exists or not
 	bool bFirstClick = true;
-	
+
 	wxMenuBar *menuBar = nullptr;
 	wxMenu *menuGameSession = nullptr;
 	wxMenu *menuLevel = nullptr;
@@ -28,7 +28,10 @@ public:
 	wxMenuItem *menuEasy = nullptr;
 	wxMenuItem *menuNormal = nullptr;
 	wxMenuItem *menuHard = nullptr;
+	wxMenuItem *menuShowHint = nullptr;
 	wxMenuItem *menuShowHelp = nullptr;
+
+	wxMenuItem* showHint = nullptr;
 
 	wxString labelBaseTitle;
 
@@ -50,7 +53,7 @@ public:
 
 	void updateNeighbouringMinesNum(int x, int y);
 
-	void populateMinefield(int mines, int x, int y);
+	void populateMinefield(int x, int y);
 
 	void OnButtonSaveClicked(wxCommandEvent& evt);
 
@@ -65,6 +68,8 @@ public:
 	void OnButtonHardClicked(wxCommandEvent& evt);
 
 	void OnButtonShowHelpClicked(wxCommandEvent& evt);
+
+	void  OnButtonShowHintClicked(wxCommandEvent& evt);
 
 	wxDECLARE_EVENT_TABLE();
 };
