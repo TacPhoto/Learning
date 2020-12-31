@@ -11,17 +11,23 @@ wxBEGIN_EVENT_TABLE(cMain, wxFrame)
 
 	EVT_MENU(613, OnButtonShowHelpClicked) // menuShowHelp
 	EVT_MENU(620, OnButtonShowHintClicked) // menuShowHint
+
+#ifdef _DEBUG
+	EVT_MENU(630, OnButtonDEBUGClicked) // menuShowHint
+#endif // DEBUG
+
 wxEND_EVENT_TABLE()
 
 
 cMain::cMain() : wxFrame(nullptr, wxID_ANY, wxT("Minesweeper"), wxPoint(20, 20), wxSize(800, 600))
 {
-	// TODO: implement winning condition
 	// TODO: implement game saving and loading
 
 	setMenuBar();
 	level lvl;
 	setLevel(easy);
+
+	clicked = 0;
 
 	struct lastClickedField lastClicked = {5, 5};
 	lastClicked.x = 5;
@@ -41,6 +47,7 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, wxT("Minesweeper"), wxPoint(20, 20),
 			
 			btn[index] = new wxButton(this, 10000 + (index));
 			btn[index]->SetFont(font);
+			btn[index]->SetLabel("");
 			grid->Add(btn[y * nFieldWidth + x], 1, wxEXPAND | wxALL);
 
 			btn[index]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &cMain::OnButtonClicked, this); 
@@ -81,6 +88,11 @@ void cMain::setMenuBar()
 	menuLevel->Append(menuShowHint);
 	menuLevel->Append(menuShowHelp);
 
+#ifdef _DEBUG
+	wxMenuItem* menuDEBUG = new wxMenuItem(menuLevel, 630, wxT("&DEBUG LEVEL"));
+	menuLevel->Append(menuDEBUG);
+#endif
+
 	menuBar->Append(menuGameSession, wxT("&Game Session"));
 	menuBar->Append(menuLevel, wxT("&Level"));
 
@@ -90,9 +102,15 @@ void cMain::setMenuBar()
 
 void cMain::OnButtonShowHintClicked(wxCommandEvent& evt)
 {
+	if (bFirstClick)
+	{
+		wxMessageBox("Don't be shy, try any field before using a hint ;)");
+		evt.Skip();
+
+	}
+
 	int x = lastClicked.x;
 	int y = lastClicked.y;
-	
 
 	if (hints != 0)
 	{
@@ -111,6 +129,11 @@ void cMain::OnButtonShowHintClicked(wxCommandEvent& evt)
 				int temp_x = x1 + i;
 				int index = y1 * nFieldWidth + temp_x;
 
+				if (index > 100)
+				{
+					break;
+				}
+
 				if (nField[index] == -1 && !(btn[index]->GetLabelText() == wxT("X")))
 				{
 					btn[index]->SetLabel("X");
@@ -123,6 +146,11 @@ void cMain::OnButtonShowHintClicked(wxCommandEvent& evt)
 			for (int i = 0; i < distance * 2 + 1; i++) {
 				int temp_x = x1 + i;
 				int index = y2 * nFieldWidth + temp_x;
+
+				if (index > 100)
+				{
+					break;
+				}
 
 				if (nField[index] == -1 && !(btn[index]->GetLabelText() == wxT("X")))
 				{
@@ -137,6 +165,11 @@ void cMain::OnButtonShowHintClicked(wxCommandEvent& evt)
 				int temp_y = y1 + i;
 				int index = temp_y * nFieldWidth + x1;
 
+				if (index > 100)
+				{
+					break;
+				}
+
 				if (nField[index] == -1 && !(btn[index]->GetLabelText() == wxT("X")))
 				{
 					btn[index]->SetLabel("X");
@@ -149,6 +182,11 @@ void cMain::OnButtonShowHintClicked(wxCommandEvent& evt)
 			for (int i = 0; i < distance * 2 + 1; i++) {
 				int temp_y = y1 + i;
 				int index = temp_y * nFieldWidth + x2;
+
+				if (index > 100)
+				{
+					break;
+				}
 
 				if (nField[index] == -1 && !(btn[index]->GetLabelText() == wxT("X")))
 				{
@@ -193,6 +231,9 @@ cMain::~cMain()
 
 	delete showHint;
 
+#ifdef _DEBUG
+	delete menuDEBUG;
+#endif
 }
 
 void cMain::setLevel(level l)
@@ -211,15 +252,24 @@ void cMain::setLevel(level l)
 	case normal:
 		hints = 1;
 		mines = 30;
-		labelBaseTitle = _("Minesweeper - Easy | Hints: ");
+		labelBaseTitle = _("Minesweeper - Normal | Hints: ");
 		newTitle = labelBaseTitle + wxString::Format(wxT("%d"), (int)hints);
 		break;
 	case hard:
 		hints = 0;
 		mines = 45;
-		labelBaseTitle = _("Minesweeper - Easy | Hints: ");
+		labelBaseTitle = _("Minesweeper - Hard | Hints: ");
 		newTitle = labelBaseTitle + wxString::Format(wxT("%d"), (int)hints);
 		break;
+#ifdef _DEBUG
+	case debug:
+		hints = 100;
+		mines = 30;
+		labelBaseTitle = _("Minesweeper - DEBUG LEVEL | Click 20 to win | Hints: ");
+		newTitle = labelBaseTitle + wxString::Format(wxT("%d"), (int)hints);
+		break;
+#endif 
+
 	}
 
 	this->SetLabel(newTitle);
@@ -229,6 +279,8 @@ void cMain::setLevel(level l)
 
 void cMain::OnButtonClicked(wxCommandEvent& evt)
 {
+	clicked++;
+
 	// Get button coordinate
 	int x = (evt.GetId() - 10000) % nFieldWidth;
 	int y = (evt.GetId() - 10000) / nFieldWidth;
@@ -252,12 +304,26 @@ void cMain::OnButtonClicked(wxCommandEvent& evt)
 		btn[index]->SetLabel("X");
 		wxMessageBox("GAME OVER");
 
+		clicked = 0;
+
 		resetGame();
 	}
 
 	else
 	{
 		updateNeighbouringMinesNum(x, y);
+
+		// Winning condition
+#ifndef _DEBUG
+		if (clicked == 100 - mines) 
+#endif // !_DEBUG
+#ifdef _DEBUG
+		if (clicked == 20)
+#endif
+		{
+			wxMessageBox("YOU WON DA GAME MY DUDE");
+			clicked = 0;
+		}
 	}
 
 	evt.Skip();
@@ -367,6 +433,17 @@ void cMain::OnButtonHardClicked(wxCommandEvent& evt)
 
 	evt.Skip();
 }
+
+#ifdef _DEBUG
+void  cMain::OnButtonDEBUGClicked(wxCommandEvent& evt)
+{
+	setLevel(debug);
+	resetGame();
+
+	evt.Skip();
+}
+#endif // _DEBUG
+
 
 void cMain::OnButtonShowHelpClicked(wxCommandEvent& evt)
 {

@@ -13,6 +13,7 @@ public:
 	int nFieldHeight = 10;
 	int mines = 30;
 	int hints;
+	int clicked; // Counts clicked fields
 	wxButton** btn;
 	int* nField = nullptr; // Tells wether mine exists or not
 	bool bFirstClick = true;
@@ -33,6 +34,10 @@ public:
 
 	wxMenuItem* showHint = nullptr;
 
+#ifdef _DEBUG
+	wxMenuItem* menuDEBUG = nullptr;
+#endif
+
 	wxString labelBaseTitle;
 
 	struct lastClickedField
@@ -41,7 +46,15 @@ public:
 		int y;
 	} lastClicked;
 
-	enum level {easy, normal, hard} lvl;
+#ifndef _DEBUG
+	enum level { easy, normal, hard } lvl;
+#endif // ! _DEBUG
+#ifdef _DEBUG
+	enum level { easy, normal, hard, debug } lvl;
+	void  OnButtonDEBUGClicked(wxCommandEvent& evt);
+#endif // 
+
+
 
 	void setLevel(level);
 
@@ -70,6 +83,7 @@ public:
 	void OnButtonShowHelpClicked(wxCommandEvent& evt);
 
 	void  OnButtonShowHintClicked(wxCommandEvent& evt);
+
 
 	wxDECLARE_EVENT_TABLE();
 };
