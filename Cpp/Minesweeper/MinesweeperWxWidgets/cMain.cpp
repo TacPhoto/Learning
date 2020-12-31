@@ -106,7 +106,7 @@ void cMain::OnButtonShowHintClicked(wxCommandEvent& evt)
 	{
 		wxMessageBox("Don't be shy, try any field before using a hint ;)");
 		evt.Skip();
-
+		return;
 	}
 
 	int x = lastClicked.x;
