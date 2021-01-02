@@ -399,7 +399,7 @@ void cMain::OnButtonSaveClicked(wxCommandEvent& evt)
 {
 	std::ofstream file;
 	file.open("save.minesweeper");
-	cSerialization::serialize(file, lvl, clicked, lastClicked.x, lastClicked.y, hints, btn);
+	cSerialization::serialize(file, lvl, clicked, lastClicked.x, lastClicked.y, hints, btn, nField);
 	file.close();
 
 	evt.Skip();
@@ -411,10 +411,16 @@ void cMain::OnButtonLoadClicked(wxCommandEvent& evt)
 	file.open("save.minesweeper");
 
 	int levelInt = lvl;
-	cSerialization::deSerialize(file, levelInt, clicked, lastClicked.x, lastClicked.y, hints, btn);
-	// TODO: serialize mines
-	// TODO: should rewrite level valuel, set level, update hints num etc
+	cSerialization::deSerialize(file, levelInt, clicked, lastClicked.x, lastClicked.y, hints, btn, nField);
+
+	int tempHints = hints; // cause setLevel will override hints
+	setLevel((level)levelInt);
+	hints = tempHints;
+	this->SetLabel(labelBaseTitle + wxString::Format(wxT("%d"), (int)hints));
+
 	file.close();
+
+	bFirstClick = false;
 
 	evt.Skip();
 }

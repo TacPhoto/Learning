@@ -13,8 +13,8 @@ enum level { easy, normal, hard, debug };
 
 namespace cSerialization
 {
-	bool serialize(std::ofstream &outputFile, int lvl, int clicked, int x, int y, int hints, wxButton *btn[]);
+	bool serialize(std::ofstream &outputFile, int lvl, int clicked, int x, int y, int hints, wxButton *btn[], int nField[]);
 
-	bool deSerialize(std::ifstream &outputFile, int &lvl, int &clicked, int &x, int &y, int &hints, wxButton* btn[]);
+	bool deSerialize(std::ifstream &outputFile, int &lvl, int &clicked, int &x, int &y, int &hints, wxButton* btn[], int nField[]);
 }
 
