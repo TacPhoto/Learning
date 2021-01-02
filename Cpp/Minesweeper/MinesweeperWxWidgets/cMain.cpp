@@ -22,7 +22,7 @@ wxEND_EVENT_TABLE()
 
 cMain::cMain() : wxFrame(nullptr, wxID_ANY, wxT("Minesweeper"), wxPoint(20, 20), wxSize(800, 600))
 {
-	// TODO: implement game saving and loading
+	// TODO: implement choosing file to save/open
 
 	setMenuBar();
 	level lvl;
@@ -288,7 +288,6 @@ void cMain::OnButtonClicked(wxCommandEvent& evt)
 	int index = y * nFieldWidth + x;
 	lastClicked.x = x;
 	lastClicked.y = y;
-	//wxMessageBox(wxString::Format(wxT("x: %d y: %d"), lastClicked.x, lastClicked.y));
 
 	// Populate minefield
 	if (bFirstClick)
