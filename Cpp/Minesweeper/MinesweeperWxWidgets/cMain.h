@@ -70,7 +70,7 @@ public:
 
 	void OnButtonSaveClicked(wxCommandEvent& evt);
 
-	void OnButtonMenuClicked(wxCommandEvent& evt);
+	void OnButtonLoadClicked(wxCommandEvent& evt);
 
 	void OnButtonRestartClicked(wxCommandEvent& evt);
 

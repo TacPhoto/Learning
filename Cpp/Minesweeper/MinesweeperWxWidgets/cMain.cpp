@@ -1,8 +1,9 @@
 #include "cMain.h"
+#include "cSerialization.h"
 
 wxBEGIN_EVENT_TABLE(cMain, wxFrame)
 	EVT_MENU(600, OnButtonSaveClicked) // menuSave
-	EVT_MENU(601, OnButtonMenuClicked) // menuLoad
+	EVT_MENU(601, OnButtonLoadClicked) // menuLoad
 	EVT_MENU(602, OnButtonRestartClicked) // menuRestart
 
 	EVT_MENU(610, OnButtonEasyClicked) // menuEasy
@@ -318,7 +319,7 @@ void cMain::OnButtonClicked(wxCommandEvent& evt)
 		if (clicked == 100 - mines) 
 #endif // !_DEBUG
 #ifdef _DEBUG
-		if (clicked == 20)
+		if (lvl == debug && clicked == 20 || clicked == 100 - mines)
 #endif
 		{
 			wxMessageBox("YOU WON DA GAME MY DUDE");
@@ -396,11 +397,25 @@ void cMain::populateMinefield(int x, int y)
 
 void cMain::OnButtonSaveClicked(wxCommandEvent& evt)
 {
+	std::ofstream file;
+	file.open("save.minesweeper");
+	cSerialization::serialize(file, lvl, clicked, lastClicked.x, lastClicked.y, hints, btn);
+	file.close();
+
 	evt.Skip();
 }
 
-void cMain::OnButtonMenuClicked(wxCommandEvent& evt)
+void cMain::OnButtonLoadClicked(wxCommandEvent& evt)
 {
+	std::ifstream file;
+	file.open("save.minesweeper");
+
+	int levelInt = lvl;
+	cSerialization::deSerialize(file, levelInt, clicked, lastClicked.x, lastClicked.y, hints, btn);
+	// TODO: serialize mines
+	// TODO: should rewrite level valuel, set level, update hints num etc
+	file.close();
+
 	evt.Skip();
 }
 
@@ -443,7 +458,6 @@ void  cMain::OnButtonDEBUGClicked(wxCommandEvent& evt)
 	evt.Skip();
 }
 #endif // _DEBUG
-
 
 void cMain::OnButtonShowHelpClicked(wxCommandEvent& evt)
 {
