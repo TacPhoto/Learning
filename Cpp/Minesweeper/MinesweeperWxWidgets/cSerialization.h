@@ -2,14 +2,6 @@
 #include "wx/wx.h"
 #include <iostream>
 #include <fstream>
-/*
-#ifndef _DEBUG
-enum level { easy, normal, hard };
-#endif // ! _DEBUG
-#ifdef _DEBUG
-enum level { easy, normal, hard, debug };
-#endif 
-*/
 
 namespace cSerialization
 {

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "wx/wx.h"
+#include <wx/string.h>
 
 class cMain : public wxFrame
 {
@@ -54,8 +55,6 @@ public:
 	void  OnButtonDEBUGClicked(wxCommandEvent& evt);
 #endif // 
 
-
-
 	void setLevel(level);
 
 	void setMenuBar();
@@ -82,9 +81,12 @@ public:
 
 	void OnButtonShowHelpClicked(wxCommandEvent& evt);
 
-	void  OnButtonShowHintClicked(wxCommandEvent& evt);
+	void OnButtonShowHintClicked(wxCommandEvent& evt);
 
+	std::string getOpenFilePath();
 
+	std::string getSaveFilePath();
+	
 	wxDECLARE_EVENT_TABLE();
 };
 

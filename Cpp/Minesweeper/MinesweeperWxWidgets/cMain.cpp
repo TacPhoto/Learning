@@ -394,12 +394,56 @@ void cMain::populateMinefield(int x, int y)
 	}
 }
 
+std::string cMain::getOpenFilePath()
+{
+	wxFileDialog* OpenDialog = new wxFileDialog(
+		this, _("Choose a save file to open"), wxEmptyString, wxEmptyString,
+		_("Minesweeper save files (*.minesweeper)|*.minesweeper"),
+			wxFD_OPEN, wxDefaultPosition);
+
+	wxString docPath = wxT("");
+
+	if (OpenDialog->ShowModal() == wxID_OK) // if the user click "Open" instead of "Cancel"
+	{
+		docPath = OpenDialog->GetPath();
+	}
+
+	OpenDialog->Destroy();
+	
+	return docPath.ToStdString();
+}
+
+std::string cMain::getSaveFilePath()
+{
+	wxFileDialog* OpenDialog = new wxFileDialog(
+		this, _("Save game_save as _?"), wxEmptyString, wxEmptyString,
+		_("Minesweeper save files (*.minesweeper)|*.minesweeper"),
+		wxFD_SAVE, wxDefaultPosition);
+
+	wxString docPath = wxT("");
+
+	if (OpenDialog->ShowModal() == wxID_OK) // if the user click "Open" instead of "Cancel"
+	{
+		docPath = OpenDialog->GetPath();
+	}
+
+	OpenDialog->Destroy();
+
+	return docPath.ToStdString();
+}
+
 void cMain::OnButtonSaveClicked(wxCommandEvent& evt)
 {
 	std::ofstream file;
-	file.open("save.minesweeper");
-	cSerialization::serialize(file, lvl, clicked, lastClicked.x, lastClicked.y, hints, btn, nField);
-	file.close();
+
+	std::string path = cMain::getSaveFilePath();
+
+	if (path != "")
+	{
+		file.open(path);
+		cSerialization::serialize(file, lvl, clicked, lastClicked.x, lastClicked.y, hints, btn, nField);
+		file.close();
+	}
 
 	evt.Skip();
 }
@@ -407,20 +451,23 @@ void cMain::OnButtonSaveClicked(wxCommandEvent& evt)
 void cMain::OnButtonLoadClicked(wxCommandEvent& evt)
 {
 	std::ifstream file;
-	file.open("save.minesweeper");
+	std::string path = cMain::getOpenFilePath();
 
-	int levelInt = lvl;
-	cSerialization::deSerialize(file, levelInt, clicked, lastClicked.x, lastClicked.y, hints, btn, nField);
+	if (path != "")
+	{
+		file.open(path);
+		int levelInt = lvl;
+		cSerialization::deSerialize(file, levelInt, clicked, lastClicked.x, lastClicked.y, hints, btn, nField);
 
-	int tempHints = hints; // cause setLevel will override hints
-	setLevel((level)levelInt);
-	hints = tempHints;
-	this->SetLabel(labelBaseTitle + wxString::Format(wxT("%d"), (int)hints));
+		int tempHints = hints; // cause setLevel will override hints
+		setLevel((level)levelInt);
+		hints = tempHints;
+		this->SetLabel(labelBaseTitle + wxString::Format(wxT("%d"), (int)hints));
 
-	file.close();
+		file.close();
 
-	bFirstClick = false;
-
+		bFirstClick = false;
+	}
 	evt.Skip();
 }
 
