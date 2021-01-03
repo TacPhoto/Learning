@@ -36,7 +36,7 @@ public class RequestParser {
                 }
             }
 
-            return "%NO%";
+            return "%NO%\r\n";
 
         }
 
@@ -77,7 +77,7 @@ public class RequestParser {
             if (fileData != null) {
                 String fileContent = FileUtils.fileToBase64String(fileData, partNum, partNumAll);
                 return ("%FILEBEGINNING%\r\n" +
-                        fileData.file.getName() + ".part" + partNum + "\r\n" +
+                        fileData.file.getName() + ".part." + partNum + "\r\n" +
                         FileData.calculateCheckSum(fileContent, "base64") +"\r\n" +
                         fileContent + "\r\n%FILEEND%\r\n");
             }

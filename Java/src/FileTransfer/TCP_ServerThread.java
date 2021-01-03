@@ -91,7 +91,7 @@ public class TCP_ServerThread implements Runnable{
                             continue;
                         }
 
-                        sendMessage(requestParser.returnMessage(request));
+                        sendMessage(requestParser. returnMessage(request));
 
                         oldRequest = request;
                     }

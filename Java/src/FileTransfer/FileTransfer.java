@@ -28,7 +28,14 @@ public class FileTransfer {
         // TODO: DOWNLOAD FILE IN PARTS with hosts not specified
         //  - create list of hosts paired with files they have
         //  - count hosts which have desired file
+        //  - save temp file with final MD5, file name and number of all parts
         //  - ask each host for a part of a file
+        //  - check if all parts are downlaoded. if not, reask for them, if yes, merge them
+
+        // TODO: RUN COMMAND TO CONTINUE DOWNLOADING FILE
+        //  - it is based on file with final MD5, file name and number of all parts
+        //  - simply asks hosts for missing parts and then merges them
+
 
         int serverPort = 10005;
 
