@@ -5,6 +5,7 @@ wxBEGIN_EVENT_TABLE(cMain, wxFrame)
 	EVT_MENU(600, OnButtonSaveClicked) // menuSave
 	EVT_MENU(601, OnButtonLoadClicked) // menuLoad
 	EVT_MENU(602, OnButtonRestartClicked) // menuRestart
+	EVT_MENU(603, OnButtonSolveClicked) //menuSolve
 
 	EVT_MENU(610, OnButtonEasyClicked) // menuEasy
 	EVT_MENU(611, OnButtonNormalClicked) // menuNormal
@@ -72,6 +73,7 @@ void cMain::setMenuBar()
 	wxMenuItem* menuSave = new wxMenuItem(menuGameSession, 600, wxT("&Save"));
 	wxMenuItem* menuLoad = new wxMenuItem(menuGameSession, 601, wxT("&Load"));
 	wxMenuItem* menuRestart = new wxMenuItem(menuGameSession, 602, wxT("&Reset"));
+	wxMenuItem* menuSolve = new wxMenuItem(menuGameSession, 603, wxT("&Solve"));
 
 	wxMenuItem* menuEasy = new wxMenuItem(menuLevel, 610, wxT("&Easy"));
 	wxMenuItem* menuNormal = new wxMenuItem(menuLevel, 611, wxT("&Normal"));
@@ -82,6 +84,7 @@ void cMain::setMenuBar()
 	menuGameSession->Append(menuSave);
 	menuGameSession->Append(menuLoad);
 	menuGameSession->Append(menuRestart);
+	menuGameSession->Append(menuSolve);
 
 	menuLevel->Append(menuEasy);
 	menuLevel->Append(menuNormal);
@@ -130,16 +133,14 @@ void cMain::OnButtonShowHintClicked(wxCommandEvent& evt)
 				int temp_x = x1 + i;
 				int index = y1 * nFieldWidth + temp_x;
 
-				if (index > 100)
+				if (index < 100 && index >= 0)
 				{
-					break;
-				}
-
 				if (nField[index] == -1 && !(btn[index]->GetLabelText() == wxT("X")))
 				{
 					btn[index]->SetLabel("X");
 					found = true;
 					break;
+				}
 				}
 			}
 			if (found) break;
@@ -148,16 +149,14 @@ void cMain::OnButtonShowHintClicked(wxCommandEvent& evt)
 				int temp_x = x1 + i;
 				int index = y2 * nFieldWidth + temp_x;
 
-				if (index > 100)
+				if (index < 100 && index >= 0)
 				{
-					break;
-				}
-
-				if (nField[index] == -1 && !(btn[index]->GetLabelText() == wxT("X")))
-				{
-					btn[index]->SetLabel("X");
-					found = true;
-					break;
+					if (nField[index] == -1 && !(btn[index]->GetLabelText() == wxT("X")))
+					{
+						btn[index]->SetLabel("X");
+						found = true;
+						break;
+					}
 				}
 			}
 			if (found) break;
@@ -166,16 +165,14 @@ void cMain::OnButtonShowHintClicked(wxCommandEvent& evt)
 				int temp_y = y1 + i;
 				int index = temp_y * nFieldWidth + x1;
 
-				if (index > 100)
+				if (index < 100 && index >= 0)
 				{
-					break;
-				}
-
-				if (nField[index] == -1 && !(btn[index]->GetLabelText() == wxT("X")))
-				{
-					btn[index]->SetLabel("X");
-					found = true;
-					break;
+					if (nField[index] == -1 && !(btn[index]->GetLabelText() == wxT("X")))
+					{
+						btn[index]->SetLabel("X");
+						found = true;
+						break;
+					}
 				}
 			}
 			if (found) break;
@@ -184,16 +181,14 @@ void cMain::OnButtonShowHintClicked(wxCommandEvent& evt)
 				int temp_y = y1 + i;
 				int index = temp_y * nFieldWidth + x2;
 
-				if (index > 100)
+				if (index < 100 && index >= 0)
 				{
-					break;
-				}
-
-				if (nField[index] == -1 && !(btn[index]->GetLabelText() == wxT("X")))
-				{
-					btn[index]->SetLabel("X");
-					found = true;
-					break;
+					if (nField[index] == -1 && !(btn[index]->GetLabelText() == wxT("X")))
+					{
+						btn[index]->SetLabel("X");
+						found = true;
+						break;
+					}
 				}
 			}
 			if (found) break;
@@ -224,6 +219,7 @@ cMain::~cMain()
 	delete menuSave;
 	delete menuLoad;
 	delete menuRestart;
+	delete menuSolve;
 
 	delete menuGameSession;
 	delete menuLevel;
@@ -376,6 +372,7 @@ void cMain::resetGame()
 
 void cMain::populateMinefield(int x, int y)
 {
+	srand(time(NULL));
 	int tempMines = mines;
 
 	while (tempMines)
@@ -393,6 +390,83 @@ void cMain::populateMinefield(int x, int y)
 		bFirstClick = false;
 	}
 }
+
+void cMain::basicSolver(wxCommandEvent& evt)
+{
+	int x = lastClicked.x;
+	int y = lastClicked.y;
+
+	for (int distance = 0; distance < 10; distance++) {
+		// Distance is a maximum distance for a single dimension. it is equal for X and Y
+		// Corners: x1,y1 x1,y2 x2,y1 x2,y2 - we need to iterate between those cords
+
+		int x1 = x - distance;
+		int x2 = x + distance;
+		int y1 = y - distance;
+		int y2 = y + distance;
+
+		bool found = false;
+
+		for (int i = 0; i < distance * 2 + 1; i++) {
+			int temp_x = x1 + i;
+			int index = y1 * nFieldWidth + temp_x;
+
+			if (index < 100 && index >= 0)
+			{
+				if (nField[index] != -1)
+				{
+					wxButton::MSWClickButtonIfPossible(btn[index]);
+					wxMilliSleep(10);
+				}
+			}
+		}
+		if (found) break;
+
+		for (int i = 0; i < distance * 2 + 1; i++) {
+			int temp_x = x1 + i;
+			int index = y2 * nFieldWidth + temp_x;
+
+			if (index < 100 && index >= 0)
+			{
+				if (nField[index] != -1)
+				{
+					wxButton::MSWClickButtonIfPossible(btn[index]);
+					wxMilliSleep(10);
+				}
+			}
+		}
+		if (found) break;
+
+		for (int i = 0; i < distance * 2 + 1; i++) {
+			int temp_y = y1 + i;
+			int index = temp_y * nFieldWidth + x1;
+
+			if (index < 100 && index >= 0)
+			{
+				if (nField[index] != -1)
+				{
+					wxButton::MSWClickButtonIfPossible(btn[index]);
+					wxMilliSleep(10);
+				}
+			}
+		}
+
+		for (int i = 0; i < distance * 2 + 1; i++) {
+			int temp_y = y1 + i;
+			int index = temp_y * nFieldWidth + x2;
+
+			if (index < 100 && index >= 0)
+			{
+				if (nField[index] != -1)
+				{
+					wxButton::MSWClickButtonIfPossible(btn[index]);
+					wxMilliSleep(10);
+				}
+			}
+		}
+	}
+}
+
 
 std::string cMain::getOpenFilePath()
 {
@@ -478,6 +552,16 @@ void cMain::OnButtonRestartClicked(wxCommandEvent& evt)
 	evt.Skip();
 }
 
+void cMain::OnButtonSolveClicked(wxCommandEvent& evt)
+{
+	if (bFirstClick)
+		wxButton::MSWClickButtonIfPossible(btn[5 * 10 + 5]);
+
+	cMain::basicSolver(evt);
+
+	evt.Skip();
+}
+
 void cMain::OnButtonEasyClicked(wxCommandEvent& evt)
 {
 	setLevel(easy);
@@ -513,6 +597,8 @@ void  cMain::OnButtonDEBUGClicked(wxCommandEvent& evt)
 
 void cMain::OnButtonShowHelpClicked(wxCommandEvent& evt)
 {
+	wxMessageBox("Easy: 15 mines 2 hints\nNormal: 30 mines 1 hint\nHard: 45 mines 0 hints");
+
 	evt.Skip();
 }
 

@@ -26,6 +26,7 @@ public:
 	wxMenuItem *menuSave = nullptr;
 	wxMenuItem *menuLoad = nullptr;
 	wxMenuItem *menuRestart = nullptr;
+	wxMenuItem *menuSolve = nullptr;
 
 	wxMenuItem *menuEasy = nullptr;
 	wxMenuItem *menuNormal = nullptr;
@@ -73,6 +74,8 @@ public:
 
 	void OnButtonRestartClicked(wxCommandEvent& evt);
 
+	void OnButtonSolveClicked(wxCommandEvent& evt);
+
 	void OnButtonEasyClicked(wxCommandEvent& evt);
 
 	void OnButtonNormalClicked(wxCommandEvent& evt);
@@ -82,6 +85,8 @@ public:
 	void OnButtonShowHelpClicked(wxCommandEvent& evt);
 
 	void OnButtonShowHintClicked(wxCommandEvent& evt);
+
+	void basicSolver(wxCommandEvent& evt);
 
 	std::string getOpenFilePath();
 
