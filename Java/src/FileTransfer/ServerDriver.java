@@ -32,7 +32,7 @@ public class ServerDriver implements  Runnable{
         while (true) {
             try {
                 socket = serverSocket.accept();
-                log("Launching tew server thread");
+                log("Launching new server thread");
                 new Thread(new TCP_ServerThread(socket, fileUtils)).start();
 
             } catch (IOException e) {

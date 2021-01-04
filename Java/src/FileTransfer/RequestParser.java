@@ -5,6 +5,10 @@ import java.net.Socket;
 import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
 
+import static FileTransfer.Logger.log;
+import static FileTransfer.Logger.prompt;
+
+
 public class RequestParser {
 
     static FileUtils fileUtils;
@@ -19,8 +23,12 @@ public class RequestParser {
         request = request.replace("%REQUESTEND%", "");
 
         if(request.startsWith("%LISTLOCALFILES%")){
+            String list =  new String(fileUtils.getFileListString());
 
-            return "Socket: " + socket + "\n" + fileUtils.getFileListString() + "\r\n";
+            log("Sending file list: \n" + list);
+
+            return "Socket: " + socket + "\n" + "Files : \n" + list + "\n" +
+                     "%CLOSECONNECTION%\r\n" ;
         }
 
         if(request.startsWith("%DOYOUHAVE%")){
@@ -28,10 +36,13 @@ public class RequestParser {
 
             String commandArg[] = request.split(" ");
             String fileName = commandArg[0];
-            String checkSum = commandArg[1];
+            String checkSum = "";
+
+            if(commandArg.length != 1)
+                checkSum = commandArg[1];
 
             if(fileUtils.getFile(fileName) != null){
-                if(fileUtils.getFile(fileName).checkSum.equals(checkSum)){
+                if(fileUtils.getFile(fileName).checkSum.equals(checkSum) || checkSum.equals("")){
                     return "%IHAVE%\r\n";
                 }
             }
@@ -56,7 +67,6 @@ public class RequestParser {
                 return "File not found\r\n";
             }
         }
-
 
         if(request.startsWith("%PULLPART%")) {
             String command = getFirstStringLine(request);
@@ -86,7 +96,6 @@ public class RequestParser {
             }
         }
 
-
         if(request.startsWith("%FILEBEGINNING%")){
             request = request.replace("%FILEBEGINNING%", "");
             request = request.replace("%FILEEND%", "").trim();
@@ -101,6 +110,9 @@ public class RequestParser {
             }
 
         }
+
+        if(!request.equals(""))
+            prompt(request);
 
         return null;
     }

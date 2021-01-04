@@ -131,7 +131,7 @@ public class FileUtils {
         }
 
         for (String file : localFilePaths){
-            log(file);
+            log("Local log, not a mistake:  : " + file);
             FileData fileData = new FileData(Paths.get(localFilesPath.toString(), file));
             localFileList.add(fileData);
         }
@@ -144,7 +144,8 @@ public class FileUtils {
         StringBuilder fileListStringBuilder = new StringBuilder();
 
         for (FileData fileData : localFileList){
-            fileListStringBuilder.append(fileData.toString() + "\n");
+            fileListStringBuilder.append(fileData.toString());
+            fileListStringBuilder.append("\n");
         }
 
         String s = fileListStringBuilder.toString();

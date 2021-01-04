@@ -2,9 +2,9 @@ package FileTransfer;
 
 public class HostData {
     public int port;
-    public int IP;
+    public String IP;
 
-    public HostData(int port, int IP) {
+    public HostData(int port, String IP) {
         this.port = port;
         this.IP = IP;
     }

@@ -6,6 +6,7 @@ import java.net.Socket;
 import java.security.NoSuchAlgorithmException;
 
 import static FileTransfer.Logger.log;
+import static FileTransfer.Logger.prompt;
 
 public class TCP_ServerThread implements Runnable{
 
@@ -17,8 +18,9 @@ public class TCP_ServerThread implements Runnable{
     static BufferedReader br;
     static FileUtils fileUtils;
     static RequestParser requestParser;
+    static String initMessage;
 
-     TCP_ServerThread(int port, FileUtils fileUtils) throws IOException {
+     TCP_ServerThread(int port, FileUtils fileUtils, String initMessage) throws IOException {
          TCP_ServerThread.port = port;
 
          ServerSocket serverSocket = new ServerSocket(port);
@@ -30,7 +32,24 @@ public class TCP_ServerThread implements Runnable{
 
          TCP_ServerThread.fileUtils = fileUtils;
          requestParser = new RequestParser(fileUtils, clientSocket);
+
+         this.initMessage = initMessage;
      }
+
+    TCP_ServerThread(Socket socket, FileUtils fileUtils, String initMessage) throws IOException {
+        port = socket.getPort();
+        clientSocket = socket;
+
+        sis = clientSocket.getInputStream();
+        sisr = new InputStreamReader(sis);
+        br = new BufferedReader(sisr);
+
+        TCP_ServerThread.fileUtils = fileUtils;
+        requestParser = new RequestParser(fileUtils, clientSocket);
+
+        this.initMessage = initMessage;
+
+    }
 
     TCP_ServerThread(Socket socket, FileUtils fileUtils) throws IOException {
          port = socket.getPort();
@@ -60,7 +79,7 @@ public class TCP_ServerThread implements Runnable{
          StringBuilder stringBuilder = new StringBuilder();
          String s = "";
 
-         while(!s.equals("%REQUESTEND%"))
+         while(!s.contains("%REQUESTEND%"))
          {
             try {
                 s = br.readLine();
@@ -75,14 +94,22 @@ public class TCP_ServerThread implements Runnable{
         }
 
         public void run() {
+         if(initMessage != null){
+             try {
+                 sendMessage(initMessage);
+             } catch (IOException e) {
+                 e.printStackTrace();
+             }
+         }
+
          String oldRequest = "";
             try {
                 String request = receiveRequest();
 
                 if(request != null) {
-
+                    //log("request: " + request);
                     while (!request.equals("%CLOSECONNECTION%")) {
-                        log("Request: " + request);
+                        prompt("Request: " + request);
 
                         if(request.equals(oldRequest)){
                             sendMessage("Skipped parsing message due to two identical requests in a row during the same connection." +
@@ -97,7 +124,7 @@ public class TCP_ServerThread implements Runnable{
                     }
                     request = null;
                 }
-
+                sendMessage("%CLOSECONNECTION%");
                 log("Connection closed, client:" + clientSocket.toString());
                 clientSocket.close();
             } catch (IOException | NoSuchAlgorithmException e) {
