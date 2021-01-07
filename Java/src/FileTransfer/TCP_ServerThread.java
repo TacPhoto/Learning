@@ -10,15 +10,15 @@ import static FileTransfer.Logger.prompt;
 
 public class TCP_ServerThread implements Runnable{
 
-    public static ServerSocket serverSocket;
-    static Socket clientSocket;
+    public  ServerSocket serverSocket;
+    Socket clientSocket;
     public static int port;
-    static InputStream sis;
-    static InputStreamReader sisr;
-    static BufferedReader br;
-    static FileUtils fileUtils;
-    static RequestParser requestParser;
-    static String initMessage;
+    InputStream sis;
+    InputStreamReader sisr;
+    BufferedReader br;
+    FileUtils fileUtils;
+    RequestParser requestParser;
+    String initMessage;
 
      TCP_ServerThread(int port, FileUtils fileUtils, String initMessage) throws IOException {
          TCP_ServerThread.port = port;
@@ -30,7 +30,7 @@ public class TCP_ServerThread implements Runnable{
          sisr = new InputStreamReader(sis);
          br = new BufferedReader(sisr);
 
-         TCP_ServerThread.fileUtils = fileUtils;
+         this.fileUtils = fileUtils;
          requestParser = new RequestParser(fileUtils, clientSocket);
 
          this.initMessage = initMessage;
@@ -44,7 +44,7 @@ public class TCP_ServerThread implements Runnable{
         sisr = new InputStreamReader(sis);
         br = new BufferedReader(sisr);
 
-        TCP_ServerThread.fileUtils = fileUtils;
+        this.fileUtils = fileUtils;
         requestParser = new RequestParser(fileUtils, clientSocket);
 
         this.initMessage = initMessage;
@@ -59,23 +59,23 @@ public class TCP_ServerThread implements Runnable{
         sisr = new InputStreamReader(sis);
         br = new BufferedReader(sisr);
 
-        TCP_ServerThread.fileUtils = fileUtils;
+        this.fileUtils = fileUtils;
         requestParser = new RequestParser(fileUtils, clientSocket);
     }
 
-        public static void sendMessage() throws IOException{
+        public void sendMessage() throws IOException{
             PrintStream outputStream = new PrintStream(clientSocket.getOutputStream());
             outputStream.println("server test response\n");
             outputStream.close();
         }
 
-        public static void sendMessage(String message) throws IOException{
+        public void sendMessage(String message) throws IOException{
             PrintStream outputStream = new PrintStream(clientSocket.getOutputStream());
             outputStream.print(message);
             outputStream.close();
         }
 
-        public static String receiveRequest(){
+        public String receiveRequest(){
          StringBuilder stringBuilder = new StringBuilder();
          String s = "";
 

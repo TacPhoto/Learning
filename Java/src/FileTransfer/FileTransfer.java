@@ -31,12 +31,7 @@ public class FileTransfer {
         //  server port, home_directory, push, name, hosts..
         //  man / help
 
-        // TODO:  DOWNLOAD FILE IN PARTS with hosts specified
-        //  - ask host for part of a file
-        //  - when have all parts, merge them and delete redundant files
-
-        // TODO: DOWNLOAD FILE IN PARTS with hosts not specified
-        //  - check if all parts are downlaoded. if not, reask for them, if yes, merge them
+        // TODO:  MERGE DOWNLOADED PARTS
 
         // TODO: RUN COMMAND TO CONTINUE DOWNLOADING FILE
         //  - it is based on file with final MD5, file name and number of all parts
@@ -59,13 +54,6 @@ public class FileTransfer {
         Thread serverDriver = new Thread(new ServerDriver(serverPort, fileUtils));
         serverDriver.start();
 
-        //sendInitMessage(8080, "0.0.0.0", "test");
-/*
-        if(args.length ==  2) {
-            //listener case
-
-            Thread serverDriver = new Thread(new ServerDriver(serverPort, fileUtils));
-            serverDriver.start();*/
         if(args.length > 2){
             //other commands than just a listener
 
@@ -75,31 +63,50 @@ public class FileTransfer {
                     sendInitMessage(hostsList.get(0).port,
                             hostsList.get(0).IP,
                             "%PULL% " + filename +
-                                    "\r\n\"%REQUESTEND%\r\n");
+                                    "\r\n%REQUESTEND%\r\n");
                 }
                 // multihost pull request (parts)
                 if (hostsList.size() > 1) {
+                    ArrayList<HostData> tempHostsList = new ArrayList<HostData>();
+
                     for (int i = 0; i < hostsList.size(); i++) {
-                        ArrayList<HostData> tempHostsList = new ArrayList<HostData>();
                         // no need for threads yet, this response goes in the main thread
                         if (getResponseThroughBasicClient(hostsList.get(i).port,
                                 hostsList.get(i).IP,
-                                "%DOYOUHAVE%" + filename
+                                "%DOYOUHAVE% " + filename + "\r\n%REQUESTEND%\r\n"
                         ).contains("%IHAVE%")) {
                             tempHostsList.add(hostsList.get(i));
                         }
-                        // file saving etc will be handled inside server thread initialized in sendInitMessage
-                        for (int j = 0; j < tempHostsList.size(); j++) {
-                            // this is multithreaded
-                            sendInitMessage(tempHostsList.get(0).port,
-                                    tempHostsList.get(0).IP,
-                                    "%PULLPART% " + " " +
-                                            j + " "
-                                            + tempHostsList.size() +
-                                            " " + filename +
-                                    "\r\n\"%REQUESTEND%\r\n");
-                        }
                     }
+                    // file parts saving etc will be handled inside server thread initialized in sendInitMessage
+
+                    for (int j = 0; j < tempHostsList.size(); j++) {
+                        // this is multithreaded
+                        sendInitMessage(tempHostsList.get(j).port,
+                                tempHostsList.get(j).IP,
+                                "%PULLPART% " + " " +
+                                        (j + 1) + " "
+                                        + tempHostsList.size() +
+                                        " " + filename + "\r\n\"%REQUESTEND%\r\n");
+                    }
+/*
+                    sendInitMessage(tempHostsList.get(0).port,
+                            tempHostsList.get(0).IP,
+                            "%PULLPART% " + " " +
+                                    (0 + 1) + " "
+                                    + tempHostsList.size() +
+                                    " " + filename + "\r\n\"%REQUESTEND%\r\n");
+
+                    sendInitMessage(tempHostsList.get(1).port,
+                            tempHostsList.get(1).IP,
+                            "%PULLPART% " + " " +
+                                    (1 + 1) + " "
+                                    + tempHostsList.size() +
+                                    " " + filename + "\r\n\"%REQUESTEND%\r\n");
+
+
+                     */
+
                 }
             } else {
 
@@ -136,13 +143,9 @@ public class FileTransfer {
     }
 
     private static void sendInitMessage(int port, String ip, String message) throws IOException {
-        /*
-        InetAddress serverAddress = InetAddress.getByName(ip);
-        Socket socket = new Socket(serverAddress, port);
-        log("Sending: [" + message + "] to Socket: " + socket);
-        new Thread(new TCP_ServerThread(socket, fileUtils, message)).start();
-         */
-        new Thread(new BasicRequestThread(port, ip, message)).start();
+        // avoiding passing static variable to a thread
+        FileUtils tempFileUtils = new FileUtils(fileUtils.rootPath.toAbsolutePath().toString());
+        new Thread(new BasicRequestThread(port, ip, tempFileUtils, message)).start();
     }
 
     private static String getResponseThroughBasicClient(int port, String ip, String message) throws IOException {
@@ -166,6 +169,9 @@ public class FileTransfer {
         while(line != null) {
             //log("getResponseThroughBasicClient: " + s);
             line = br.readLine();
+
+            if(line == null)
+                break;
 
             if(line.contains("%CLOSECONNECTION%"))
                 break;

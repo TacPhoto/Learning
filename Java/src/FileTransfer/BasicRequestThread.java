@@ -3,6 +3,7 @@ package FileTransfer;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.security.NoSuchAlgorithmException;
 
 import static FileTransfer.Logger.log;
 import static FileTransfer.Logger.prompt;
@@ -10,18 +11,24 @@ import static FileTransfer.Logger.prompt;
 
 public class BasicRequestThread implements Runnable{
     public static InetAddress serverAddress;
-    static BufferedReader br;
-    static BufferedWriter bw;
-    static InputStream sis;
-    static OutputStream sos;
-    static InputStreamReader sisr;
-    static OutputStreamWriter sosw;
-    public static Socket socket;
-    public static String message;
-    BasicRequestThread(int port, String ip, String message) throws IOException {
+    BufferedReader br;
+    BufferedWriter bw;
+    InputStream sis;
+    OutputStream sos;
+    InputStreamReader sisr;
+    OutputStreamWriter sosw;
+    Socket socket;
+    String message;
+    RequestParser requestParser;
+    FileUtils fileUtils;
+
+    BasicRequestThread(int port, String ip, FileUtils fileUtils,String message) throws IOException {
         serverAddress = InetAddress.getByName(ip);
         socket = new Socket(serverAddress, port);
         this.message = message;
+        this.fileUtils = fileUtils;
+        requestParser = new RequestParser(this.fileUtils, socket);
+
         log("Thread Sending: [" + message + "] to Socket: " + socket);
 
     }
@@ -56,11 +63,13 @@ public class BasicRequestThread implements Runnable{
             if(!response.equals(""))
                 prompt("BasicRequestThread received: " + response);
 
+            requestParser.returnMessage(response); // saves received files etc
+
 /*
             sos.close();
             sis.close();
             socket.close();*/
-        } catch (IOException e) {
+        } catch (IOException | NoSuchAlgorithmException e) {
             e.printStackTrace();
     }
     }
