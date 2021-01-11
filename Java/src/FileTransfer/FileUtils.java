@@ -1,9 +1,6 @@
 package FileTransfer;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -11,9 +8,11 @@ import java.nio.file.Paths;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Iterator;
 import java.util.Scanner;
 
 import static FileTransfer.Logger.log;
+import static FileTransfer.Logger.prompt;
 
 public class FileUtils {
     public Path rootPath;
@@ -33,8 +32,8 @@ public class FileUtils {
         Scanner scanner = new Scanner(request);
         String filename = null;
         String checkSum = null;
-        //todo fix it, this method is executed twice for some reason
 
+        // get data from request
         int i = 0;
         while(scanner.hasNextLine()){
             String line = scanner.nextLine();
@@ -62,7 +61,7 @@ public class FileUtils {
             String tempFilename = filename;
 
             while(new File (tempPath.toAbsolutePath().toString()).exists()) {
-                tempFilename = i + filename;
+                tempFilename = i + "." + filename;
                 tempPath = Paths.get(downloadedFilesPath, tempFilename);
                 i++;
             }
@@ -119,6 +118,32 @@ public class FileUtils {
         return s;
     }
 
+    public static void saveMergedFile(ArrayList<File> files, String filePath) throws IOException {
+        if (files.size() > 0) {
+            BufferedInputStream in;
+            try (BufferedOutputStream out = new BufferedOutputStream(
+                    new FileOutputStream(new File(filePath)))){
+
+                for (File file : files) {
+
+                    in = new BufferedInputStream(
+                            new FileInputStream(file));
+
+                    byte[] buffer = new byte[2048];
+                    int inSize = -1;
+
+                    while ((inSize = in.read(buffer)) != -1) {
+                        out.write(buffer, 0, inSize);
+                    }
+
+                    in.close();
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     public boolean updateLocalFileList() throws IOException, NoSuchAlgorithmException {
         localFileList.clear();
@@ -152,7 +177,6 @@ public class FileUtils {
 
         return s;
     }
-
 
     public void updateCheckSums() throws IOException, NoSuchAlgorithmException {
         for (FileData fileData : localFileList){

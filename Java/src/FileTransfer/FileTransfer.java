@@ -7,10 +7,8 @@ import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Base64;
-import java.util.Scanner;
+import java.util.*;
+import java.util.regex.Pattern;
 
 import static FileTransfer.Logger.log;
 import static FileTransfer.Logger.prompt;
@@ -30,9 +28,7 @@ public class FileTransfer {
         //  server port, home_directory, pull, name, hosts..
         //  server port, home_directory, push, name, hosts..
         //  man / help
-
-        // TODO:  MERGE DOWNLOADED PARTS
-
+        
         // TODO: RUN COMMAND TO CONTINUE DOWNLOADING FILE
         //  - it is based on file with final MD5, file name and number of all parts
         //  - simply asks hosts for missing parts and then merges them
@@ -78,34 +74,33 @@ public class FileTransfer {
                             tempHostsList.add(hostsList.get(i));
                         }
                     }
+
+
+                    ArrayList<Thread> serverThreadList = new ArrayList<Thread>();
+
                     // file parts saving etc will be handled inside server thread initialized in sendInitMessage
 
                     for (int j = 0; j < tempHostsList.size(); j++) {
                         // this is multithreaded
-                        sendInitMessage(tempHostsList.get(j).port,
+                        serverThreadList.add(sendInitMessage(tempHostsList.get(j).port,
                                 tempHostsList.get(j).IP,
                                 "%PULLPART% " + " " +
                                         (j + 1) + " "
                                         + tempHostsList.size() +
-                                        " " + filename + "\r\n\"%REQUESTEND%\r\n");
+                                        " " + filename + "\r\n\"%REQUESTEND%\r\n")
+                        );
                     }
-/*
-                    sendInitMessage(tempHostsList.get(0).port,
-                            tempHostsList.get(0).IP,
-                            "%PULLPART% " + " " +
-                                    (0 + 1) + " "
-                                    + tempHostsList.size() +
-                                    " " + filename + "\r\n\"%REQUESTEND%\r\n");
 
-                    sendInitMessage(tempHostsList.get(1).port,
-                            tempHostsList.get(1).IP,
-                            "%PULLPART% " + " " +
-                                    (1 + 1) + " "
-                                    + tempHostsList.size() +
-                                    " " + filename + "\r\n\"%REQUESTEND%\r\n");
+                    // wait till all downloads are finished
+                    for(int i = 0; i < serverThreadList.size(); i++){
+                        while(serverThreadList.get(i).isAlive()) {
+                            // wait (yes, I know it's not a legit way)
+                        }
+                    }
 
+                    prompt("Part downloads threads finished, file merger called");
 
-                     */
+                    mergeFiles(filename);
 
                 }
             } else {
@@ -142,10 +137,93 @@ public class FileTransfer {
 
     }
 
-    private static void sendInitMessage(int port, String ip, String message) throws IOException {
+    private static void mergeFiles(String filename) throws IOException {
+        // works only for files which don't have duplicates (they have number prefix)
+            File[] allFiles = new File(fileUtils.downloadedFilesPath.toString()).listFiles();
+            ArrayList<File> files = new ArrayList<>();
+
+            log("Filtering files to get fileparts only");
+
+            // filter files
+            for(File file : allFiles){
+                String fullName = file.getName(); //  name, format, 'part', partnum [no number on purpose]
+                String nameParts[] = fullName.split("\\.");
+                log("part 0: " + nameParts[0]);
+                //skip files not made of parts (they have name, format, part, partnum) and that are duplicates
+                    if(nameParts.length != 4){
+                        continue;
+                    }
+
+                    if( (nameParts[0] + "." + nameParts[1]).equals(filename) ){
+                        files.add(file);
+                }
+            }
+
+            // clean redundant list
+            allFiles = null;
+
+            log("Sorting file parts");
+            log("Listing sorted parts");
+            // sort files
+            sortFileParts(files);
+            for(File file : files){
+                log(file.getAbsolutePath());
+            }
+            log("Listing sorted parts done");
+
+            prompt("File merging initialization done, saving merged file");
+
+            FileUtils.saveMergedFile(files, fileUtils.downloadedFilesPath + "\\" + filename);
+
+            prompt("Cleaning files");
+            for(int i = files.size() - 1; i >= 0 ; i--){
+
+                File tempFile = files.get(i);
+                files.remove(i);
+
+                if(tempFile.delete()){
+                    prompt("Deleted: " + tempFile.getName());
+                }else{
+                    prompt("Failed to delete: " + tempFile.getName());
+                }
+            }
+            prompt("File cleanup done");
+
+    }
+
+    private static void sortFileParts(ArrayList<File> files) {
+        int n = files.size();
+
+        // bubble sort
+        for (int i = 0; i < n - 1; i++)
+            for (int j = 0; j < n - i - 1; j++){
+
+                // partnums to separate variables
+                int f_j = Integer.parseInt( files.get(j).getName().split("\\.")[3] );
+                int f_j2 = Integer.parseInt( files.get(j+1).getName().split("\\.")[3] );
+
+                if (f_j > f_j2) {
+                    Collections.swap(files, j, j+1);
+                }
+            }
+
+        log("File parts sorted");
+    }
+
+    /*
+        private static void sendInitMessage(int port, String ip, String message) throws IOException {
+            // avoiding passing static variable to a thread
+            FileUtils tempFileUtils = new FileUtils(fileUtils.rootPath.toAbsolutePath().toString());
+            new Thread(new BasicRequestThread(port, ip, tempFileUtils, message)).start();
+        }
+    */
+
+    private static Thread sendInitMessage(int port, String ip, String message) throws IOException {
         // avoiding passing static variable to a thread
         FileUtils tempFileUtils = new FileUtils(fileUtils.rootPath.toAbsolutePath().toString());
-        new Thread(new BasicRequestThread(port, ip, tempFileUtils, message)).start();
+        Thread thread = new Thread(new BasicRequestThread(port, ip, tempFileUtils, message));
+        thread.start();
+        return thread;
     }
 
     private static String getResponseThroughBasicClient(int port, String ip, String message) throws IOException {
