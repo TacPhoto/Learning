@@ -8,7 +8,6 @@ import java.nio.file.Paths;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Base64;
-import java.util.Iterator;
 import java.util.Scanner;
 
 import static FileTransfer.Logger.log;
@@ -22,8 +21,16 @@ public class FileUtils {
 
     public FileUtils(String rootPath){
         this.rootPath = Paths.get(rootPath);
+
+        /*
         this.localFilesPath = Paths.get(rootPath, "local\\");
         this.downloadedFilesPath = Paths.get(rootPath, "received\\");
+        */
+
+        // paths identical on purpose, please adjust this code if you want
+        this.localFilesPath = Paths.get(rootPath, "");
+        this.downloadedFilesPath = Paths.get(rootPath, "");
+
         this.localFileList = new ArrayList<FileData>();
     }
 
@@ -137,8 +144,11 @@ public class FileUtils {
                     }
 
                     in.close();
+
+                    prompt("File merging done");
                 }
             } catch (FileNotFoundException e) {
+                prompt("File merging not successful");
                 e.printStackTrace();
             }
         }
