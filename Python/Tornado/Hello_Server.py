@@ -1,24 +1,31 @@
+from abc import ABC
+
 import tornado.ioloop
 import tornado.web
 
-class basicRequestHandler(tornado.web.RequestHandler):
+
+class basicRequestHandler(tornado.web.RequestHandler, ABC):
     def get(self):
         self.write("Hello Tornado!")
 
-class staticRequestHandler(tornado.web.RequestHandler):
+
+class staticRequestHandler(tornado.web.RequestHandler, ABC):
     def get(self):
         self.render("index.html")
 
-class queryStringRequestHandler(tornado.web.RequestHandler):
+
+class queryStringRequestHandler(tornado.web.RequestHandler, ABC):
     def get(self):
         n = int(self.get_argument("n"))
         result = "odd" if n % 2 else "even"
 
         self.write("It's " + result)
 
-class resourceRequestHandler(tornado.web.RequestHandler):
+
+class resourceRequestHandler(tornado.web.RequestHandler, ABC):
     def get(self, id):
         self.write("Querying tweet #" + id)
+
 
 if __name__ == "__main__":
     app = tornado.web.Application([

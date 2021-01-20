@@ -26,7 +26,7 @@ async def four():
     print('starting four')
     await asyncio.sleep(4)
     print('four done')
-    return  4
+    return 4
 
 
 async def main():
