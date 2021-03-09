@@ -23,7 +23,6 @@ wxEND_EVENT_TABLE()
 
 cMain::cMain() : wxFrame(nullptr, wxID_ANY, wxT("Minesweeper"), wxPoint(20, 20), wxSize(800, 600))
 {
-	// TODO: implement choosing file to save/open
 
 	setMenuBar();
 	level lvl;
