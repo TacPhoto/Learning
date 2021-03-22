@@ -1,2 +1,0 @@
-start java -cp ../ FileTransfer.FileTransfer 10006 "Z:\GitHubLearning\Learning\Java\bin\FileTransfer\Files2"
-start java -cp ../ FileTransfer.FileTransfer 10005 "Z:\GitHubLearning\Learning\Java\bin\FileTransfer\Files1" push testPic.jpg 0.0.0.0:10006

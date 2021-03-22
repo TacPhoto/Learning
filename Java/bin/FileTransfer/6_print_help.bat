@@ -1,1 +1,0 @@
-start java -cp ../ FileTransfer.FileTransfer  man
