@@ -67,6 +67,7 @@ cMain::~cMain()
 void cMain::OnMenuNew(wxCommandEvent& evt)
 {
 	cEditorFrame* f = new cEditorFrame(this, "Test");
+	f->New(16, 16);
 	f->Show();
 	evt.Skip();
 
@@ -88,4 +89,10 @@ void cMain::OnMenuExit(wxCommandEvent& evt)
 
 void cMain::OnSelectColour(wxCommandEvent& evt)
 {
+	int color = evt.GetId() - 10100;
+
+	if (GetActiveChild() != nullptr)
+	{
+		((cEditorFrame*)GetActiveChild())->SetColor(color);
+	}
 }
