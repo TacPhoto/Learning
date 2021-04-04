@@ -26,12 +26,55 @@ void cEditorFrame::SetColor(int c)
 
 bool cEditorFrame::Save(wxString sFileName)
 {
-	return false;
+	if (!sprBase.Load(sFileName.wc_str()))
+		return false;
+	else
+	{
+		for (int i = 0; i < sprBase.nWidth; i++)
+			for (int j = 0; j < sprBase.nHeight; j++)
+			{
+				wchar_t glyph = sprBase.GetGlyph(i, j);
+				short colour = sprBase.GetColour(i, j);
+
+				if (glyph == L' ')
+					m_pSprite[j * sprBase.nWidth + i] = 16;
+				else
+					m_pSprite[j * sprBase.nWidth + i] = colour & 0x000F;
+			}
+		m_Canvas->SetSpriteData(sprBase.nHeight, sprBase.nWidth, m_pSprite);
+		return true;
+	}
 }
 
 bool cEditorFrame::Open(wxString sFileName)
 {
-	return false;
+	m_sprBase = new olcSprite(sFileName.wc_str());
+
+	if (m_sprBase->nWidth == 0 || m_sprBase->nHeight == 0)
+		return false;
+	else
+	{
+		m_pSprite = new unsigned char[m_sprBase->nWidth * m_sprBase->nHeight]{ 0 };
+
+		for (int i = 0; i < m_sprBase->nWidth; i++)
+			for (int j = 0; j < m_sprBase->nHeight; j++)
+			{
+				wchar_t glyph = m_sprBase->GetGlyph(i, j);
+				short colour = m_sprBase->GetColour(i, j);
+
+				if (glyph == L' ')
+				{
+					m_pSprite[j * m_sprBase->nWidth + i] = 16;
+				}
+				else
+				{
+					m_pSprite[j * m_sprBase->nWidth + i] = colour & 0x000F;
+				}
+			}
+
+		m_Canvas->SetSpriteData(m_sprBase->nHeight, m_sprBase->nWidth, m_pSprite);
+		return true;
+	}
 }
 
 bool cEditorFrame::New(int r, int c)

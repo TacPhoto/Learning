@@ -81,6 +81,8 @@ void cCanvas::OnDraw(wxDC& dc)
 	pen.SetColour(wxColour(200, 200, 200));
 
 	dc.SetPen(pen);
+	if (m_nPixelSize <= 4) dc.SetPen(*wxTRANSPARENT_PEN);
+
 	dc.SetBrush(brush);
 
 	for(int y = s.GetRow(); y < e.GetRow(); y++)
